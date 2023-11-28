@@ -1,0 +1,8 @@
+#Backend ignored folders
+#IntelliJ default file
+/.idea/
+#Maven
+/target/
+/.mvn
+/.mvn-classpath
+/pom.xml.bak
