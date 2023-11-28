@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.spotify.audioFeaturesRecords;
+package edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords;
 
 
 /**

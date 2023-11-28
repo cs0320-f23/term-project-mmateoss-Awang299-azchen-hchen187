@@ -1,6 +1,4 @@
-package edu.brown.cs.student.main.server.spotify.searchRecords;
-
-import java.util.List;
+package edu.brown.cs.student.main.server.spotify.records.searchRecords;
 
 /**
  * Record that works with moshi to create an object for a song based on the spotify API.

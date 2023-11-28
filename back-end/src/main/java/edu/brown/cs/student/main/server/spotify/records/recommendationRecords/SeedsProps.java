@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.spotify.recommendationRecords;
+package edu.brown.cs.student.main.server.spotify.records.recommendationRecords;
 
 /**
  * Record that tells moshi how to make up the internal list of seed objects.

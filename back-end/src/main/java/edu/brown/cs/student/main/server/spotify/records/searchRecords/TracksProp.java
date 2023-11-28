@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.spotify.searchRecords;
+package edu.brown.cs.student.main.server.spotify.records.searchRecords;
 
 import java.util.List;
 
