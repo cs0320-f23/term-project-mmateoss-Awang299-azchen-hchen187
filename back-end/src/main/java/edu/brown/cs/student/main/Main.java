@@ -3,8 +3,6 @@ package edu.brown.cs.student.main;
 import edu.brown.cs.student.main.parsing.CreatorFromRow;
 import edu.brown.cs.student.main.parsing.FactoryFailureException;
 import edu.brown.cs.student.main.parsing.Parser;
-import edu.brown.cs.student.main.searching.Search;
-import edu.brown.cs.student.main.searching.StringListCreator;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
@@ -33,44 +31,44 @@ public final class Main {
    * @param args - the arguments inputted to the command line by the user
    */
   private Main(String[] args) {
-    // program will exit if not enough arguments are inputted
-    if (args.length < 3 || args.length > 5 || args.length == 4) {
-      System.err.println(
-          "Incorrect number of arguments, please reference readme for" + " guide to inputs");
-      System.exit(0);
-    }
-    try {
-      FileReader reader = new FileReader(args[0]);
-      CreatorFromRow<List<String>> creator = new StringListCreator();
-      Parser<List<String>> parser = new Parser<>(reader, args[2], creator);
-      Search searcher = new Search(parser, args[1]);
-
-      // input in form: [file], [target], [header t/f], [name/col], [actual name/col]
-      if (args.length == 3) {
-        searcher.basicSearch();
-
-      } else if (args.length == 5) {
-        if (args[3].equals("name") && args[2].equals("true")) {
-          searcher.headerSearch(args[4]);
-
-        } else if (args[3].equals("name") && !args[2].equals("true")) {
-          System.err.println(
-              "You cannot search the column of a header without having a header"
-                  + ", please ensure that third argument inputted is true if want to do this "
-                  + "search");
-        } else if (args[3].equals("col")) {
-          searcher.colSearch(args[4]);
-        }
-      }
-
-    } catch (FileNotFoundException e) {
-      System.err.println("File not Found");
-      System.exit(0);
-    } catch (FactoryFailureException e) {
-
-    } catch (IOException e){
-
-    }
+//    // program will exit if not enough arguments are inputted
+//    if (args.length < 3 || args.length > 5 || args.length == 4) {
+//      System.err.println(
+//          "Incorrect number of arguments, please reference readme for" + " guide to inputs");
+//      System.exit(0);
+//    }
+//    try {
+//      FileReader reader = new FileReader(args[0]);
+//      CreatorFromRow<List<String>> creator = new StringListCreator();
+//      Parser<List<String>> parser = new Parser<>(reader, args[2], creator);
+//      Search searcher = new Search(parser, args[1]);
+//
+//      // input in form: [file], [target], [header t/f], [name/col], [actual name/col]
+//      if (args.length == 3) {
+//        searcher.basicSearch();
+//
+//      } else if (args.length == 5) {
+//        if (args[3].equals("name") && args[2].equals("true")) {
+//          searcher.headerSearch(args[4]);
+//
+//        } else if (args[3].equals("name") && !args[2].equals("true")) {
+//          System.err.println(
+//              "You cannot search the column of a header without having a header"
+//                  + ", please ensure that third argument inputted is true if want to do this "
+//                  + "search");
+//        } else if (args[3].equals("col")) {
+//          searcher.colSearch(args[4]);
+//        }
+//      }
+//
+//    } catch (FileNotFoundException e) {
+//      System.err.println("File not Found");
+//      System.exit(0);
+//    } catch (FactoryFailureException e) {
+//
+//    } catch (IOException e){
+//
+//    }
   }
 
   /** Method called when the program runs. */

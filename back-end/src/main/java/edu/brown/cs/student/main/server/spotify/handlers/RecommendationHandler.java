@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.spotify;
+package edu.brown.cs.student.main.server.spotify.handlers;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -21,7 +21,7 @@ import spark.Route;
 /**
  *
  */
-public class SpotifyHandler implements Route {
+public class RecommendationHandler implements Route {
 
 
 
@@ -29,7 +29,7 @@ public class SpotifyHandler implements Route {
   /**
    *
    */
-  public SpotifyHandler(){
+  public RecommendationHandler(){
 
   }
 

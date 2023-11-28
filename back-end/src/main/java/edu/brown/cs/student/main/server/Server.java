@@ -2,10 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
-import edu.brown.cs.student.main.server.csv.CsvLoader;
-import edu.brown.cs.student.main.server.csv.LoadCsvHandler;
-import edu.brown.cs.student.main.server.csv.SearchCsvHandler;
-import edu.brown.cs.student.main.server.csv.ViewCsvHandler;
+
 import edu.brown.cs.student.main.server.webapi.BroadbandHandler;
 import spark.Spark;
 
@@ -38,7 +35,7 @@ public class Server {
 //    Spark.get("viewcsv", new ViewCsvHandler(csvLoader));
 //    Spark.get("searchcsv", new SearchCsvHandler(csvLoader));
 //    Spark.get("broadband", new BroadbandHandler());
-//    Spark.get("spotify" new SpotifyHandler());
+//    Spark.get("spotify" new RecommendationHandler());
 
     Spark.init();
     Spark.awaitInitialization();
