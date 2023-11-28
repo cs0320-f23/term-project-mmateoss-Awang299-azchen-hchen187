@@ -53,6 +53,12 @@ public class SpotifyData implements IData {
   }
 
 
+
+  @Override
+  public FeaturesProp getFeatures() throws Exception{
+    return null;
+  }
+
   /**
    * Helper method that makes a request from API to get needed information and turns
    * it into a Song object.
