@@ -1,0 +1,13 @@
+{
+  "tracks": [],
+  "seeds": [
+    {
+      "initialPoolSize": 533,
+      "afterFilteringSize": 0,
+      "afterRelinkingSize": 0,
+      "id": "0c6xIDDpzE81m2q797ordA",
+      "type": "TRACK",
+      "href": "https://api.spotify.com/v1/tracks/0c6xIDDpzE81m2q797ordA"
+    }
+  ]
+}
