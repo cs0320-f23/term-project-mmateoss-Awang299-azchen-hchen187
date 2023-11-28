@@ -3,6 +3,10 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 
+import edu.brown.cs.student.main.server.spotify.handlers.AddDislikedSongsHandler;
+import edu.brown.cs.student.main.server.spotify.handlers.AddInputSongsHandler;
+import edu.brown.cs.student.main.server.spotify.handlers.GenerateNewPlaylistHandler;
+import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
 import edu.brown.cs.student.main.server.webapi.BroadbandHandler;
 import spark.Spark;
 
@@ -29,13 +33,11 @@ public class Server {
     });
 
     // Initializing Spark get handlers
-//    CsvLoader csvLoader = new CsvLoader();
+    Spark.get("recommendation", new RecommendationHandler());
+    Spark.get("generateNewPlaylist", new GenerateNewPlaylistHandler());
+    Spark.get("addInputSongs", new AddInputSongsHandler());
+    Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
 
-//    Spark.get("loadcsv", new LoadCsvHandler(csvLoader));
-//    Spark.get("viewcsv", new ViewCsvHandler(csvLoader));
-//    Spark.get("searchcsv", new SearchCsvHandler(csvLoader));
-//    Spark.get("broadband", new BroadbandHandler());
-//    Spark.get("spotify" new RecommendationHandler());
 
     Spark.init();
     Spark.awaitInitialization();
