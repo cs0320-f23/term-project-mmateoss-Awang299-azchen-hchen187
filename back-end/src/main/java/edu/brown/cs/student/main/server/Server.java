@@ -2,7 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
-
+import edu.brown.cs.student.main.server.spotify.data.SpotifyData;
 import edu.brown.cs.student.main.server.spotify.handlers.AddDislikedSongsHandler;
 import edu.brown.cs.student.main.server.spotify.handlers.AddInputSongsHandler;
 import edu.brown.cs.student.main.server.spotify.handlers.GenerateNewPlaylistHandler;
@@ -10,9 +10,9 @@ import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
 import edu.brown.cs.student.main.server.webapi.BroadbandHandler;
 import spark.Spark;
 
-
 /**
- * Top-level class for the server. Contains the main() method which starts Spark and runs
+ * Top-level class for the server. Contains the main() method which starts Spark
+ * and runs
  * the various handlers. We have four endpoints.
  */
 public class Server {
@@ -31,13 +31,13 @@ public class Server {
       response.header("Access-Control-Allow-Origin", "*");
       response.header("Access-Control-Allow-Methods", "*");
     });
+    SpotifyData SpotifyData = new SpotifyData();
 
     // Initializing Spark get handlers
-    Spark.get("recommendation", new RecommendationHandler());
+    Spark.get("recommendation", new RecommendationHandler(SpotifyData));
     Spark.get("generateNewPlaylist", new GenerateNewPlaylistHandler());
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
-
 
     Spark.init();
     Spark.awaitInitialization();

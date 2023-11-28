@@ -8,12 +8,12 @@ import edu.brown.cs.student.main.server.spotify.searchRecords.Song;
  * our
  * server to use it accordingly.
  */
-public class SpotifyData implements IData {
+public class MockData implements IData {
 
   /**
    * Constructor for the SpotifyData class.
    */
-  public SpotifyData() {
+  public MockData() {
 
   }
 
