@@ -86,20 +86,21 @@ public class MockData implements IData {
 
   /**
    * Helper method that gets all the song ids and puts them into a string in order for getFeatures
-   * to get all the features for the songs.
+   * to get all the features for the songs. This method is for testing purposes in order to make
+   * sure that the method will work in the non mocked case.
    *
    * @param allNames String or List<String> that contains all the names of the
    * @return a string that is comma separated, containing all the track ids for the songs
    *
    */
-  public String getSongIds(String[] allNames, String token) throws Exception {
+  public String getSongIds(String[] allNames) throws Exception {
 
     String ids = "";
     int lastIdx = allNames.length-1;
     // loop through the list of song names and
     for(int i=0; i<allNames.length;i++){
-      String songName = allNames[i];
-      Song songObj = this.getSong(token, songName);
+      String filePath = allNames[i];
+      Song songObj = this.getSongSpecificIds(filePath);
       if(i == lastIdx){
         ids = ids+songObj.tracks().items().get(0).id();
       }
@@ -112,4 +113,21 @@ public class MockData implements IData {
     return ids;
   }
 
+
+  /**
+   * Helper method that creates a song object from a specific filePath to be used in the mocked
+   * getSongIds method, allowing for us to test that method.
+   *
+   * @param file the filePath for a specific json file for the songObj
+   * @return a songObj for the specific song
+   * @throws Exception IOException where the
+   */
+  private Song getSongSpecificIds(String file) throws Exception{
+
+    FileReader reader = new FileReader(file);
+    SongDataSource songData = new SongDataSource(reader);
+    songData.loadJson();
+    return songData.getJsonObj();
+
+  }
 }
