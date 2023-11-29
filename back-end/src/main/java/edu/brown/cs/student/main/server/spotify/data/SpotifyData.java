@@ -13,6 +13,7 @@ import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -32,13 +33,29 @@ public class SpotifyData implements IData {
    * Method that will allow the server to get a song object based on the name of the songs
    * inputted
    *
+   * @param songName the name of the song that we are searching for
+   * @param token the Spotify token for the user
    * @return a song object based on the name of the song inputted
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
    */
   @Override
-  public Song getSong() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getSong'");
+  public Song getSong(String token, String songName) throws URISyntaxException, IOException,
+      InterruptedException{
+
+    // Generate the UriString to make the recommendation
+    // track: may possibly need to be track%3
+    String uriString =
+        "https://api.spotify.com/v1/search?q=track%3"+songName+"&type=track";
+
+    // return the song object
+    return this.fetchSongApiData(uriString,token);
   }
+
+
 
   /**
    * Method that will allow the server to get a recommendation based on a seed song, and
@@ -47,16 +64,68 @@ public class SpotifyData implements IData {
    * @return a recommendation object.
    */
   @Override
-  public Recommendation getRecommendation() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'getRecommendation'");
+  public Recommendation getRecommendation(String token) {
+    String uriString = "";
+
+
+    return null;
   }
 
 
+  /**
+   * Helper method that gets all the song ids and puts them into a string in order for getFeatures
+   * to get all the features for the songs.
+   *
+   * @param allNames String or List<String> that contains all the names of the
+   * @return a string that is comma separated, containing all the track ids for the songs
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   *
+   */
+  private String getSongIds(String[] allNames, String token) throws URISyntaxException, IOException,
+      InterruptedException {
+    //TODO: Might want to move this to another class if we have a cached data class where we search
+    // to see if we already have the id stored in a cache, and check against blacklist of songs
+    String ids = "";
+    int lastIdx = allNames.length-1;
+    // loop through the list of song names and
+    for(int i=0; i<allNames.length;i++){
+      String songName = allNames[i];
+      Song songObj = this.getSong(token, songName);
+      if(i == lastIdx){
+        ids = ids+songObj.tracks().items().get(0).id();
+      }
+      else{
+        ids = ids+songObj.tracks().items().get(0).id()+",";
+      }
+    }
 
+    // returning the built string with all the ids
+    return ids;
+  }
+
+
+  /**
+   * Method that returns a featuresProp object for all the inputted songs
+   *
+   * @param token the Spotify token for the user
+   * @return the featureProp object containing info for all the songs
+   * @throws URISyntaxException exception where URI syntax is incorrect.
+   * @throws IOException exception where it failed to read/open
+   *                     information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   */
   @Override
-  public FeaturesProp getFeatures() throws Exception{
-    return null;
+  public FeaturesProp getFeatures(String token, String[] allNames) throws URISyntaxException, IOException,
+      InterruptedException {
+
+    String ids = this.getSongIds(allNames, token);
+    String uriString = "https://api.spotify.com/v1/audio-features?ids="+ids;
+    return this.fetchFeaturesApiData(uriString,token);
   }
 
   /**
@@ -72,11 +141,13 @@ public class SpotifyData implements IData {
    * @throws InterruptedException exception where connection to API is
    *                              interrupted.
    */
-  private Song fetchSongApiData(String uriString)
+  private Song fetchSongApiData(String uriString, String token)
       throws URISyntaxException, IOException, InterruptedException {
     // building a new HttpRequest
+    //TODO: make sure that the header part is correct
     HttpRequest buildRequest = HttpRequest.newBuilder()
         .uri(new URI(uriString))
+        .header("Authorization", "Bearer "+token)
         .GET()
         .build();
     // building a response with the HttpRequest
@@ -91,6 +162,7 @@ public class SpotifyData implements IData {
     return dataAdapter.fromJson(response.body());
   }
 
+
   /**
    * Helper method that makes a request from API to get needed information and turns
    * it into a Recommendation object.
@@ -104,11 +176,13 @@ public class SpotifyData implements IData {
    * @throws InterruptedException exception where connection to API is
    *                              interrupted.
    */
-  private Recommendation fetchRecommendationApiData(String uriString)
+  private Recommendation fetchRecommendationApiData(String uriString, String token)
       throws URISyntaxException, IOException, InterruptedException {
     // building a new HttpRequest
+    //TODO: make sure that the header part is correct
     HttpRequest buildRequest = HttpRequest.newBuilder()
         .uri(new URI(uriString))
+        .header("Authorization", "Bearer "+token)
         .GET()
         .build();
     // building a response with the HttpRequest
@@ -124,7 +198,6 @@ public class SpotifyData implements IData {
   }
 
 
-
   /**
    * Helper method that makes a request from API to get needed information and turns
    * it into a FeaturesProp object.
@@ -138,11 +211,13 @@ public class SpotifyData implements IData {
    * @throws InterruptedException exception where connection to API is
    *                              interrupted.
    */
-  private FeaturesProp fetchFeaturesApiData(String uriString)
+  private FeaturesProp fetchFeaturesApiData(String uriString, String token)
       throws URISyntaxException, IOException, InterruptedException {
     // building a new HttpRequest
+    //TODO: make sure that the header part is correct
     HttpRequest buildRequest = HttpRequest.newBuilder()
         .uri(new URI(uriString))
+        .header("Authorization", "Bearer "+token)
         .GET()
         .build();
     // building a response with the HttpRequest

@@ -7,6 +7,9 @@ import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
+/**
+ * Class that tests that the records create the correct objects from the passed in json.
+ */
 public class RecordTests {
 
 
@@ -22,7 +25,7 @@ public class RecordTests {
         "data/mockedSpotifyJsons/"
             + "mockedRecommendations/mockedRecommendation1.json",
         "data/mockedSpotifyJsons/mockedAudioFeatures/mockedAudioFeats1.json");
-    Recommendation rec = data.getRecommendation();
+    Recommendation rec = data.getRecommendation("");
     Assert.assertTrue(rec instanceof Recommendation);
     Assert.assertEquals(rec.tracks().get(0).id(),"5N9M7Ji7KYrmfJ6Jki3raU");
     Assert.assertEquals(rec.seeds().size(),1);
@@ -43,7 +46,7 @@ public class RecordTests {
         "data/mockedSpotifyJsons/"
             + "mockedRecommendations/mockedRecommendation1.json",
         "data/mockedSpotifyJsons/mockedAudioFeatures/mockedAudioFeats1.json");
-    FeaturesProp feat = data.getFeatures();
+    FeaturesProp feat = data.getFeatures("", null);
     Assert.assertTrue(feat instanceof FeaturesProp);
     Assert.assertEquals(feat.audio_features().size(), 3);
     Assert.assertEquals(feat.audio_features().get(0).acousticness(), Float.valueOf("0.000273"));
@@ -66,7 +69,7 @@ public class RecordTests {
         "data/mockedSpotifyJsons/"
             + "mockedRecommendations/mockedRecommendation1.json",
         "data/mockedSpotifyJsons/mockedAudioFeatures/mockedAudioFeats1.json");
-    Song song = data.getSong();
+    Song song = data.getSong("", "");
     Assert.assertTrue(song instanceof Song);
     Assert.assertEquals(song.tracks().items().size(), 2);
     Assert.assertEquals(song.tracks().items().get(0).name(), "I Will Wait");

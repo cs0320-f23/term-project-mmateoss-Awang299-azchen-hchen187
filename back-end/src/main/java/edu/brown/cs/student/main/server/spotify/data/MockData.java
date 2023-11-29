@@ -8,6 +8,7 @@ import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Re
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.FileReader;
 import java.io.IOException;
+import java.net.URISyntaxException;
 
 /**
  * Class that will be used to get mocked data, allowing
@@ -40,7 +41,7 @@ public class MockData implements IData {
    * @exception Exception IOException where the json file cant be read.
    */
   @Override
-  public Song getSong() throws Exception{
+  public Song getSong(String token, String songName) throws Exception{
 
     FileReader reader = new FileReader(this.mockedSongPath);
     SongDataSource songData = new SongDataSource(reader);
@@ -57,7 +58,7 @@ public class MockData implements IData {
    * @exception Exception IOException where the json file cant be read.
    */
   @Override
-  public Recommendation getRecommendation() throws Exception{
+  public Recommendation getRecommendation(String token) throws Exception{
 
     FileReader reader = new FileReader(this.mockedRecommendationPath);
     RecommendationDataSource dataSource = new RecommendationDataSource(reader);
@@ -74,11 +75,41 @@ public class MockData implements IData {
    * @throws Exception IO Exception where the json cant be read.
    */
   @Override
-  public FeaturesProp getFeatures() throws Exception {
+  public FeaturesProp getFeatures(String token, String[] allNames) throws Exception {
 
     FileReader reader = new FileReader(this.mockedFeaturesPath);
     FeatureDataSource dataSource = new FeatureDataSource(reader);
     dataSource.loadJson();
     return dataSource.getJsonObj();
   }
+
+
+  /**
+   * Helper method that gets all the song ids and puts them into a string in order for getFeatures
+   * to get all the features for the songs.
+   *
+   * @param allNames String or List<String> that contains all the names of the
+   * @return a string that is comma separated, containing all the track ids for the songs
+   *
+   */
+  public String getSongIds(String[] allNames, String token) throws Exception {
+
+    String ids = "";
+    int lastIdx = allNames.length-1;
+    // loop through the list of song names and
+    for(int i=0; i<allNames.length;i++){
+      String songName = allNames[i];
+      Song songObj = this.getSong(token, songName);
+      if(i == lastIdx){
+        ids = ids+songObj.tracks().items().get(0).id();
+      }
+      else{
+        ids = ids+songObj.tracks().items().get(0).id()+",";
+      }
+    }
+
+    // returning the built string with all the ids
+    return ids;
+  }
+
 }
