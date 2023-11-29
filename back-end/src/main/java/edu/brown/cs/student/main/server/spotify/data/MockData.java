@@ -58,7 +58,11 @@ public class MockData implements IData {
    * @exception Exception IOException where the json file cant be read.
    */
   @Override
-  public Recommendation getRecommendation(String token) throws Exception{
+  public Recommendation getRecommendation(String token, String limit, String seed_tracks,
+      String min_acousticness, String max_acousticness, String min_danceability,
+      String max_danceability, String min_energy, String max_energy,
+      String min_speechiness, String max_speechiness, String min_valence,
+      String  max_valence) throws Exception{
 
     FileReader reader = new FileReader(this.mockedRecommendationPath);
     RecommendationDataSource dataSource = new RecommendationDataSource(reader);

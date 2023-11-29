@@ -61,14 +61,51 @@ public class SpotifyData implements IData {
    * Method that will allow the server to get a recommendation based on a seed song, and
    * different metadata values inputted.
    *
+   * @param token Spotify token for the user
+   * @param limit max number of recommended songs
+   * @param max_acousticness max acousticness of songs recommended
+   * @param min_acousticness min acousticness of songs recommended
+   * @param max_danceability max dancability of songs recommended
+   * @param max_energy max energy of songs recommended
+   * @param max_speechiness max speechiness of songs reccomended
+   * @param max_valence max valence of songs recommended
+   * @param min_danceability min dancability of songs recommended
+   * @param min_energy min energy of songs recommended
+   * @param min_speechiness min speechiness of songs recommended
+   * @param min_valence min valence of songs recommended
+   * @param seed_tracks seed_tracks of songs recommended
    * @return a recommendation object.
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   *
    */
   @Override
-  public Recommendation getRecommendation(String token) {
-    String uriString = "";
+  public Recommendation getRecommendation(String token, String limit, String seed_tracks,
+      String min_acousticness, String max_acousticness, String min_danceability,
+      String max_danceability, String min_energy, String max_energy,
+      String min_speechiness, String max_speechiness, String min_valence,
+      String  max_valence) throws URISyntaxException, IOException,
+      InterruptedException {
 
+    //TODO: Make parameters that get passed in and then get set to the parameters
+    String uriString = "https://api.spotify.com/v1/recommendations?"
+        + "limit="+limit
+        + "&seed_tracks="+seed_tracks
+        + "&min_acousticness="+min_acousticness
+        + "&max_acousticness="+max_acousticness
+        + "&min_danceability="+min_danceability
+        + "&max_danceability="+max_danceability
+        + "&min_energy="+min_energy
+        + "&max_energy="+max_energy
+        + "&min_speechiness="+min_speechiness
+        + "&max_speechiness="+max_speechiness
+        + "&min_valence="+min_valence
+        + "&max_valence="+max_valence;
 
-    return null;
+    return this.fetchRecommendationApiData(uriString,token);
   }
 
 
