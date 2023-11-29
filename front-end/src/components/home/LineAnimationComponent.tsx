@@ -1,5 +1,4 @@
 import React from 'react';
-import './../HomePage.css';
 
 interface LineAnimationProps {
     startAnimation: boolean;

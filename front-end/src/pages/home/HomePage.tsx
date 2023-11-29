@@ -1,12 +1,12 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import { LineAnimationComponent } from '../../components/home/LineAnimationComponent';
+import PersonComponent from '../../components/home/PersonComponent';
+import Toolbar from '../../components/Toolbar/Toolbar';
+// import HeadphonesBarAfter from "../../assets/images/HomePage/headphone-bar-after.svg";
+
 import './HomePage.css';
-import { LineAnimationComponent } from './HomePageComponents/LineAnimationComponent';
-import PersonComponent from './HomePageComponents/PersonComponent';
-import Toolbar from '../../../components/Toolbar/Toolbar';
-
-
 
 function HomePage() {
     const navigate = useNavigate();

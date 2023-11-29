@@ -174,7 +174,7 @@ path {
   transition: transform 0.3s, background-color 0.3s; */
   z-index: 1;
   /* border-radius: 10px 10px 0 0; */
-  background: url("./../../../assets/images/HomePage/headphone-bar-before.png") no-repeat center center;
+  background: url("../../assets/images/HomePage/headphone-bar-before.png") no-repeat center center;
   background-size: contain;
   transition: transform 0.3s;
 }
@@ -191,7 +191,7 @@ path {
 
 .head-container:hover .headphone-bar {
   transform: scale(1.2);
-  background: url("./../../../assets/images/HomePage/headphone-bar-after.svg") no-repeat center center;
+  background: url("../../assets/images/HomePage/headphone-bar-after.svg") no-repeat center center;
   background-size: contain;
   transform: translateY(-20px);
 }

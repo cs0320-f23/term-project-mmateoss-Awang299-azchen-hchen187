@@ -1,5 +1,4 @@
 import React, { useState, useEffect} from 'react';
-import './../HomePage.css';
 import FaceComponent from './FaceComponent';
 
 interface HeadProps {

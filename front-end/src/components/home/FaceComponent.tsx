@@ -1,6 +1,5 @@
 import React, { useState, useEffect} from 'react';
 import EyeComponent from './EyeComponent';
-import './../HomePage.css';
 
 interface FaceProps {
   headClicked: boolean;

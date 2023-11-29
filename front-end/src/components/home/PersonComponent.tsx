@@ -1,6 +1,8 @@
 import React, { useState, useEffect} from 'react';
-import './../HomePage.css';
 import HeadComponent from './HeadComponent';
+
+import './home.css';
+
 
 interface PersonProps {
     handleHeadClick: () => void;

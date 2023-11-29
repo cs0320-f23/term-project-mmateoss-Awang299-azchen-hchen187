@@ -2,7 +2,7 @@ import './App.css';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {AnimatePresence, motion} from 'framer-motion';
 import React from 'react';
-import HomePage from './pages/home/HomePage/HomePage';
+import HomePage from './pages/home/HomePage';
 import SongsPage from './pages/input/SongsPage/SongsPage';
 
 /**
