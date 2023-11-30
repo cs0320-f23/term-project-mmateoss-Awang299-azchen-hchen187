@@ -34,4 +34,14 @@ public class MockedTests {
     Assert.assertEquals(ids,actualIds);
 
   }
+
+
+  @Test
+  public void testGetToken(){
+
+    TestTokenGenerator generator = new TestTokenGenerator();
+    String token = generator.getToken();
+    System.out.println(token);
+
+  }
 }
