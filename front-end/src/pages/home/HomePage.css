@@ -1,36 +1,5 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
-:root {
-  --primary-accent: var(--green);
-  --primary-base: black;
-  --secondary-accent: var(--lime);
-  --secondary-base: var(--muted-pink);
-  --green: #1db954;
-  --mustard-yellow: #f9d03b;
-  --hot-pink: #f037a5;
-  --red: #ff4633;
-  --blue: #519bf4;
-  --orange: #ffc665;
-  --muted-pink: #f673a2;
-  --grey-blue: #a1c3d3;
-  --lime: #cdf564;
-  --baby-pink: #ffcdd3;
-  --yellow: #f7e32c;
-}
-
-body, html {
-  font-family: "Kumbh Sans", sans-serif;
-  margin: 0;
-  padding: 0;
-  height: 100%;
-  overflow: hidden;
-  justify-content: center;
-  height: 100vh;
-  margin: 0 auto;
-  background-color: var(--primary-base);
-  /* background-color: #f9d03b; */
-  transition: background-color 0.3s;
-}
 /* 
 .head:hover + .body {
   background-color: #f9d03b;
@@ -41,6 +10,7 @@ body, html {
   width: 100%;
   flex-direction: column;
   align-items: center;
+  background: black;
 }
 
 .filler-container {
@@ -66,13 +36,14 @@ body, html {
   align-items: center;
 }
 
+
 svg {
   position: absolute;
-  width: 100%;
+  /* width: 100%;
   height: 100%;
   top: 0;
   left: 50;
-  /* z-index: 0; */
+  z-index: 0; */
 }
 
 path {

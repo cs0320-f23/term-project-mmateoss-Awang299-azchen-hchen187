@@ -1,37 +1,7 @@
-:root {
-    --primary-accent: var(--green);
-    --primary-base: black;
-    --secondary-accent: var(--lime);
-    --secondary-base: var(--muted-pink);
-    --green: #1db954;
-    --mustard-yellow: #f9d03b;
-    --hot-pink: #f037a5;
-    --red: #ff4633;
-    --blue: #519bf4;
-    --orange: #ffc665;
-    --muted-pink: #f673a2;
-    --grey-blue: #a1c3d3;
-    --lime: #cdf564;
-    --baby-pink: #ffcdd3;
-    --yellow: #f7e32c;
-  }
-
 h1 {
     font-size: large;
     color: white;
 }
-
-.body {
-    font-family: "Kumbh Sans", sans-serif;
-    margin: 0;
-    padding: 0;
-    height: 100%;
-    overflow: hidden;
-    justify-content: center;
-    height: 100vh;
-    margin: 0 auto;
-    background-color: var(--muted-pink);
-  }
 
 .main-container {
     display: flex;

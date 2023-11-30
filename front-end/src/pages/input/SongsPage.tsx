@@ -1,8 +1,6 @@
 import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
 import './SongsPage.css';
 import { motion } from 'framer-motion';
-import Toolbar from '../../../components/Toolbar/Toolbar';
-
 
 function SongsPage() {
 
@@ -11,7 +9,6 @@ function SongsPage() {
     //initial={{opacity:0}} animate={{opacity: 1}}  
     <motion.div className="body">
       <div className="main-container">
-        <Toolbar />
         <motion.div initial={{opacity:0}} animate={{opacity: 1}} className="progress-container">
           <div className="progress-bar-highlight">Step 1</div>
           <div className="progress-bar">Step 2</div>
