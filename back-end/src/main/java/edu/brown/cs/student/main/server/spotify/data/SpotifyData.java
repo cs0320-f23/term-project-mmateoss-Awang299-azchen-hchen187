@@ -41,15 +41,20 @@ public class SpotifyData implements IData {
    *                              information.
    * @throws InterruptedException exception where connection to API is
    *                              interrupted.
+   *
+   * Learned about replaceAll here: https://www.javatpoint.com/java-string-replaceall
    */
   @Override
   public Song getSong(String token, String songName) throws URISyntaxException, IOException,
       InterruptedException{
 
+    // Need to replace all spaces with %20 to allow it to be a correctly formed URL
+    String correctedSongName = songName.replaceAll(" ", "%20");
+
     // Generate the UriString to make the recommendation
     // track: may possibly need to be track%3
     String uriString =
-        "https://api.spotify.com/v1/search?q=track%3"+songName+"&type=track";
+        "https://api.spotify.com/v1/search?q=track:"+correctedSongName+"&type=track";
 
     // return the song object
     return this.fetchSongApiData(uriString,token);
@@ -192,10 +197,9 @@ public class SpotifyData implements IData {
         .build()
         .send(buildRequest, HttpResponse.BodyHandlers.ofString());
 
-    // making target type and then using Moshi to turn it into a Song object
-    Type targetClassType = Types.newParameterizedType(Song.class);
+    // using Moshi to turn it into a Song object
     Moshi moshi = new Moshi.Builder().build();
-    JsonAdapter<Song> dataAdapter = moshi.adapter(targetClassType);
+    JsonAdapter<Song> dataAdapter = moshi.adapter(Song.class);
     return dataAdapter.fromJson(response.body());
   }
 
@@ -227,10 +231,10 @@ public class SpotifyData implements IData {
         .build()
         .send(buildRequest, HttpResponse.BodyHandlers.ofString());
 
-    // making target type and then using Moshi to turn it into a Recommendation object
-    Type targetClassType = Types.newParameterizedType(Recommendation.class);
+    //using Moshi to turn it into a Recommendation object
+
     Moshi moshi = new Moshi.Builder().build();
-    JsonAdapter<Recommendation> dataAdapter = moshi.adapter(targetClassType);
+    JsonAdapter<Recommendation> dataAdapter = moshi.adapter(Recommendation.class);
     return dataAdapter.fromJson(response.body());
   }
 
@@ -262,10 +266,9 @@ public class SpotifyData implements IData {
         .build()
         .send(buildRequest, HttpResponse.BodyHandlers.ofString());
 
-    // making target type and then using Moshi to turn it into a Song object
-    Type targetClassType = Types.newParameterizedType(FeaturesProp.class);
+    //using Moshi to turn it into a Song object
     Moshi moshi = new Moshi.Builder().build();
-    JsonAdapter<FeaturesProp> dataAdapter = moshi.adapter(targetClassType);
+    JsonAdapter<FeaturesProp> dataAdapter = moshi.adapter(FeaturesProp.class);
     return dataAdapter.fromJson(response.body());
   }
 
