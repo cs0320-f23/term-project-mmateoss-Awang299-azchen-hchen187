@@ -33,7 +33,7 @@ function HomePage() {
     return (
       <>
         {/* //TODO: fix this animate/ exit issue */}
-        <div style={{ background: "black" }}>
+        <div className="home-page">
           <motion.div exit={{ opacity: 0 }} transition={transition} className="main-container">
             <div className="filler-container"></div>
             <LineAnimationComponent startAnimation={animate} />

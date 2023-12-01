@@ -5,6 +5,11 @@
   background-color: #f9d03b;
 } */
 
+.home-page {
+  background: black;
+  min-height: 100vh;
+}
+
 .main-container {
   display: flex;
   width: 100%;

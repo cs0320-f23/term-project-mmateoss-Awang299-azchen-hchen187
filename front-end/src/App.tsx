@@ -8,7 +8,7 @@ import MetadataPage from './pages/input/MetadataPage';
 import GenerationPage from './pages/input/GenerationPage';
 import GeneratedPlaylistPage from './pages/result/GeneratedPlaylistPage';
 import LoadingPage from './pages/result/LoadingPage';
-import Toolbar from './components/Toolbar/Toolbar';
+import Toolbar from './components/toolbar/Toolbar';
 
 
 /**
@@ -34,23 +34,8 @@ function App() {
       <Toolbar />
       <Router>
         <Routes>
-          <Route
-            path="/"
-            element={
-              // <AnimatePresence initial={false}>
-              <HomePage />
-              // {/* </AnimatePresence> */}
-            }
-          />
-          <Route
-            path="/input/songs"
-            element={
-              // <AnimatePresence initial={false}>
-              <SongsPage />
-              // </AnimatePresence>
-            }
-          />
-
+          <Route path="/" element={<HomePage />} />
+          <Route path="/input/songs" element={<SongsPage />} />
           <Route path="/input/metadata" element={<MetadataPage />} />
           <Route path="/input/generation" element={<GenerationPage />} />
           <Route path="/result" element={<GeneratedPlaylistPage />} />
