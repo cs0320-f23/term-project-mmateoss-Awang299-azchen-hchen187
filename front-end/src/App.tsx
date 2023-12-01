@@ -28,6 +28,12 @@ function App() {
       </motion.div>
   )
 
+  const MetadataPageComponent = () => (
+    <motion.div key="songs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <MetadataPage />
+    </motion.div>
+)
+
   
   return (
     <div className="App">

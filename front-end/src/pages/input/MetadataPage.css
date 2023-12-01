@@ -79,11 +79,11 @@ h1 {
 }
 
 .person-container-small {
-  display: inline-block;
-  transform: scale(0.7);
-  transform-origin: bottom left;
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  margin: 30px;
-}
+    display: inline-block;
+    transform: scale(0.7);
+    transform-origin: bottom left;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 30px;
+  }

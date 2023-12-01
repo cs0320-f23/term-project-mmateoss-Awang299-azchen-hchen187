@@ -5,10 +5,12 @@ import HeadComponent from './HeadComponent';
 interface PersonProps {
     handleHeadClick: () => void;
     headClicked: boolean;
+    disabledHover: boolean;
 }
 
 function PersonComponent(props: PersonProps) {
   const [HPPosition, setHPPosition] = useState({ x: 0, y: 0 });
+  const handleHover = props.disabledHover ? 'disable-hover' : '';
 
 
   useEffect(() => {
@@ -38,7 +40,7 @@ function PersonComponent(props: PersonProps) {
 
   return (
 
-        <div className="head-container">
+        <div className={`head-container ${handleHover}`}>
             <div className="headphone-container">
                 <div className="left-headphone" style={props.headClicked ? {} : {left: `${HPPosition.x + 7}px`, top: `${HPPosition.y}px`}}></div>
             </div>
