@@ -3,7 +3,13 @@ import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import {AnimatePresence, motion} from 'framer-motion';
 import React from 'react';
 import HomePage from './pages/home/HomePage';
-import SongsPage from './pages/input/SongsPage/SongsPage';
+import SongsPage from './pages/input/SongsPage';
+import MetadataPage from './pages/input/MetadataPage';
+import GenerationPage from './pages/input/GenerationPage';
+import GeneratedPlaylistPage from './pages/result/GeneratedPlaylistPage';
+import LoadingPage from './pages/result/LoadingPage';
+import Toolbar from './components/Toolbar/Toolbar';
+
 
 /**
  * This is the highest level component!
@@ -24,26 +30,18 @@ function App() {
 
   
   return (
-    <Router>
-      <Routes>
-          <Route
-            path="/"
-            element={
-              <AnimatePresence initial={false}>
-                <LandingPageComponent />
-              </AnimatePresence>
-            }
-          />
-          <Route
-          path="/SongsPage"
-          element={
-            <AnimatePresence initial={false}>
-              <SongsPageComponent />
-            </AnimatePresence>
-          }
-          />
-      </Routes>
-    </Router>
+    <div className="App">
+      <Toolbar />
+      <Router>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route path="/input/songs" element={<SongsPage />} />
+          <Route path="/input/metadata" element={<MetadataPage />} />
+          <Route path="/input/generation" element={<GenerationPage />} />
+          <Route path="/result" element={<GeneratedPlaylistPage />} />
+        </Routes>
+      </Router>
+    </div>
   );
 }
 

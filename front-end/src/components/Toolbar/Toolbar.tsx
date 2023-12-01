@@ -9,7 +9,7 @@ function Toolbar() {
         <a href="/" className="logo">Logo</a>
 
             <nav className="navbar">
-                <a href="InputPage">Home</a>
+                <a href="/">Home</a>
                 <a href="#">About</a>
                 <a href="#">FAQ</a>
             </nav>

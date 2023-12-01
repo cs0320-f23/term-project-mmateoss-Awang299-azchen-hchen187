@@ -1,10 +1,13 @@
 import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
-import './SongsPage.css';
+import './LoginPage.css';
 import { motion } from 'framer-motion';
 import Toolbar from '../../../components/Toolbar/Toolbar';
+import { spotifyLogin } from './SpotifyConnection';
 
 
-function SongsPage() {
+
+function LoginPage() {
+  const handleHeadClick = () => {}
 
 
   return (
@@ -12,14 +15,13 @@ function SongsPage() {
     <motion.div className="body">
       <div className="main-container">
         <Toolbar />
-        <motion.div initial={{opacity:0}} animate={{opacity: 1}} className="progress-container">
-          <div className="progress-bar-highlight">Step 1</div>
-          <div className="progress-bar">Step 2</div>
-          <div className="progress-bar">Step 3</div>
-        </motion.div>
+        <button onClick={spotifyLogin}>Login to Spotify </button>
       </div>
+      {/* <div className="person-container">
+        <PersonComponent handleHeadClick={handleHeadClick} headClicked={false} />
+      </div> */}
     </motion.div>
   );
 }
 
-export default SongsPage;
+export default LoginPage;

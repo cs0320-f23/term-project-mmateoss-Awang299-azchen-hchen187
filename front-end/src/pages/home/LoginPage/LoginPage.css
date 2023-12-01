@@ -27,9 +27,12 @@ h1 {
     padding: 0;
     height: 100%;
     overflow: hidden;
-    justify-content: center;
+    position: relative;
+    /* justify-content: center; */
     height: 100vh;
     margin: 0 auto;
+    display: flex;
+    /* align-items: flex-end; */
     background-color: var(--muted-pink);
   }
 
@@ -40,37 +43,21 @@ h1 {
     align-items: center;
 }
 
-.progress-container {
+button {
     position: relative;
-    display: flex;
-    width: 100%;
-    height: 8vh;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
+    width: 160px;
+    padding: 10px;
+    margin-right: 20px;
+    margin-left: 20px;
+    text-align: center;
+    border-radius: 100px;
+    background-color: #f2f2ed;
 }
 
-.progress-bar {
-  position: relative;
-  width: 160px;
-  padding: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  text-align: center;
-  border-radius: 100px;
-  background-color: #f2f2ed;
-}
-
-.progress-bar-highlight {
-  position: relative;
-  width: 160px;
-  padding: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  text-align: center;
-  border-radius: 100px;
-  background-color: var(--lime);
-}
-
+/* .person-container {
+    background-color: seagreen;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    transform: scale(0.7);
+} */
