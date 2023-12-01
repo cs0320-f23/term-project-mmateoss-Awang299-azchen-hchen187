@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
+import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.data.SpotifyData;
 import edu.brown.cs.student.main.server.spotify.handlers.AddDislikedSongsHandler;
 import edu.brown.cs.student.main.server.spotify.handlers.AddInputSongsHandler;
@@ -31,10 +32,10 @@ public class Server {
       response.header("Access-Control-Allow-Origin", "*");
       response.header("Access-Control-Allow-Methods", "*");
     });
-    SpotifyData SpotifyData = new SpotifyData();
+    CachedSpotifyData data = new CachedSpotifyData();
 
     // Initializing Spark get handlers
-    Spark.get("recommendation", new RecommendationHandler(SpotifyData));
+    Spark.get("recommendation", new RecommendationHandler(data));
     Spark.get("generateNewPlaylist", new GenerateNewPlaylistHandler());
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());

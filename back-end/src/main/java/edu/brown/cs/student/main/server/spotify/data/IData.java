@@ -4,14 +4,36 @@ import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.Fea
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 
+/**
+ * Interface used for dependency injection allowing us to run a server with mocked and real data.
+ */
 public interface IData {
-    public Song getSong(String token, String songName) throws Exception;
 
-    public Recommendation getRecommendation(String token, String limit, String seed_tracks,
-        String min_acousticness, String max_acousticness, String min_danceability,
-        String max_danceability, String min_energy, String max_energy,
-        String min_speechiness, String max_speechiness, String min_valence,
-        String  max_valence) throws Exception;
+    /**
+     * Method used to get a song object from its name
+     *
+     * @param songName the name of the Song
+     * @return a song object
+     * @throws Exception any exception that could occur
+     */
+    public Song getSong(String songName) throws Exception;
 
-    public FeaturesProp getFeatures(String token, String[] allNames) throws Exception;
+    /**
+     * Method used to get a recommendation either mocked or real
+     *
+     * @param limit the max number of songs recommended
+     * @param allNames the names of all the acceptable songs which we want to use to generate a
+     *                 recommendation
+     * @return a recommendation object
+     * @throws Exception any exception that could be thrown
+     */
+    public Recommendation getRecommendation(String limit, String[] allNames) throws Exception;
+
+    /**
+     * Method used to get a feature object based on the names of songs
+     * @param allNames the names of acceptable songs whose features we want
+     * @return featureProp object
+     * @throws Exception any exception that could be thrown either by mocked or real data.
+     */
+    public FeaturesProp getFeatures(String[] allNames) throws Exception;
 }

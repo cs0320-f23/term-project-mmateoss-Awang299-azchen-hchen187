@@ -20,7 +20,7 @@ import java.util.List;
  * Class that will be used to get the needed data from the spotify API, allowing
  * our server to use it accordingly.
  */
-public class SpotifyData implements IData {
+public class SpotifyData{
 
   /**
    * Constructor for the SpotifyData class.
@@ -44,7 +44,7 @@ public class SpotifyData implements IData {
    *
    * Learned about replaceAll here: https://www.javatpoint.com/java-string-replaceall
    */
-  @Override
+
   public Song getSong(String token, String songName) throws URISyntaxException, IOException,
       InterruptedException{
 
@@ -87,7 +87,6 @@ public class SpotifyData implements IData {
    *                              interrupted.
    *
    */
-  @Override
   public Recommendation getRecommendation(String token, String limit, String seed_tracks,
       String min_acousticness, String max_acousticness, String min_danceability,
       String max_danceability, String min_energy, String max_energy,
@@ -161,11 +160,10 @@ public class SpotifyData implements IData {
    * @throws InterruptedException exception where connection to API is
    *                              interrupted.
    */
-  @Override
-  public FeaturesProp getFeatures(String token, String[] allNames) throws URISyntaxException, IOException,
+  public FeaturesProp getFeatures(String token, String ids) throws URISyntaxException, IOException,
       InterruptedException {
 
-    String ids = this.getSongIds(allNames, token);
+    //String ids = this.getSongIds(allNames, token);
     String uriString = "https://api.spotify.com/v1/audio-features?ids="+ids;
     return this.fetchFeaturesApiData(uriString,token);
   }

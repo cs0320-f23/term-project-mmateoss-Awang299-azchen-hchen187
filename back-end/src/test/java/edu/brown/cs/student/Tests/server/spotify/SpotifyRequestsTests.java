@@ -66,7 +66,9 @@ public class SpotifyRequestsTests {
     names[2] = "Levels";
     //5UqCQaDshqbIk3pkhy4Pjg
 
-    FeaturesProp features = this.data.getFeatures(this.token, names);
+    String ids = "1fXiYSWmkKJfRKMegCkI11,285pBltuF7vW8TeWk8hdRR,5UqCQaDshqbIk3pkhy4Pjg";
+
+    FeaturesProp features = this.data.getFeatures(this.token, ids);
 
     Assert.assertEquals(features.audio_features().get(0).valence(), Float.valueOf("0.452"));
     Assert.assertEquals(features.audio_features().get(1).danceability(), Float.valueOf("0.511"));
