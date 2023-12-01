@@ -7,7 +7,7 @@ import PersonComponent from '../../components/home/PersonComponent';
 import './MetadataPage.css';
 import '../../components/home/Person.css';
 
-function SongsPage() {
+function MetadataPage() {
 
   return (
     //initial={{opacity:0}} animate={{opacity: 1}}
@@ -25,4 +25,4 @@ function SongsPage() {
   );
 }
 
-export default SongsPage;
+export default MetadataPage;

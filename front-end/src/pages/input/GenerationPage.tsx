@@ -1,7 +1,28 @@
-import React from 'react'
+import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
+import ProgressBar from '../../components/progress/ProgressBar'
+import NavButton from '../../components/button/NavButton';
+import PersonComponent from '../../components/home/PersonComponent';
 
-export default function GenerationPage() {
+import './GenerationPage.css';
+import '../../components/home/Person.css';
+
+function GenerationPage() {
+
   return (
-    <div style={{ color: "white"}}>GenerationPage</div>
-  )
+    //initial={{opacity:0}} animate={{opacity: 1}}
+    <div className="songs-page">
+      <motion.div className="body">
+        <div className="main-container">
+          <ProgressBar step={3} />
+          <NavButton nextPage="/result"/>
+          <div className="person-container-small">
+            <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true}/>
+          </div>
+        </div>
+      </motion.div>
+    </div>
+  );
 }
+
+export default GenerationPage;
