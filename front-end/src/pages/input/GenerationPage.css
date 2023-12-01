@@ -1,0 +1,19 @@
+.generation-page {
+    .selections {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 3rem;
+    }
+
+    .playlist-info {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 2rem;
+    }
+
+    .generate-button {
+        margin: 5rem;
+    }
+}
