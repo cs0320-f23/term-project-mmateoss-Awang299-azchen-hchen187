@@ -6,7 +6,7 @@ function Toolbar() {
 
     return (
     <header className="header">
-        <a href="/" className="logo">Logo</a>
+        <a href="/" className="logo">Spotimatch</a>
 
             <nav className="navbar">
                 <a href="/">Home</a>
