@@ -60,7 +60,7 @@ public class RecommendationHandler implements Route {
     String[] allNames = req.queryParamsValues("allNames");
 
     // defensive programming, checking that everything that needed to be inputted was inputted
-    if(params.size() != 3 || variability == null || token == null || limit == null){
+    if(params.size() != 4 || variability == null || token == null || limit == null){
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
       responseMap.put("Error Message", "please ensure that that you passed in a variability,"
@@ -71,15 +71,17 @@ public class RecommendationHandler implements Route {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
       responseMap.put("Error Message", "please ensure that you passed in a list of song names"
-          + "as a parameter in order to generate recommendations");
+          + " as a parameter in order to generate recommendations");
       return moshi.adapter(Map.class).toJson(responseMap);
     }
+    //TODO: check to make sure that variability is greater than 0
     if(limit.equals("0")){
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
       responseMap.put("Error Message", "the limit cannot be 0, it must be an integer greater than 0");
       return moshi.adapter(Map.class).toJson(responseMap);
     }
+
     try{
       // returning and generating the actual recommendation
       this.spotifyData.setToken(token);
