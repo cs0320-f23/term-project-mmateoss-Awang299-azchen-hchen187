@@ -9,6 +9,7 @@ import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Random;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -47,9 +48,15 @@ public class CachedSpotifyData implements IData {
    * Method that sets the instance variable token to whatever is passed in to it.
    *
    * @param token the Spotify authorization token
+   * @return boolean saying if the token was set
    */
-  public void setToken(String token){
-    this.token = token;
+  @Override
+  public boolean setToken(String token){
+    if(token != null){
+      this.token = token;
+      return true;
+    }
+    return false;
   }
 
 
@@ -62,7 +69,7 @@ public class CachedSpotifyData implements IData {
    * @throws Exception
    */
   @Override
-  public Song getSong(String songName) throws Exception{
+  public Song getSong(String songName) throws URISyntaxException, IOException, InterruptedException{
     return this.data.getSong(this.token,songName);
   }
 
@@ -85,7 +92,7 @@ public class CachedSpotifyData implements IData {
 
     // getting a random track from the list to be our seed track
     Random rand = new Random();
-    int randIdx = rand.nextInt(feats.audio_features().size()+1);
+    int randIdx = rand.nextInt(feats.audio_features().size());
     String seed_track = feats.audio_features().get(randIdx).id();
 
     // getting a sum of the values and then going to divide
@@ -229,7 +236,8 @@ public class CachedSpotifyData implements IData {
    * @throws Exception
    */
   @Override
-  public Recommendation getRecommendation(String limit, String[] allNames) throws Exception {
+  public Recommendation getRecommendation(String limit, String[] allNames) throws
+      URISyntaxException, IOException, InterruptedException, ExecutionException {
 
     FeaturesProp feats = this.getFeatures(allNames);
     String[] values = this.generateValues(feats);
@@ -256,7 +264,7 @@ public class CachedSpotifyData implements IData {
    *
    */
   private String getSongIds(String[] allNames) throws URISyntaxException, IOException,
-      InterruptedException, Exception{
+      InterruptedException, ExecutionException {
 
     // creating our final string to store all our ids
     String ids = "";
@@ -294,7 +302,7 @@ public class CachedSpotifyData implements IData {
    * @throws Exception
    */
   @Override
-  public FeaturesProp getFeatures(String[] allNames) throws Exception{
+  public FeaturesProp getFeatures(String[] allNames) throws URISyntaxException, IOException, InterruptedException, ExecutionException{
 
     // getting the song ids for every song name available
     String songIds = this.getSongIds(allNames);

@@ -36,4 +36,7 @@ public interface IData {
      * @throws Exception any exception that could be thrown either by mocked or real data.
      */
     public FeaturesProp getFeatures(String[] allNames) throws Exception;
+
+
+    public boolean setToken(String token);
 }

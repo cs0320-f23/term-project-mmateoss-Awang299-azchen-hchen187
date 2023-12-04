@@ -130,4 +130,13 @@ public class MockData implements IData {
     return songData.getJsonObj();
 
   }
+
+  /**
+   * Empty method used
+   * @param token
+   */
+  @Override
+  public boolean setToken(String token){
+    return false;
+  }
 }
