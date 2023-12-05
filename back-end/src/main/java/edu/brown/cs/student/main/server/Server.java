@@ -8,6 +8,7 @@ import edu.brown.cs.student.main.server.spotify.handlers.AddDislikedSongsHandler
 import edu.brown.cs.student.main.server.spotify.handlers.AddInputSongsHandler;
 import edu.brown.cs.student.main.server.spotify.handlers.GenerateNewPlaylistHandler;
 import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.spotify.handlers.TokenHandler;
 import edu.brown.cs.student.main.server.webapi.BroadbandHandler;
 import spark.Spark;
 
@@ -36,7 +37,7 @@ public class Server {
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data));
-    Spark.get("generateNewPlaylist", new GenerateNewPlaylistHandler());
+    Spark.get("token", new TokenHandler());
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
 

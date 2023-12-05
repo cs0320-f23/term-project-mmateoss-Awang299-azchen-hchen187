@@ -1,7 +1,11 @@
 package edu.brown.cs.student.main.server.spotify.tokens;
 
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -9,6 +13,7 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
+import java.util.concurrent.TimeUnit;
 
 /**
  * Class that serves as a way of generating a spotify token for testing
@@ -18,7 +23,7 @@ public class TokenGenerator {
   private String client_id;
   private String client_secret;
   private String combined;
-  private String token;
+  private LoadingCache<String, String> tokenCache;
 
   /**
    * Constructor for the TokenGenerator class
@@ -28,6 +33,21 @@ public class TokenGenerator {
     this.client_id = "";
     this.client_secret = "";
     this.combined = this.client_id+":"+this.client_secret;
+
+    // building the cache that will hold a token for an hour, which is how long before it needs to
+    // be regenerated
+    this.tokenCache = CacheBuilder.newBuilder()
+        .maximumSize(1)
+        .expireAfterWrite(1, TimeUnit.HOURS)
+        .recordStats().build(
+            new CacheLoader<String, String>() {
+              @Override
+              public String load(String tokenName) throws Exception {
+
+                return generateToken();
+              }
+            }
+        );
 
   }
 
@@ -44,7 +64,7 @@ public class TokenGenerator {
    * @throws InterruptedException exception where connection to API is
    *                              interrupted.
    */
-  private void generateToken() throws IOException, InterruptedException, URISyntaxException {
+  private String generateToken() throws IOException, InterruptedException, URISyntaxException {
     String uriString ="https://accounts.spotify.com/api/token";
     String base64Encoded = Base64.getEncoder().encodeToString(this.combined.getBytes());
 
@@ -61,7 +81,7 @@ public class TokenGenerator {
         .send(buildRequest, HttpResponse.BodyHandlers.ofString());
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<TokenResponse> dataAdapter = moshi.adapter(TokenResponse.class);
-    this.token = dataAdapter.fromJson(response.body()).access_token();
+    return dataAdapter.fromJson(response.body()).access_token();
   }
 
   /**
@@ -70,18 +90,16 @@ public class TokenGenerator {
    * @return the Spotify API token as a string
    */
   public String getToken() {
+    String token = "";
     try{
-      this.generateToken();
+      token = this.tokenCache.get("token");
     }
     catch(Exception e){
       System.out.println(e.toString());
     }
-    return this.token;
+    return token;
   }
 
-//TODO: Implement Guava Cache that lasts one hour therefore allowing for us to either get the same
-// token or generate a new one if it expires. Cache size one, duration 1 hour... String to String
-// "generated_token" to token
 
 
 }

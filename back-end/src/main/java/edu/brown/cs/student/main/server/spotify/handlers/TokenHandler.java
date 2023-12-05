@@ -9,11 +9,18 @@ import spark.Request;
 import spark.Response;
 import spark.Route;
 
+/**
+ * TokenHandler class, used to allow the frontend to get access to a spotify access token which
+ * they can then use to get a playback sdk or to make other calls to the backend.
+ */
 public class TokenHandler implements Route {
 
   private TokenGenerator generator;
 
 
+  /**
+   * Constructor for the TokenHandler
+   */
   public TokenHandler(){
     this.generator = new TokenGenerator();
 

@@ -1,4 +1,4 @@
-package edu.brown.cs.student.Tests.server.spotify.handlerTests;
+package edu.brown.cs.student.Tests.server.spotify.handlerTests.recommendationHandlerTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
