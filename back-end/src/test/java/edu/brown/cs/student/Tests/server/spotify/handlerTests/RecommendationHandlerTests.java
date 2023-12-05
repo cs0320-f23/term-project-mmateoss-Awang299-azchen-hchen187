@@ -5,7 +5,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
-import edu.brown.cs.student.Tests.server.spotify.tokens.TestTokenGenerator;
+import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
@@ -57,7 +57,7 @@ public class RecommendationHandlerTests {
     Spark.init();
     Spark.awaitInitialization(); // don't continue until the server is listening
 
-    TestTokenGenerator generator = new TestTokenGenerator();
+    TokenGenerator generator = new TokenGenerator();
     this.token = generator.getToken();
   }
 

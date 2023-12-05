@@ -1,8 +1,7 @@
 package edu.brown.cs.student.Tests.server.spotify;
 
-import edu.brown.cs.student.Tests.server.spotify.tokens.TestTokenGenerator;
+import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
-import edu.brown.cs.student.main.server.spotify.data.SpotifyData;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import org.junit.jupiter.api.BeforeEach;
@@ -31,7 +30,7 @@ public class CachedDataTests {
    */
   @BeforeEach
   public void beforeEach(){
-    TestTokenGenerator generator = new TestTokenGenerator();
+    TokenGenerator generator = new TokenGenerator();
     this.token = generator.getToken();
 
   }

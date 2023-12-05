@@ -1,6 +1,6 @@
 package edu.brown.cs.student.Tests.server.spotify;
 
-import edu.brown.cs.student.Tests.server.spotify.tokens.TestTokenGenerator;
+import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.spotify.data.MockData;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
@@ -43,7 +43,7 @@ public class MockedTests {
   @Test
   public void testGetToken(){
 
-    TestTokenGenerator generator = new TestTokenGenerator();
+    TokenGenerator generator = new TokenGenerator();
     String token = generator.getToken();
     Assert.assertTrue(token != null);
   }

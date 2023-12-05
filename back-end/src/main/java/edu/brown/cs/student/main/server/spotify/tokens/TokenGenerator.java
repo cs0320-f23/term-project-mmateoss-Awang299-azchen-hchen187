@@ -1,4 +1,4 @@
-package edu.brown.cs.student.Tests.server.spotify.tokens;
+package edu.brown.cs.student.main.server.spotify.tokens;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
@@ -13,7 +13,7 @@ import java.util.Base64;
 /**
  * Class that serves as a way of generating a spotify token for testing
  */
-public class TestTokenGenerator {
+public class TokenGenerator {
 
   private String client_id;
   private String client_secret;
@@ -21,9 +21,9 @@ public class TestTokenGenerator {
   private String token;
 
   /**
-   * Constructor for the TestTokenGenerator class
+   * Constructor for the TokenGenerator class
    */
-  public TestTokenGenerator(){
+  public TokenGenerator(){
     //TODO: Input your client_id and client_secret here to generate tokens for testing
     this.client_id = "";
     this.client_secret = "";

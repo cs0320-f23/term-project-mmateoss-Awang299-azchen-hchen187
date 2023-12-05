@@ -44,7 +44,6 @@ public class SpotifyData{
    *
    * Learned about replaceAll here: https://www.javatpoint.com/java-string-replaceall
    */
-
   public Song getSong(String token, String songName) throws URISyntaxException, IOException,
       InterruptedException{
 
