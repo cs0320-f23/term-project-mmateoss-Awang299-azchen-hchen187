@@ -41,7 +41,7 @@ public class MockedTests {
    * Method that tests that the token generation is correct
    */
   @Test
-  public void testGetToken(){
+  public void testGetToken() throws Exception{
 
     TokenGenerator generator = new TokenGenerator();
     String token = generator.getToken();

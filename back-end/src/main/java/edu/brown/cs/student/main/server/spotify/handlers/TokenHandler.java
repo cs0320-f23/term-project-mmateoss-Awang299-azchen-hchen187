@@ -1,6 +1,7 @@
 package edu.brown.cs.student.main.server.spotify.handlers;
 
 import com.squareup.moshi.Moshi;
+import edu.brown.cs.student.main.server.spotify.tokens.IToken;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import java.util.HashMap;
 import java.util.Map;
@@ -15,14 +16,14 @@ import spark.Route;
  */
 public class TokenHandler implements Route {
 
-  private TokenGenerator generator;
+  private IToken generator;
 
 
   /**
    * Constructor for the TokenHandler
    */
-  public TokenHandler(){
-    this.generator = new TokenGenerator();
+  public TokenHandler(IToken generator){
+    this.generator = generator;
 
   }
 
@@ -43,10 +44,11 @@ public class TokenHandler implements Route {
     try{
       if(params.size() > 0){
         responseMap.put("Result", "Error");
-        responseMap.put("Error message", "please do not include any parameters when trying to"
-            + "get the token");
+        responseMap.put("Error Message", "please do not include any parameters when trying to"
+            + " get the token");
         return moshi.adapter(Map.class).toJson(responseMap);
-      } else{
+      }
+      else{
 
         String token = this.generator.getToken();
         responseMap.put("Result", "Success");

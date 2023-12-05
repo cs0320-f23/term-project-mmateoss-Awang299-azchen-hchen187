@@ -13,12 +13,13 @@ import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.Base64;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
 /**
  * Class that serves as a way of generating a spotify token for testing
  */
-public class TokenGenerator {
+public class TokenGenerator implements IToken{
 
   private String client_id;
   private String client_secret;
@@ -89,17 +90,14 @@ public class TokenGenerator {
    *
    * @return the Spotify API token as a string
    */
-  public String getToken() {
+  @Override
+  public String getToken() throws ExecutionException {
+
     String token = "";
-    try{
-      token = this.tokenCache.get("token");
-    }
-    catch(Exception e){
-      System.out.println(e.toString());
-    }
+    // getting the token from the cache
+    token = this.tokenCache.get("token");
     return token;
   }
-
 
 
 }

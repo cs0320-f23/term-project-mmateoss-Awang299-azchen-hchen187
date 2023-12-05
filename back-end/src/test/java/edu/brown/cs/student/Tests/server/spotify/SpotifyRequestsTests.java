@@ -30,7 +30,7 @@ public class SpotifyRequestsTests {
    * Method called before each test is run
    */
   @BeforeEach
-  public void beforeTest(){
+  public void beforeTest() throws Exception{
     TokenGenerator generator = new TokenGenerator();
     this.token = generator.getToken();
     this.data = new SpotifyData();

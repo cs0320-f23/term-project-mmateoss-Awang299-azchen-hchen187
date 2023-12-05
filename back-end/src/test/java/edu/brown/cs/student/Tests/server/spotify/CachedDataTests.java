@@ -29,7 +29,7 @@ public class CachedDataTests {
    * Method called before each test is run.
    */
   @BeforeEach
-  public void beforeEach(){
+  public void beforeEach() throws Exception{
     TokenGenerator generator = new TokenGenerator();
     this.token = generator.getToken();
 

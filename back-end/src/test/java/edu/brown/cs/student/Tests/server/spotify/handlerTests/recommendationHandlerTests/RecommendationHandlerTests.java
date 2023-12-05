@@ -49,7 +49,7 @@ public class RecommendationHandlerTests {
    * Method gotten from the gearup, that sets up our server, called before each test is run.
    */
   @BeforeEach
-  public void setup() {
+  public void setup() throws Exception{
     // In fact, restart the entire Spark server for every test!
     CachedSpotifyData data = new CachedSpotifyData();
     Spark.get("recommendation", new RecommendationHandler(data));
