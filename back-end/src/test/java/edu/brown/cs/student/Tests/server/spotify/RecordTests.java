@@ -25,7 +25,7 @@ public class RecordTests {
         "data/mockedSpotifyJsons/"
             + "mockedRecommendations/mockedRecommendation1.json",
         "data/mockedSpotifyJsons/mockedAudioFeatures/mockedAudioFeats1.json");
-    Recommendation rec = data.getRecommendation("", null);
+    Recommendation rec = data.getRecommendation("", null, "");
     Assert.assertTrue(rec instanceof Recommendation);
     Assert.assertEquals(rec.tracks().get(0).id(),"5N9M7Ji7KYrmfJ6Jki3raU");
     Assert.assertEquals(rec.seeds().size(),1);

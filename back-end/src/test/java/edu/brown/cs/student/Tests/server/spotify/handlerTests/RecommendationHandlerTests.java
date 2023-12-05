@@ -5,8 +5,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
+import edu.brown.cs.student.Tests.server.spotify.tokens.TestTokenGenerator;
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -21,10 +23,15 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.testng.Assert;
 import spark.Spark;
 
 public class RecommendationHandlerTests {
 
+  private String token;
+  public RecommendationHandlerTests(){
+
+  }
 
   /**
    * Method that is run once at the beginning. Gotten from the gearup.
@@ -49,6 +56,9 @@ public class RecommendationHandlerTests {
 
     Spark.init();
     Spark.awaitInitialization(); // don't continue until the server is listening
+
+    TestTokenGenerator generator = new TestTokenGenerator();
+    this.token = generator.getToken();
   }
 
   /**
@@ -72,7 +82,7 @@ public class RecommendationHandlerTests {
    * @throws InterruptedException exception where connection to API is interrupted.
    * @throws URISyntaxException exception where URI syntax is incorrect.
    */
-  static private HttpResponse<String> tryRequest(String apiCall, Map<String, String> queryParams)
+  static private HttpResponse<String> tryRequest(String apiCall, Map<String, String> queryParams, String allNames)
       throws IOException, InterruptedException, URISyntaxException {
 
     StringBuilder queryString = new StringBuilder();
@@ -96,7 +106,7 @@ public class RecommendationHandlerTests {
 
     // Build the HTTP request
     HttpRequest request = HttpRequest.newBuilder()
-        .uri(new URI("http://localhost:" + Spark.port() + "/" + apiCall + queryString))
+        .uri(new URI("http://localhost:" + Spark.port() + "/" + apiCall + queryString+ allNames))
         .GET()  // This is optional since GET is the default method.
         .build();
 
@@ -106,9 +116,102 @@ public class RecommendationHandlerTests {
     return response;
   }
 
+  /**
+   * Testing that we can call the handler and get a recommendation with one song passed in.
+   *
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   *
+   */
+  @Test
+  public void testHandlerRec() throws IOException, InterruptedException, URISyntaxException{
+    Map<String, String> queryParams = new HashMap<>();
+    queryParams.put("token", this.token);
+    queryParams.put("variability", "0.2");
+    queryParams.put("limit", "5");
 
-  //TODO: Make sure that we use generate a token from the token class for testing and use that as the
-  // token we pass into the server so that it works.
+    //missing names
+    String allNames = "&allNames=";
+    allNames += "Enchanted";
+
+
+    HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
+
+    Moshi moshi = new Moshi.Builder().build();
+    JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
+    Recommendation responseBody = jsonAdapter.fromJson(response.body());
+    Assert.assertEquals(responseBody.tracks().size(), 5);
+    Assert.assertTrue(responseBody.seeds().get(0).afterFilteringSize() > 10);
+    Assert.assertEquals(responseBody.seeds().get(0).initialPoolSize(), 500);
+  }
+
+  /**
+   * Testing that we can call the handler and get a recommendation with two songs passed in.
+   *
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   *
+   */
+  @Test
+  public void testHandlerRecMultiSong() throws IOException, InterruptedException, URISyntaxException {
+    Map<String, String> queryParams = new HashMap<>();
+    queryParams.put("token", this.token);
+    queryParams.put("variability", "0.2");
+    queryParams.put("limit", "5");
+
+    //missing names
+    String allNames = "&allNames=";
+    allNames += "Enchanted";
+    allNames += "&allNames=All%20too%20well";
+
+    HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
+
+    Moshi moshi = new Moshi.Builder().build();
+    JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
+    Recommendation responseBody = jsonAdapter.fromJson(response.body());
+    Assert.assertEquals(responseBody.tracks().size(), 5);
+    Assert.assertTrue(responseBody.seeds().get(0).afterFilteringSize() > 10);
+
+  }
+
+  /**
+   * Testing that we can call the handler and get a recommendation with three songs passed in.
+   *
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   *
+   */
+  @Test
+  public void threeSongRecTest() throws IOException, InterruptedException, URISyntaxException{
+    Map<String, String> queryParams = new HashMap<>();
+    queryParams.put("token", this.token);
+    queryParams.put("variability", "0.2");
+    queryParams.put("limit", "5");
+
+    //missing names
+    String allNames = "&allNames=";
+    allNames += "Enchanted";
+    allNames += "&allNames=All%20too%20well";
+    allNames += "&allNames=Anti-Hero";
+
+    HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
+
+    Moshi moshi = new Moshi.Builder().build();
+    JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
+    Recommendation responseBody = jsonAdapter.fromJson(response.body());
+    Assert.assertEquals(responseBody.tracks().size(), 5);
+    Assert.assertTrue(responseBody.seeds().get(0).afterFilteringSize() > 10);
+
+  }
 
 
 

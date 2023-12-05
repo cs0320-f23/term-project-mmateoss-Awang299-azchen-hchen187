@@ -66,7 +66,12 @@ public class CachedSpotifyData implements IData {
    *
    * @return Spotify object for the name of the song
    *
-   * @throws Exception
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   *
    */
   @Override
   public Song getSong(String songName) throws URISyntaxException, IOException, InterruptedException{
@@ -80,8 +85,9 @@ public class CachedSpotifyData implements IData {
    *
    * @return a string array containing all the values needed.
    */
-  private String[] generateValues(FeaturesProp feats){
+  private String[] generateValues(FeaturesProp feats, String variability){
 
+    float var = Float.parseFloat(variability);
     String[] results = new String[11];
     float avgAcousticness = 0;
     float avgDancability = 0;
@@ -115,74 +121,74 @@ public class CachedSpotifyData implements IData {
     avgValence = avgValence / divisor;
 
     // generating overall values for the query
-    if(avgAcousticness - 0.2 < 0){
+    if(avgAcousticness - var < 0){
       String min_acousticness = "0";
       results[0] = min_acousticness;
     } else{
-      String min_acousticness = String.valueOf(avgAcousticness - 0.2);
+      String min_acousticness = String.valueOf(avgAcousticness - var);
       results[0] = min_acousticness;
     }
-    if(avgAcousticness + 0.2 > 1){
+    if(avgAcousticness + var > 1){
       String max_acousticness = "1";
       results[1] = max_acousticness;
     } else{
-      String max_acousticness = String.valueOf(avgAcousticness + 0.2);
+      String max_acousticness = String.valueOf(avgAcousticness + var);
       results[1] = max_acousticness;
     }
-    if(avgDancability - 0.2 < 0){
+    if(avgDancability - var < 0){
       String min_danceability = "0";
       results[2] = min_danceability;
     } else{
-      String min_danceability = String.valueOf(avgDancability - 0.2);
+      String min_danceability = String.valueOf(avgDancability - var);
       results[2] = min_danceability;
     }
-    if(avgDancability + 0.2 > 1){
+    if(avgDancability + var > 1){
       String max_danceability = "1";
       results[3] = max_danceability;
     } else{
-      String max_danceability = String.valueOf(avgDancability + 0.2);
+      String max_danceability = String.valueOf(avgDancability + var);
       results[3] = max_danceability;
     }
-    if(avgEnergy - 0.2 < 0){
+    if(avgEnergy - var < 0){
       String min_energy = "0";
       results[4] = min_energy;
     } else{
-      String min_energy = String.valueOf(avgEnergy - 0.2);
+      String min_energy = String.valueOf(avgEnergy - var);
       results[4] = min_energy;
     }
-    if(avgEnergy + 0.2 > 1){
+    if(avgEnergy + var > 1){
       String max_energy = "1";
       results[5] = max_energy;
     } else{
-      String max_energy = String.valueOf(avgEnergy + 0.2);
+      String max_energy = String.valueOf(avgEnergy + var);
       results[5] = max_energy;
     }
-    if(avgSpeechiness - 0.2 < 0){
+    if(avgSpeechiness - var < 0){
       String min_speechiness = "0";
       results[6] = min_speechiness;
     } else{
-      String min_speechiness = String.valueOf(avgSpeechiness - 0.2);
+      String min_speechiness = String.valueOf(avgSpeechiness - var);
       results[6] = min_speechiness;
     }
-    if(avgSpeechiness + 0.2 > 1){
+    if(avgSpeechiness + var > 1){
       String max_speechiness = "1";
       results[7] = max_speechiness;
     } else{
-      String max_speechiness = String.valueOf(avgSpeechiness + 0.2);
+      String max_speechiness = String.valueOf(avgSpeechiness + var);
       results[7] = max_speechiness;
     }
-    if(avgValence - 0.2 < 0){
+    if(avgValence - var < 0){
       String min_valence = "0";
       results[8] = min_valence;
     } else{
-      String min_valence = String.valueOf(avgValence - 0.2);
+      String min_valence = String.valueOf(avgValence - var);
       results[8] = min_valence;
     }
-    if(avgValence + 0.2 > 1){
+    if(avgValence + var > 1){
       String max_valence = "1";
       results[9] = max_valence;
     } else{
-      String max_valence = String.valueOf(avgValence + 0.2);
+      String max_valence = String.valueOf(avgValence + var);
       results[9] = max_valence;
     }
 
@@ -236,11 +242,11 @@ public class CachedSpotifyData implements IData {
    * @throws Exception
    */
   @Override
-  public Recommendation getRecommendation(String limit, String[] allNames) throws
+  public Recommendation getRecommendation(String limit, String[] allNames, String variability) throws
       URISyntaxException, IOException, InterruptedException, ExecutionException {
 
     FeaturesProp feats = this.getFeatures(allNames);
-    String[] values = this.generateValues(feats);
+    String[] values = this.generateValues(feats, variability);
 
     Recommendation rec = this.generateRecommendation(limit ,values[10],values[0],values[1],
         values[2],values[3],values[4],values[5],values[6],values[7],values[8],values[9]);

@@ -116,10 +116,6 @@ public class MockedRecommendationHandlerTests {
   }
 
 
-  //TODO: Create for a way to know if the token does not work and test it, also, create for a check
-  // in the generated recommendation to ensure that they have a possibility to get lyrics from
-  // them
-
   /**
    * Method that tests we get the correct error when a limit is not passed in as a parameter.
    */
@@ -164,7 +160,30 @@ public class MockedRecommendationHandlerTests {
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
     Assert.assertEquals("Error",responseBody.get("Result"));
-    Assert.assertEquals("the limit cannot be 0, it must be an integer greater than 0",
+    Assert.assertEquals("the limit must be an integer in the range 1-100",
+        responseBody.get("Error Message"));
+  }
+
+  /**
+   * Method that tests we get the correct error when the limit is set to int above 100
+   */
+  @Test
+  public void overHundredLimTest() throws IOException, InterruptedException, URISyntaxException{
+    Map<String, String> queryParams = new HashMap<>();
+    queryParams.put("token", "dsdsds");
+    queryParams.put("variability", "0.2");
+    queryParams.put("limit", "101");
+    String allNames = "&allNames=";
+    allNames += "Enchanted";
+    allNames += "&allNames=All%20too%20well";
+
+    HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
+
+    Moshi moshi = new Moshi.Builder().build();
+    JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
+    Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
+    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("the limit must be an integer in the range 1-100",
         responseBody.get("Error Message"));
   }
 

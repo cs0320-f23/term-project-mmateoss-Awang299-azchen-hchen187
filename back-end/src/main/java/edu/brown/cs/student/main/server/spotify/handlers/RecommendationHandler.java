@@ -75,17 +75,17 @@ public class RecommendationHandler implements Route {
       return moshi.adapter(Map.class).toJson(responseMap);
     }
     //TODO: check to make sure that variability is greater than 0
-    if(limit.equals("0")){
+    if(limit.equals("0") || Integer.valueOf(limit) > 100 || Integer.valueOf(limit) < 0){
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", "the limit cannot be 0, it must be an integer greater than 0");
+      responseMap.put("Error Message", "the limit must be an integer in the range 1-100");
       return moshi.adapter(Map.class).toJson(responseMap);
     }
 
     try{
       // returning and generating the actual recommendation
       this.spotifyData.setToken(token);
-      Recommendation rec = this.spotifyData.getRecommendation(limit, allNames);
+      Recommendation rec = this.spotifyData.getRecommendation(limit, allNames, variability);
       // making sure recommendation returns something
       if(rec.tracks().size() == 0){
         Map<String, Object> responseMap = new HashMap<>();

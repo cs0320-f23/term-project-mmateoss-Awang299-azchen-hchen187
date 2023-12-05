@@ -27,7 +27,7 @@ public interface IData {
      * @return a recommendation object
      * @throws Exception any exception that could be thrown
      */
-    public Recommendation getRecommendation(String limit, String[] allNames) throws Exception;
+    public Recommendation getRecommendation(String limit, String[] allNames, String variability) throws Exception;
 
     /**
      * Method used to get a feature object based on the names of songs

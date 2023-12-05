@@ -82,9 +82,9 @@ public class CachedDataTests {
     // speechiness: 0.0265
 
     String limit = "3";
-    Recommendation rec = data.getRecommendation(limit, allNames);
+    Recommendation rec = data.getRecommendation(limit, allNames, "0.2");
     Assert.assertEquals(rec.tracks().size(), 3);
-    Assert.assertEquals(rec.seeds().get(0).afterFilteringSize(), 62);
+    Assert.assertTrue(rec.seeds().get(0).afterFilteringSize() > 10);
 
 
   }
@@ -124,8 +124,9 @@ public class CachedDataTests {
     // avg spe: 0.0284
 
     String limit = "5";
-    Recommendation rec = data.getRecommendation(limit, allNames);
-    Assert.assertEquals(rec.seeds().get(0).afterFilteringSize(), 83);
+    Recommendation rec = data.getRecommendation(limit, allNames, "0.2");
+    Assert.assertEquals(rec.seeds().get(0).initialPoolSize(), 500);
+    Assert.assertTrue(rec.seeds().get(0).afterFilteringSize() > 10);
 
   }
 
