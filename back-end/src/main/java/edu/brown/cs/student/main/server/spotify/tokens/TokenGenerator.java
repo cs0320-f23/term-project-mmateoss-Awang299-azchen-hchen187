@@ -79,7 +79,9 @@ public class TokenGenerator {
     return this.token;
   }
 
-
+//TODO: Implement Guava Cache that lasts one hour therefore allowing for us to either get the same
+// token or generate a new one if it expires. Cache size one, duration 1 hour... String to String
+// "generated_token" to token
 
 
 }
