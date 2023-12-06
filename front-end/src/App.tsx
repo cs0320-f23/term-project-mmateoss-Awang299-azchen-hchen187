@@ -8,7 +8,7 @@ import MetadataPage from './pages/input/MetadataPage';
 import GenerationPage from './pages/input/GenerationPage';
 import GeneratedPlaylistPage from './pages/result/GeneratedPlaylistPage';
 import LoadingPage from './pages/result/LoadingPage';
-import Toolbar from './components/toolbar/Toolbar';
+import Toolbar from './components/Toolbar/Toolbar';
 
 
 /**
@@ -27,6 +27,12 @@ function App() {
         <SongsPage />
       </motion.div>
   )
+
+  const MetadataPageComponent = () => (
+    <motion.div key="songs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
+      <MetadataPage />
+    </motion.div>
+)
 
   
   return (

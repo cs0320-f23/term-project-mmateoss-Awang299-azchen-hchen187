@@ -6,6 +6,7 @@ import PersonComponent from '../../components/home/PersonComponent';
 // import HeadphonesBarAfter from "../../assets/images/HomePage/headphone-bar-after.svg";
 
 import './HomePage.css';
+import '../../components/home/Person.css';
 
 function HomePage() {
     const navigate = useNavigate();
@@ -61,7 +62,7 @@ function HomePage() {
                 animate={animateStyle}
                 className="expanded-container"
               >
-                <PersonComponent handleHeadClick={handleHeadClick} headClicked={headClicked} />
+                <PersonComponent handleHeadClick={handleHeadClick} headClicked={headClicked} disabledHover={false}/>
               </motion.div>
             </div>
           </motion.div>

@@ -5,7 +5,7 @@ interface EyeComponentProps {
 }
 
 function EyeComponent(props: EyeComponentProps) {
-  const [eyePosition, setEyePosition] = useState({ x: 200, y: 200 });
+  const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [pupilPosition, setPupilPosition] = useState({ x: 0, y: 0 });
   
 

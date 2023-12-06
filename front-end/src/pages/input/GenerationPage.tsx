@@ -1,39 +1,17 @@
-import React, { useState } from 'react'
-import './GenerationPage.css'
+import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
+import { motion } from 'framer-motion';
 import ProgressBar from '../../components/progress/ProgressBar'
+import NavButton from '../../components/button/NavButton';
+import PersonComponent from '../../components/home/PersonComponent';
 
-export default function GenerationPage() {
+import './GenerationPage.css';
+import '../../components/home/Person.css';
 
-  const [selectedSongs, setSelectedSongs] = useState(["song1"])
-  const [selectedMetaData, setSelectedMetaData] = useState(["metadata1"])
-  const [name, setName] = useState("")
-  const [length, setLength] = useState(0)
-
-  const handleGenerateButtonClick = () => {
-
-  }
+function GenerationPage() {
 
   return (
-    <div className="generation-page">
-      <ProgressBar step={3} />
-      <div className="selections">
-        <div className="song-selections"></div>
-        {selectedSongs.map((song) => song)}
-        <div className="metadata-selections">{selectedMetaData.map((song) => song)}</div>
-      </div>
-      <div className="playlist-info">
-        <div className="name">
-          {" "}
-          <input placeholder="name"></input>
-        </div>
-        <div className="length">
-          {" "}
-          <input placeholder="length"></input>
-        </div>
-      </div>
-      <a href="/result">
-        <button className="generate-button"> GENERATE </button>
-      </a>
-    </div>
-  );
+    <div style={{ color: "white"}}>GenerationPage</div>
+  )
 }
+
+export default GenerationPage;
