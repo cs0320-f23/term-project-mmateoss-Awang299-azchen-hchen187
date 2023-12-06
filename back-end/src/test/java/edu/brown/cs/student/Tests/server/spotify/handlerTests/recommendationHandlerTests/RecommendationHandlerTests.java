@@ -1,13 +1,13 @@
-package edu.brown.cs.student.Tests.server.spotify.handlerTests;
+package edu.brown.cs.student.Tests.server.spotify.handlerTests.recommendationHandlerTests;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 
-import edu.brown.cs.student.Tests.server.spotify.tokens.TestTokenGenerator;
+import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
-import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import java.io.IOException;
 import java.net.URI;
@@ -49,7 +49,7 @@ public class RecommendationHandlerTests {
    * Method gotten from the gearup, that sets up our server, called before each test is run.
    */
   @BeforeEach
-  public void setup() {
+  public void setup() throws Exception{
     // In fact, restart the entire Spark server for every test!
     CachedSpotifyData data = new CachedSpotifyData();
     Spark.get("recommendation", new RecommendationHandler(data));
@@ -57,7 +57,7 @@ public class RecommendationHandlerTests {
     Spark.init();
     Spark.awaitInitialization(); // don't continue until the server is listening
 
-    TestTokenGenerator generator = new TestTokenGenerator();
+    TokenGenerator generator = new TokenGenerator();
     this.token = generator.getToken();
   }
 

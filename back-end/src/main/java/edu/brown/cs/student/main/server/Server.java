@@ -3,12 +3,11 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
-import edu.brown.cs.student.main.server.spotify.data.SpotifyData;
-import edu.brown.cs.student.main.server.spotify.handlers.AddDislikedSongsHandler;
-import edu.brown.cs.student.main.server.spotify.handlers.AddInputSongsHandler;
-import edu.brown.cs.student.main.server.spotify.handlers.GenerateNewPlaylistHandler;
-import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
-import edu.brown.cs.student.main.server.webapi.BroadbandHandler;
+import edu.brown.cs.student.main.server.handlers.AddDislikedSongsHandler;
+import edu.brown.cs.student.main.server.handlers.AddInputSongsHandler;
+import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.handlers.TokenHandler;
+import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import spark.Spark;
 
 /**
@@ -32,11 +31,14 @@ public class Server {
       response.header("Access-Control-Allow-Origin", "*");
       response.header("Access-Control-Allow-Methods", "*");
     });
+
+    // Creating variables that need to be passed into
     CachedSpotifyData data = new CachedSpotifyData();
+    TokenGenerator generator = new TokenGenerator();
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data));
-    Spark.get("generateNewPlaylist", new GenerateNewPlaylistHandler());
+    Spark.get("token", new TokenHandler(generator));
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
 

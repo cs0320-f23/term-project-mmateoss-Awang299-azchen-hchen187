@@ -1,13 +1,12 @@
 package edu.brown.cs.student.Tests.server.spotify;
 
-import edu.brown.cs.student.Tests.server.spotify.tokens.TestTokenGenerator;
+import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.spotify.data.SpotifyData;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.IOException;
 import java.net.URISyntaxException;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
@@ -31,8 +30,8 @@ public class SpotifyRequestsTests {
    * Method called before each test is run
    */
   @BeforeEach
-  public void beforeTest(){
-    TestTokenGenerator generator = new TestTokenGenerator();
+  public void beforeTest() throws Exception{
+    TokenGenerator generator = new TokenGenerator();
     this.token = generator.getToken();
     this.data = new SpotifyData();
   }

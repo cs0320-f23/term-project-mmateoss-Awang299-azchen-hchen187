@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.spotify.handlers;
+package edu.brown.cs.student.main.server.handlers;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;

@@ -1,10 +1,9 @@
-package edu.brown.cs.student.Tests.server.spotify.handlerTests;
+package edu.brown.cs.student.Tests.server.spotify.handlerTests.recommendationHandlerTests;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.data.MockData;
-import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import java.io.IOException;
 import java.net.URI;
