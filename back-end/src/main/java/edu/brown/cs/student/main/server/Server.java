@@ -3,14 +3,11 @@ package edu.brown.cs.student.main.server;
 import static spark.Spark.after;
 
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
-import edu.brown.cs.student.main.server.spotify.data.SpotifyData;
-import edu.brown.cs.student.main.server.spotify.handlers.AddDislikedSongsHandler;
-import edu.brown.cs.student.main.server.spotify.handlers.AddInputSongsHandler;
-import edu.brown.cs.student.main.server.spotify.handlers.GenerateNewPlaylistHandler;
-import edu.brown.cs.student.main.server.spotify.handlers.RecommendationHandler;
-import edu.brown.cs.student.main.server.spotify.handlers.TokenHandler;
+import edu.brown.cs.student.main.server.handlers.AddDislikedSongsHandler;
+import edu.brown.cs.student.main.server.handlers.AddInputSongsHandler;
+import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.handlers.TokenHandler;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
-import edu.brown.cs.student.main.server.webapi.BroadbandHandler;
 import spark.Spark;
 
 /**

@@ -2,8 +2,7 @@ package edu.brown.cs.student.Tests.server.spotify.handlerTests.tokenHandlerTests
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import edu.brown.cs.student.main.server.spotify.handlers.TokenHandler;
-import edu.brown.cs.student.main.server.spotify.tokens.MockedToken;
+import edu.brown.cs.student.main.server.handlers.TokenHandler;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import java.io.IOException;
 import java.net.URI;

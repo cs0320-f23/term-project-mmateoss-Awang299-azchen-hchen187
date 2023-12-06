@@ -1,9 +1,13 @@
 package edu.brown.cs.student.Tests.server.spotify;
 
+import edu.brown.cs.student.main.server.lyrics.lyricsRecords.LyricsObject;
+import edu.brown.cs.student.main.server.lyrics.mockedLyrics.MockedLyricDataSource;
 import edu.brown.cs.student.main.server.spotify.data.MockData;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
+import java.io.FileReader;
+import java.io.IOException;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 
@@ -79,6 +83,25 @@ public class RecordTests {
     Assert.assertEquals(song.tracks().items().get(1).popularity(), 44);
     Assert.assertEquals(song.tracks().items().get(0).preview_url(), "https://p.scdn.co/mp3"
         + "-preview/4d2f72a69bc3619e6e854912fd1275b6efbcc10c?cid=8199ced0f4aa4ceba1efbcedd7b6878a");
+
+  }
+
+  /**
+   * Method that tests that our Lyric Record creates an object as intended
+   *
+   * @throws IOException - exception where the file can't be read properly
+   */
+  @Test
+  public void testLyricRecords() throws IOException {
+
+    FileReader reader = new FileReader("data/mockedLyricJsons/mockedlyricJson1.json");
+    MockedLyricDataSource dataSource = new MockedLyricDataSource(reader);
+    dataSource.loadJson();
+    LyricsObject lyrics = dataSource.getJsonObj();
+    Assert.assertEquals(lyrics.lines().size(), 45);
+    Assert.assertEquals(lyrics.lines().get(0).timeTag(), "00:17.19");
+    Assert.assertEquals(lyrics.lines().get(3).words(), "These days of dust");
+
 
   }
 }

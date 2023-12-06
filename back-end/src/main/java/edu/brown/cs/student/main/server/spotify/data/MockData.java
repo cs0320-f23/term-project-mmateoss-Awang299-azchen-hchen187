@@ -132,8 +132,8 @@ public class MockData implements IData {
   }
 
   /**
-   * Empty method used
-   * @param token
+   * Empty method used to set the token in the non mocked version of this method
+   * @param token the spotify api token
    */
   @Override
   public boolean setToken(String token){

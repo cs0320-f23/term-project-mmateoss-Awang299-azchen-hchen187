@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.spotify.handlers;
+package edu.brown.cs.student.main.server.handlers;
 
 import spark.Request;
 import spark.Response;

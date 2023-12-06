@@ -93,7 +93,6 @@ public class SpotifyData{
       String  max_valence) throws URISyntaxException, IOException,
       InterruptedException {
 
-    //TODO: Make parameters that get passed in and then get set to the parameters
     String uriString = "https://api.spotify.com/v1/recommendations?"
         + "limit="+limit
         + "&seed_tracks="+seed_tracks
@@ -109,42 +108,6 @@ public class SpotifyData{
         + "&max_valence="+max_valence;
 
     return this.fetchRecommendationApiData(uriString,token);
-  }
-
-
-  /**
-   * Helper method that gets all the song ids and puts them into a string in order for getFeatures
-   * to get all the features for the songs.
-   *
-   * @param allNames String or List<String> that contains all the names of the
-   * @return a string that is comma separated, containing all the track ids for the songs
-   * @throws URISyntaxException   exception where URI syntax is incorrect.
-   * @throws IOException          exception where it failed to read/open
-   *                              information.
-   * @throws InterruptedException exception where connection to API is
-   *                              interrupted.
-   *
-   */
-  private String getSongIds(String[] allNames, String token) throws URISyntaxException, IOException,
-      InterruptedException {
-    //TODO: Might want to move this to another class if we have a cached data class where we search
-    // to see if we already have the id stored in a cache, and check against blacklist of songs
-    String ids = "";
-    int lastIdx = allNames.length-1;
-    // loop through the list of song names and
-    for(int i=0; i<allNames.length;i++){
-      String songName = allNames[i];
-      Song songObj = this.getSong(token, songName);
-      if(i == lastIdx){
-        ids = ids+songObj.tracks().items().get(0).id();
-      }
-      else{
-        ids = ids+songObj.tracks().items().get(0).id()+",";
-      }
-    }
-
-    // returning the built string with all the ids
-    return ids;
   }
 
 
@@ -183,7 +146,6 @@ public class SpotifyData{
   private Song fetchSongApiData(String uriString, String token)
       throws URISyntaxException, IOException, InterruptedException {
     // building a new HttpRequest
-    //TODO: make sure that the header part is correct
     HttpRequest buildRequest = HttpRequest.newBuilder()
         .uri(new URI(uriString))
         .header("Authorization", "Bearer "+token)
@@ -217,7 +179,6 @@ public class SpotifyData{
   private Recommendation fetchRecommendationApiData(String uriString, String token)
       throws URISyntaxException, IOException, InterruptedException {
     // building a new HttpRequest
-    //TODO: make sure that the header part is correct
     HttpRequest buildRequest = HttpRequest.newBuilder()
         .uri(new URI(uriString))
         .header("Authorization", "Bearer "+token)
@@ -252,7 +213,6 @@ public class SpotifyData{
   private FeaturesProp fetchFeaturesApiData(String uriString, String token)
       throws URISyntaxException, IOException, InterruptedException {
     // building a new HttpRequest
-    //TODO: make sure that the header part is correct
     HttpRequest buildRequest = HttpRequest.newBuilder()
         .uri(new URI(uriString))
         .header("Authorization", "Bearer "+token)
