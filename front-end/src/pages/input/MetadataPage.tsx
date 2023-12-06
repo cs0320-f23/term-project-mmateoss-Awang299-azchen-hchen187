@@ -14,7 +14,6 @@ function MetadataPage() {
     <div className="songs-page">
       <motion.div className="body">
         <div className="main-container">
-          <ProgressBar step={2} />
           <NavButton nextPage="/input/generation"/>
           <div className="person-container-small">
             <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true}/>
