@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
 h1 {
-    font-size: large;
+    font-size: 100pt;
     color: white;
 }
 
@@ -13,42 +13,11 @@ h1 {
 .main-container {
     display: flex;
     width: 100%;
-    flex-direction: column;
-    align-items: center;
-}
-
-.progress-container {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 8vh;
-    margin-top: 20px;
-    margin-bottom: 40px;
+    align-items: flex-start;
+    justify-content: center;
     flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.progress-bar {
-  position: relative;
-  width: 160px;
-  padding: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  text-align: center;
-  border-radius: 100px;
-  background-color: #f2f2ed;
-}
-
-.progress-bar-highlight {
-  position: relative;
-  width: 160px;
-  padding: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  text-align: center;
-  border-radius: 100px;
-  background-color: var(--lime);
+    /* flex-direction: column;
+    align-items: center; */
 }
 
 .button-container {
@@ -88,23 +57,73 @@ h1 {
   margin: 30px;
 }
 
+.arrow-svg {
+  position: absolute;
+  width: 20%;
+  height: 50%;
+  top: 30;
+  left: 0;
+  transform: rotate(15deg);
+  /* width: 100%;
+  height: 100%;
+  top: 0;
+  left: 50;
+  z-index: 0; */
+}
+
+path {
+  stroke: transparent;
+  stroke-width: 12;
+  stroke-dasharray: 8000;
+  stroke-dashoffset: 8000;
+}
+
+.animate-arrow {
+  stroke: var(--yellow);
+  stroke-width: 5;
+  animation: drawLine 7s forwards;
+}
+
+.animate-arrow-head {
+  stroke: var(--yellow);
+  stroke-width: 5;
+  animation: drawLine 7s forwards;
+  animation-delay: 1s;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.instructions-container {
+  position: absolute;
+  max-width: 350px;
+  margin-top: -5vh;
+  margin-right: 50vh;
+  font-size: 20pt;
+  text-align: left;
+  color: white;
+  font-weight: bold;
+  line-height: 40px;
+}
+
+.search-container {
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  margin-top: 5vh;
+  margin-right: 50vh;
+  height: 70vh;
+  z-index: 1;
+}
+
 .search-bar {
-  /* width: 400px;
-  background-color: darkslategrey;
-  padding: 10px;
-  border-radius: 10px;
-  box-shadow: inset 0 0 0.5px 1px hsla(0, 0%,  
-              100%, 0.075),
-
-              0 0 0 1px hsla(0, 0%, 0%, 0.05),
-
-              0 0.3px 0.4px hsla(0, 0%, 0%, 0.02),
-              0 0.9px 1.5px hsla(0, 0%, 0%, 0.045),
-              0 3.5px 6px hsla(0, 0%, 0%, 0.09); */
-
   display: inline-block;
   position: relative;
-  height: 50px;
+  min-height: 50px;
   width: 50px;
   box-sizing: border-box;
   margin: 0px 10px 9px 0px;
@@ -139,26 +158,147 @@ h1 {
 }
 
 .search-input {
-  /* width: 100%;
-  padding: 10px;
-  font-size: 16px;
-  background-color: #ccc;
-  border: 2px solid #ccc;
-  border-radius: 5px;
-  margin-bottom: 10px;
-  box-sizing: border-box; */
   width: 100%;
-		border: none;
-		box-sizing: border-box;
-		font-family: Helvetica;
-		font-size: 15px;
-		color: inherit;
-		background: transparent;
-		outline-width: 0px;
-    color: white;
+  border: none;
+  box-sizing: border-box;
+  font-family: "Kumbh Sans";
+  font-size: 15px;
+  color: inherit;
+  background: transparent;
+  outline-width: 0px;
+  color: white;
 }
+
 
 .search-input:focus {
   outline: none;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.track {
+  flex-grow: 1;
+  overflow-y: auto;
+  color: white;
+}
+
+.track-container-wrapper {
+  background-color: black;
+  margin: 8px;
+}
+
+.track-container {
+  background-color: black;
+  flex-grow: 1;
+  display: flex;
+  margin: 8px;
+  box-shadow: rgba(33, 33, 71, 0.557) 0px 2px 5px -1px, rgba(255, 255, 255, 0.6) 0px 1px 3px -1px;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.track-container:hover {
+  background-color: rgba(50, 55, 75, 0.5);
+}
+
+
+.track-image {
+  left: 200px;
+}
+
+.track-info {
+  text-align: left;
+  max-width: 300px;
+  margin-left: 12px;
+}
+
+.track-title {
+  font-weight: bold;
+}
+
+.track-artist {
+  color: #6c757d;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #555;
+  border-radius: 20px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: #333;
+  border-radius: 20px;
+}
+
+/* todo: change colour of x button */
+input[type="search"]::-webkit-search-clear-button {
+  /* -webkit-appearance: none;
+  appearance: none; */
+  margin-right: 8px;
+  cursor: pointer;
+  width: 16px; 
+  height: 16px; 
+  color:rgba(255, 255, 255, 0.6);
+}
+
+.selected-track-container {
+  position: fixed;
+  display: flex;
+  flex-direction: row;
+  margin-top: 5vh;
+  margin-left: 80vh;
+  height: 70vh;
+  color: white;
+  flex-grow: 1;
+  justify-content: center;
+}
+
+.selected-track-overlay {
+  position: absolute;
+  justify-content: center;
+  max-width: 400px;
+  top: 14vh;
+  z-index: 1;
+}
+
+.displayed-title {
+  padding-top: 15px;
+  padding-bottom: 35px;
+  font-size: 14pt;
+  font-weight: bold;
+}
+
+.song-text-container {
+  margin-top: 35px;
+  font-size: 23pt;
+  font-weight: bold;
+}
+
+.album-lineart-container {
+  margin-top: 50px;
+}
+
+.arrow-container {
+  position: absolute;
+  top: 20px;
+  margin-left: 40px;
+}
+
+.album-cover-arrow {
+  position: relative;
+  width: 375px;
+  height: 200px;
+  left: 20px;
+  background: url("../../assets/images/SongsPage/arrow-line.png") no-repeat center center;
+  background-size: cover;
+}
+
+.album-cover-box {
+  width: 375px;
+  height: 375px;
+  background: url("../../assets/images/SongsPage/album-cover-outline.png") no-repeat center center;
+  background-size: cover;
 }
