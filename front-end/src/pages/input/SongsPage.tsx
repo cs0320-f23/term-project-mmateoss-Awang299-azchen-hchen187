@@ -150,7 +150,7 @@ function SongsPage() {
             </div>
           </div>
 
-          <NavButton nextPage="/input/metadata" />
+          <NavButton nextPage="/input/metadata" displayedText="Next"/>
           <div className="person-container-small">
             <PersonComponent
               handleHeadClick={() => {}}
