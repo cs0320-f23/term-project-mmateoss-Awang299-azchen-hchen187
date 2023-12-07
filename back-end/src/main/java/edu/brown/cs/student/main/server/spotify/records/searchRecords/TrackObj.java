@@ -15,6 +15,6 @@ package edu.brown.cs.student.main.server.spotify.records.searchRecords;
  *                   with 100 being the most popular.
  */
 public record TrackObj(String id, String uri, String preview_url, String name,
-                       int popularity) {
+                       int popularity, AlbumObj album) {
 
 }

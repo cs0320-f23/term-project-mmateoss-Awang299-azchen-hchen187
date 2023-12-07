@@ -83,6 +83,8 @@ public class RecordTests {
     Assert.assertEquals(song.tracks().items().get(1).popularity(), 44);
     Assert.assertEquals(song.tracks().items().get(0).preview_url(), "https://p.scdn.co/mp3"
         + "-preview/4d2f72a69bc3619e6e854912fd1275b6efbcc10c?cid=8199ced0f4aa4ceba1efbcedd7b6878a");
+    Assert.assertEquals(song.tracks().items().get(0).album().images().get(0).url(),
+        "https://i.scdn.co/image/ab67616d0000b2736e2407383e952808a0602b0d");
 
   }
 
