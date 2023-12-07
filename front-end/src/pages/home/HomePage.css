@@ -42,17 +42,12 @@
 }
 
 
-svg {
+/* svg {
   position: absolute;
   width: 100%;
   height: 80%;
   top: 20;
-  /* width: 100%;
-  height: 100%;
-  top: 0;
-  left: 50;
-  z-index: 0; */
-}
+} */
 
 path {
   stroke: transparent;
@@ -103,38 +98,3 @@ path {
   mask-size: 20px;
   /* color: black; */
 }
-
-
-
-/* 
-.App-header {
-  background-color: #282c34;
-  min-height: 8vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(1px + 2vmin);
-  color: white;
-} */
-
-/* .box-experiment {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  overflow: hidden;
-  width: 50px;
-  height: 50px;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-box-align: center;
-  -webkit-align-items: center;
-  -ms-flex-align: center;
-  align-items: center;
-  border: 4px solid #f2f2ed;
-  border-radius: 100%;
-  background-color: #f2f2ed;
-} */

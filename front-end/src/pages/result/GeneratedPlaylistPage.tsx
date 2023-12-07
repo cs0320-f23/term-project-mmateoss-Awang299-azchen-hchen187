@@ -1,4 +1,3 @@
-import { Paper } from '@mui/material'
 import React, { useState } from 'react'
 import "./GeneratedPlaylistPage.css"
 
@@ -7,9 +6,7 @@ export default function GeneratedPlaylistPage() {
 
   return (
     <div className="generated-playlist-page">
-      {songs.map((song) => (
-        <Paper className="song-paper" elevation={3}>{song}</Paper>
-      ))}
+      
     </div>
   );
 }
