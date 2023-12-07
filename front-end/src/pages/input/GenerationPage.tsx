@@ -10,11 +10,18 @@ function GenerationPage() {
   const [trackUri, setTrackUri] = useState("spotify:track:5f4Hy5mw5SRaUgXX9c6P5S")
 
   return (
-    <SpotifyPlayer
-      token={token}
-      play={true}
-      uris={[trackUri]}
-    />
+    //initial={{opacity:0}} animate={{opacity: 1}}
+    <div className="songs-page">
+      <motion.div className="body">
+        <div className="main-container">
+          <ProgressBar step={3} />
+          <NavButton nextPage="/result" displayedText="Submit"/>
+          <div className="person-container-small">
+            <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true}/>
+          </div>
+        </div>
+      </motion.div>
+    </div>
   );
 }
 

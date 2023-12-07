@@ -1,20 +1,30 @@
 import React from 'react'
+import { SongData } from '../interfaces/Interface';
 
-interface SongData {
-    title: string,
-    artist: string,
-    trackID: string,
-    albumUrl: string,
-  }
+interface TrackSearchResultProps {
+    track: SongData
+    chooseTrack: (selectedTrack: SongData) => void;
+}
 
-export default function TrackSearchResult({track} : {track : SongData}) {
+export default function TrackSearchResult(props: TrackSearchResultProps) {
+
+    const handleTrackSelection = () => {
+        props.chooseTrack(props.track)
+    }
+    
   return (
-    <div className="d-flex m-2 align-items-center">
-        <img src={track.albumUrl} style={{ height: "64px", width: "64px" }} />
-        <div className="ml-3">
-            <div>{track.title}</div>
-            <div className="text-muted">{track.artist}</div>
+        <div className="track-container" onClick={handleTrackSelection}>
+        <img
+          className="track-image"
+          src={props.track.albumUrl}
+          style={{ width: "64px", height: "64px" }}
+          alt="album cover"
+        />
+        <div className="track-info">
+          <div className="track-title">{props.track.title}</div>
+          <div className="track-artist">{props.track.artist}</div>
         </div>
-    </div>
-  )
+      </div>
+      
+  );
 }
