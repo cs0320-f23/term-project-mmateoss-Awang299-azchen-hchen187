@@ -24,6 +24,8 @@ public class CachedSpotifyData implements IData {
   private LoadingCache<String, Song> songCache;
   private String token;
 
+  private LoadingCache<String[], List<List<String>>> searchingSongCache;
+
   /**
    * Constructor for the CachedSpotifyData class. Serves as a proxy for the Spotify Data class
    * allowing us to cache the data, increasing performance and reducing number of API calls.
@@ -43,6 +45,20 @@ public class CachedSpotifyData implements IData {
                 return getSong(songName);
               }
             }
+        );
+    this.searchingSongCache = CacheBuilder.newBuilder()
+        .maximumSize(40)
+        .expireAfterWrite(3, TimeUnit.MINUTES)
+        .recordStats().build(
+            new CacheLoader<String[], List<List<String>>>() {
+              @Override
+              public List<List<String>> load(String[] queries) throws Exception {
+                String prompt = queries[0];
+                String limit = queries[1];
+                return buildGetSongsPrompts(prompt,limit);
+              }
+            }
+
         );
 
   }
@@ -340,8 +356,16 @@ public class CachedSpotifyData implements IData {
    */
   @Override
   public List<List<String>> getSongsPrompt(String prompt, String limit) throws
-      URISyntaxException, IOException, InterruptedException {
+      URISyntaxException, IOException, InterruptedException, ExecutionException {
 
+    String[] input = new String[2];
+    input[0] = prompt;
+    input[1] = limit;
+    return this.searchingSongCache.get(input);
+  }
+
+  private List<List<String>> buildGetSongsPrompts(String prompt, String limit)  throws
+      URISyntaxException, IOException, InterruptedException{
     Song songs = this.data.getSongKeywords(this.token, prompt, limit);
     List<List<String>> toReturn = new ArrayList<>();
     for(int i =0; i<songs.tracks().items().size();i++){
@@ -356,6 +380,5 @@ public class CachedSpotifyData implements IData {
     }
     return toReturn;
   }
-
 
 }

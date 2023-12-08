@@ -141,7 +141,6 @@ public class CachedDataTests {
     String limit = "5";
     String prompt = "the weekend";
     List<List<String>> results = data.getSongsPrompt(prompt, limit);
-    System.out.println(results);
     Assert.assertEquals(results.get(0).get(0), "The Weekend");
     Assert.assertEquals(results.get(0).get(1), "SZA");
     Assert.assertEquals(results.get(0).get(1), "SZA");
