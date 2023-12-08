@@ -10,11 +10,104 @@ import LanguageDropdown from '../../components/input/LanguageDropdown';
 import { useAppContext } from '../../components/input/ContextProvider';
 
 function MetadataPage() {
-  const {chooseDifficulty} = useAppContext();
+  const {difficulty, chooseDifficulty} = useAppContext();
+  const [hoveredButton, setHoveredButton] = useState<string | null>(null);
 
   const handleDifficultyButtonClick = (difficulty: string) => {
     chooseDifficulty(difficulty);
+    setHoveredButton(null);
     console.log('button clicked')
+  }
+
+  const getDisplayedText = (input: string) => {
+    switch (input) {
+      case 'easy':
+        return (
+          <span>
+            Fill in the missing word, just 
+            <span style={{ fontWeight: 'bolder', textDecoration: 'underline', color: 'var(--green)' }}> like </span>
+            this.
+            <br></br>
+          </span>
+        );
+      case 'medium':
+        return (
+          <span>
+            Fill in the missing line:
+            <br />
+            "
+            <span style={{fontWeight: 'normal'}}>
+            I just need to tell you somthing - 
+            </span>
+            <br /> 
+            <span style={{ fontWeight: 'bolder', textDecoration: 'underline', color: 'var(--green)' }}> I really really really really really really like you.</span>
+            {' '}"
+            <br />
+          </span>
+        );
+      case 'hard':
+        return (
+          <span>
+            Fill in the missing lines:
+            <br /> 
+            "
+            <span style={{ fontWeight: 'bolder', color: 'var(--green)'}}>________________</span>
+            {' '}"
+            <br /> 
+            "
+            <span style={{ fontWeight: 'bolder', color: 'var(--green)' }}>_____________________</span>
+            {' '}"
+            <br />
+          </span>
+        );
+      default:
+        return '';
+    }
+  }
+
+  const getButtonText = (currDifficulty: string | null) => {
+    if (currDifficulty != null && difficulty === "") {
+      return getDisplayedText(currDifficulty)
+    } else {
+      return getDisplayedText(difficulty)
+    }
+   
+    // switch (currDifficulty) {
+    //   case 'easy':
+    //     return getDisplayedText('easy');
+    //   case 'medium':
+    //     return (
+    //       <span>
+    //         Fill in the missing line:
+    //         <br />
+    //         "
+    //         <span style={{fontWeight: 'normal'}}>
+    //         I just need to tell you somthing - 
+    //         </span>
+    //         <br /> 
+    //         <span style={{ fontWeight: 'bolder', textDecoration: 'underline', color: 'var(--green)' }}> I really really really really really really like you.</span>
+    //         {' '}"
+    //         <br />
+    //       </span>
+    //     );
+    //   case 'hard':
+    //     return (
+    //       <span>
+    //         Fill in the missing lines:
+    //         <br /> 
+    //         "
+    //         <span style={{ fontWeight: 'bolder', color: 'var(--green)'}}>________________</span>
+    //         {' '}"
+    //         <br /> 
+    //         "
+    //         <span style={{ fontWeight: 'bolder', color: 'var(--green)' }}>_____________________</span>
+    //         {' '}"
+    //         <br />
+    //       </span>
+    //     );
+    //   default:
+    //     return 'kjfalkjshkajh';
+    // }
   }
 
   return (
@@ -26,10 +119,20 @@ function MetadataPage() {
             <LanguageDropdown />
           </div>
           <div className="difficulty-container">
-          {/* {`difficulty-button ${buttonClicked ? 'clicked' : ''}`} */}
-            <button onClick={() => handleDifficultyButtonClick("easy")} className="difficulty-button">easy</button>
-            <button onClick={() => chooseDifficulty("medium")} className="difficulty-button">medium</button>
-            <button onClick={() => chooseDifficulty("hard")} className="difficulty-button">hard</button>
+            {['easy', 'medium', 'hard'].map((level) => (
+                <button
+                  key={level}
+                  onClick={() => handleDifficultyButtonClick(level)}
+                  className={`difficulty-button ${difficulty === level ? 'clicked' : ''}`}
+                  onMouseEnter={() => setHoveredButton(level)}
+                  onMouseLeave={() => setHoveredButton(null)}
+                >
+                  {level}
+                </button>
+              ))}
+          </div>
+          <div className="difficulty-text-container" >
+            {<p>{getButtonText(hoveredButton)}</p>}
           </div>
           <NavButton nextPage="/input/generation" displayedText="Start Game" />
           <div className="person-container-small">

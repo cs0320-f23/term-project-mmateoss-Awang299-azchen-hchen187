@@ -22,26 +22,29 @@ h1 {
     width: 300px;
     position: relative;
     margin: 20px;
-    background-color: seagreen;
 }
 
 .language-select {
     width: 100%;
     position: relative;
     font-size: 16px;
-    background-color: seagreen;
     appearance: none;
 }
 
-/* .language-select .css-13cymwt-control {
-    border: 2px solid #ff0000; 
+.language-select .css-13cymwt-control {
+    border: 2px solid #ccc; 
     border-radius: 10px;
     box-shadow: none;
   }
   
   .language-select .css-13cymwt-control:hover {
-    border-color: #00ff00;
-  } */
+    border-color: var(--mustard-yellow);
+  }
+
+.css-t3ipsp-control {
+    border-color: var(--mustard-yellow) !important;
+    box-shadow: 0 0 1px var(--mustard-yellow) !important;
+}
 
 /* select option {
     padding: 10px;
@@ -95,6 +98,11 @@ h1 {
     margin: 30px;
   }
 
+.difficulty-container {
+  position: relative;
+  top: 30vh;
+}
+
 .difficulty-button {
   border: none;
   cursor: pointer;
@@ -108,14 +116,27 @@ h1 {
   font-weight: 500;
   font-family: "Kumbh Sans";
   border-radius: 100px;
-  background-color: #f2f2ed;
+  background-color: var(--baby-pink);
   transition: background-color 0.3s ease;
 }
 
 .difficulty-button:hover {
-    background-color: var(--baby-pink);
+    background-color: var(--muted-pink);
 }
 
-.difficulty-button .clicked {
-    background-color: var(--pink);
+.difficulty-button.clicked {
+    background-color: var(--mustard-yellow);
+}
+
+.difficulty-text-container {
+    width: 675px;
+    font-size: 23pt;
+    text-align: left;
+    color: white;
+    font-weight: bold;
+    line-height: 40px;
+    position: relative;
+    top: 35vh;
+    text-indent: 40px;
+    transition: opacity 0.3s ease-in-out;
 }

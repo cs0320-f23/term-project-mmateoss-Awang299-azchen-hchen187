@@ -18,7 +18,7 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) =
     const [selectedTrack, setSelectedTrack] = useState<SongData>();
     const [nativeLanguage, setNativeLanguage] = useState("");
     const [totalPoints, setTotalPoints] = useState(0);
-    const [difficulty, setDifficulty] = useState("easy");
+    const [difficulty, setDifficulty] = useState("");
 
     
 
