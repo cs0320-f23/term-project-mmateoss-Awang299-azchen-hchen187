@@ -2,6 +2,7 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
+import edu.brown.cs.student.main.server.handlers.GetSongHandler;
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.handlers.AddDislikedSongsHandler;
 import edu.brown.cs.student.main.server.handlers.AddInputSongsHandler;
@@ -39,6 +40,7 @@ public class Server {
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data));
     Spark.get("token", new TokenHandler(generator));
+    Spark.get("getSongs", new GetSongHandler(data));
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
 

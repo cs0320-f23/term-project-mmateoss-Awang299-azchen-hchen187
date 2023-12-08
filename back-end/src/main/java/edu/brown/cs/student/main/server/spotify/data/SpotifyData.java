@@ -110,6 +110,33 @@ public class SpotifyData{
     return this.fetchRecommendationApiData(uriString,token);
   }
 
+  /**
+   * Method that returns a song object solely based on any word passed in, could be the name of the
+   * song or the name of the artist or just a letter.
+   *
+   * @param token API token to allow calls to the spotify api
+   * @param prompt what is being searched for
+   * @return A song object that contains multiple songs that match that.
+   *
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   *
+   */
+  public Song getSongKeywords(String token, String prompt, String limit) throws URISyntaxException,
+      IOException, InterruptedException{
+
+    // Need to replace all spaces with %20 to allow it to be a correctly formed URL
+    String correctedPrompt = prompt.replaceAll(" ", "%20");
+
+    String uriString =
+        "https://api.spotify.com/v1/search?q="+correctedPrompt+"&type=track%2Cartist&limit="+limit;
+
+    return this.fetchSongApiData(uriString,token);
+  }
+
 
   /**
    * Method that returns a featuresProp object for all the inputted songs
@@ -228,7 +255,6 @@ public class SpotifyData{
     JsonAdapter<FeaturesProp> dataAdapter = moshi.adapter(FeaturesProp.class);
     return dataAdapter.fromJson(response.body());
   }
-
 
 
 }

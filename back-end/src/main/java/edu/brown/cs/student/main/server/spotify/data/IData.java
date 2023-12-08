@@ -3,6 +3,7 @@ package edu.brown.cs.student.main.server.spotify.data;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
+import java.util.List;
 
 /**
  * Interface used for dependency injection allowing us to run a server with mocked and real data.
@@ -38,5 +39,20 @@ public interface IData {
     public FeaturesProp getFeatures(String[] allNames) throws Exception;
 
 
+    /**
+     * Method used to set the token in order to be used throughout the class.
+     * @param token Spotify API token
+     * @return boolean saying if it was set
+     */
     public boolean setToken(String token);
+
+    /**
+     * Method used to get songs from a prompt that is inputted, could be other than just song name
+     * @param prompt what is searching for the song
+     * @param limit max number of songs returned
+     * @return List of List of strings containing info for the song
+     *
+     * @throws Exception any exception that could be thrown while searching.
+     */
+    public List<List<String>> getSongsPrompt(String prompt, String limit) throws Exception;
 }
