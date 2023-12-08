@@ -15,7 +15,7 @@ function GenerationPage() {
       <motion.div className="body">
         <div className="main-container">
           <ProgressBar step={3} />
-          <NavButton nextPage="/result" displayedText="Submit"/>
+          <NavButton nextPage="/result" displayedText="Submit" proceedToNextPage={true} onClickRejection={() => {}}/>
           <div className="person-container-small">
             <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true}/>
           </div>

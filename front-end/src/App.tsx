@@ -5,11 +5,11 @@ import React from 'react';
 import { ContextProvider } from './components/input/ContextProvider';
 import HomePage from './pages/home/HomePage';
 import SongsPage from './pages/input/SongsPage';
-import MetadataPage from './pages/input/MetadataPage';
 import GenerationPage from './pages/input/GenerationPage';
 import GeneratedPlaylistPage from './pages/result/GeneratedPlaylistPage';
 import LoadingPage from './pages/result/LoadingPage';
 import Toolbar from './components/toolbar/Toolbar';
+import SettingsPage from './pages/input/SettingsPage';
 
 
 
@@ -30,9 +30,9 @@ function App() {
       </motion.div>
   )
 
-  const MetadataPageComponent = () => (
+  const SettingsPageComponent = () => (
     <motion.div key="songs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <MetadataPage />
+      <SettingsPage />
     </motion.div>
 )
 
@@ -45,7 +45,7 @@ function App() {
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/input/songs" element={<SongsPage />} />
-            <Route path="/input/metadata" element={<MetadataPage />} />
+            <Route path="/input/settings" element={<SettingsPage />} />
             <Route path="/input/generation" element={<GenerationPage />} />
             <Route path="/result" element={<GeneratedPlaylistPage />} />
           </Routes>

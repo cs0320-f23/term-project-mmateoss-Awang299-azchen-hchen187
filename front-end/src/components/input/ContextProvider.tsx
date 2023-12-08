@@ -3,8 +3,8 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 import { SongData } from '../interfaces/Interface';
 
 interface AppContextProps {
-  selectedTrack: SongData | undefined;
-  chooseTrack: (track: SongData) => void;
+  selectedTrack: string[] | undefined;
+  chooseTrack: (track: string[]) => void;
   nativeLanguage: string;
   chooseNativeLanguage: (language: string) => void;
   totalPoints: number;
@@ -15,14 +15,14 @@ interface AppContextProps {
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) => {
-    const [selectedTrack, setSelectedTrack] = useState<SongData>();
+    const [selectedTrack, setSelectedTrack] = useState<string[]>();
     const [nativeLanguage, setNativeLanguage] = useState("");
     const [totalPoints, setTotalPoints] = useState(0);
     const [difficulty, setDifficulty] = useState("");
 
     
 
-    const chooseTrack = (track : SongData) => {
+    const chooseTrack = (track : string[]) => {
         setSelectedTrack(track);
       };
 

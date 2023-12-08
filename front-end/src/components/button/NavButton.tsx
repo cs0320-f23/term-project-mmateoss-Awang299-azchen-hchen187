@@ -5,13 +5,19 @@ import { useNavigate } from 'react-router-dom';
 interface NavButtonProps {
     nextPage: string;
     displayedText: string;
+    proceedToNextPage: boolean;
+    onClickRejection: () => void;
 }
 
-export default function NavButton( {nextPage, displayedText} : NavButtonProps ) {
+export default function NavButton( {nextPage, displayedText, proceedToNextPage, onClickRejection} : NavButtonProps ) {
 
   const navigate = useNavigate();
   const handleButtonClick = () => {
-    navigate(nextPage);
+    if (proceedToNextPage) {
+        navigate(nextPage);
+    } else {
+        onClickRejection();
+    }
   }
 
 

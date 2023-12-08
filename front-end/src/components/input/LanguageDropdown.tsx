@@ -8,7 +8,7 @@ interface Language {
 }
 
 const LanguageDropdown = () => {
-  const {chooseNativeLanguage} = useAppContext();
+  const {nativeLanguage, chooseNativeLanguage} = useAppContext();
   
   const handleLanguageSelection = (
     selectedOption: SingleValue<Language>,
@@ -36,7 +36,7 @@ const LanguageDropdown = () => {
     <Select
       options={options}
       placeholder="Select a language"
-      className="language-select"
+      className={nativeLanguage ? nativeLanguage : "Select a language"}
       onChange={handleLanguageSelection}
     />
   );

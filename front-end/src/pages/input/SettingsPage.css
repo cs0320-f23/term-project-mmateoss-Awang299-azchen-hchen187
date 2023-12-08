@@ -17,6 +17,66 @@ h1 {
     align-items: center;
 }
 
+.step-2-lineart-container {
+  position: absolute;
+  top: 7vh;
+  left: 9vh;
+}
+
+.step-2-lineart {
+  position: relative;
+  width: 450px;
+  height: 450px;
+  left: 20px;
+  background: url("../../assets/images/SettingsPage/step-2-lineart-big.png") no-repeat center center;
+  background-size: cover;
+  transform: rotate(-10deg);
+}
+
+.instructions-container-step2 {
+  position: absolute;
+  max-width: 350px;
+  top: 27vh;
+  left: 18vh;
+  font-size: 20pt;
+  text-align: left;
+  color: white;
+  font-weight: bold;
+  line-height: 40px;
+  text-indent: 50px;
+}
+
+
+.step-3-lineart-container {
+  position: absolute;
+  top: 25vh;
+  right: 7vh;
+  z-index: 1;
+}
+
+.step-3-lineart {
+  position: relative;
+  width: 350px;
+  height: 350px;
+  left: 20px;
+  background: url("../../assets/images/SettingsPage/step-3-lineart.png") no-repeat center center;
+  background-size: cover;
+  transform: rotate(3deg);
+}
+
+.instructions-container-step3 {
+  position: absolute;
+  max-width: 200px;
+  top: 35vh;
+  right: 20vh;
+  font-size: 20pt;
+  text-align: right;
+  color: white;
+  font-weight: bold;
+  line-height: 40px;
+  text-indent: 50px;
+}
+
 .dropdown-container {
     top: 10vh;
     width: 300px;
@@ -86,6 +146,21 @@ h1 {
 
 .nav-button:hover {
   background-color: var(--green);
+}
+
+
+.warning-message-container {
+  height: 200px;
+  width: 150px;
+  border-radius: 50px 50px 50px 10px;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+  display: flex;
+  background-color: var(--lime);
+  margin-left: 300px;
+  color: black;
+  font-size: 20pt;
 }
 
 .person-container-small {

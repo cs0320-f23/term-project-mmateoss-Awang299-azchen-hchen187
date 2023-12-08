@@ -12,9 +12,13 @@ import TrackSearchResult from '../../components/input/TrackSearchResult';
 import { SongData } from '../../components/interfaces/Interface';
 import { useAppContext } from '../../components/input/ContextProvider';
 
-async function fetchSongs(input: string) : Promise<string> {
-  //todo: update serverinput string
-  const serverInput = "getSongs?" + "whateverparemeter=" + input;
+async function fetchSongs(input: string) : Promise<{Result: string, data: string[][]}> {
+  const limit = 10;
+  const tokenObject = await fetch("http://localhost:3232/token");
+  const tokenJson = await tokenObject.json();
+  const token = tokenJson.token;
+  const serverInput = "getSongs?token=" + token + "&limit=" + limit + "&query=" + input;
+  console.log(serverInput)
   const fetched = await fetch("http://localhost:3232/" + serverInput);
   const dataObject = await fetched.json();
   return dataObject;
@@ -29,17 +33,26 @@ async function fetchMockedSongs(input: string) {
 function SongsPage() {
   const { selectedTrack, chooseTrack } = useAppContext();
   const [search, setSearch] = useState("")
-  const [searchResults, setSearchResults] = useState<SongData[]>([])
+  const [searchResults, setSearchResults] = useState<string[][]>([])
   const [isActive, setIsActive] = useState(false);
+  const [fieldsPopulated, setFieldsPopulated] = useState(false);
+  const [displayWarning, setDisplayWarning] = useState(false);
 
   const handleSearchClick = () => {
     setIsActive(true);
   }
 
-  //displays selected song
+  const handleButtonRejection = () => {
+    setDisplayWarning(true)
+  }
+
+  //updates fieldsPopulated boolean
   useEffect(() => {
-    console.log("new track chosen")
-    console.log(selectedTrack)
+    if (selectedTrack !== undefined) {
+      if (selectedTrack.length !== 0) {
+        setFieldsPopulated(true)
+      } 
+    }
   }, [selectedTrack])
 
   //handles searching of songs
@@ -47,18 +60,16 @@ function SongsPage() {
     if (!search) return setSearchResults([]);
 
     let cancel = false;
-    fetchMockedSongs(search).then(response => {
+    fetchSongs(search).then(response => {
+      console.log(response)
       if (cancel) {
         console.log("cancel is true")
         return 
       }
-      if (response.result === "success") {
-        if (Array.isArray(response.data)) {
-          setSearchResults(response.data)
-          console.log(searchResults)
-        }
+      if (response.Result === "Success") {
+        setSearchResults(response.data)
       } else {
-        //error
+        //todo: handle error response
       }
     })
     return () => {
@@ -116,7 +127,7 @@ function SongsPage() {
                 {searchResults.map((track) => (
                   <TrackSearchResult
                     track={track}
-                    key={track.trackID}
+                    key={track[2]}
                     chooseTrack={chooseTrack}
                   />
                 ))}
@@ -130,10 +141,10 @@ function SongsPage() {
             {selectedTrack ? (
               // Render something when a track is selected
               <div className="selected-track-overlay">
-                <div className="displayed-title">{selectedTrack.title}</div>
+                <div className="displayed-title">{selectedTrack[0]}</div>
                 <img
                   className="track-image"
-                  src={selectedTrack.albumUrl}
+                  src={selectedTrack[3]}
                   style={{ width: "250px", height: "250px" }}
                   alt="album cover"
                 />
@@ -150,8 +161,9 @@ function SongsPage() {
             </div>
           </div>
 
-          <NavButton nextPage="/input/metadata" displayedText="Next"/>
+          <NavButton nextPage="/input/settings" displayedText="Next" proceedToNextPage={fieldsPopulated} onClickRejection={handleButtonRejection}/>
           <div className="person-container-small">
+            <div className={`${displayWarning ? "warning-message-container" : ""}`}>Please input a song!</div>
             <PersonComponent
               handleHeadClick={() => {}}
               headClicked={false}
