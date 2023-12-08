@@ -1,7 +1,7 @@
 package edu.brown.cs.student.Tests.server.spotify;
 
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
-import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
+import edu.brown.cs.student.main.server.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import org.junit.jupiter.api.BeforeEach;
@@ -13,46 +13,43 @@ import org.testng.Assert;
  */
 public class CachedDataTests {
 
-
   private String token;
 
   /**
    * Constructor for the testing class.
    */
-  public CachedDataTests(){
-
+  public CachedDataTests() {
 
   }
-
 
   /**
    * Method called before each test is run.
    */
   @BeforeEach
-  public void beforeEach() throws Exception{
+  public void beforeEach() throws Exception {
     TokenGenerator generator = new TokenGenerator();
     this.token = generator.getToken();
 
   }
 
-
   /**
-   * Ensuring that we can get the features of a group of songs based on their names
+   * Ensuring that we can get the features of a group of songs based on their
+   * names
+   * 
    * @throws Exception any exception thrown while the test is running
    */
   @Test
-  public void testGetFeats() throws Exception{
+  public void testGetFeats() throws Exception {
 
     CachedSpotifyData data = new CachedSpotifyData();
     data.setToken(this.token);
     String[] names = new String[3];
     names[0] = "I Will Wait";
-    //1fXiYSWmkKJfRKMegCkI11
+    // 1fXiYSWmkKJfRKMegCkI11
     names[1] = "Lucid Dreams";
-    //285pBltuF7vW8TeWk8hdRR
+    // 285pBltuF7vW8TeWk8hdRR
     names[2] = "Levels";
-    //5UqCQaDshqbIk3pkhy4Pjg
-
+    // 5UqCQaDshqbIk3pkhy4Pjg
 
     FeaturesProp feats = data.getFeatures(names);
     Assert.assertEquals(feats.audio_features().get(0).valence(), Float.valueOf("0.452"));
@@ -67,7 +64,7 @@ public class CachedDataTests {
    * @throws Exception
    */
   @Test
-  public void testGenerateRecommendationSingleTrack() throws Exception{
+  public void testGenerateRecommendationSingleTrack() throws Exception {
 
     CachedSpotifyData data = new CachedSpotifyData();
     data.setToken(this.token);
@@ -85,11 +82,11 @@ public class CachedDataTests {
     Assert.assertEquals(rec.tracks().size(), 3);
     Assert.assertTrue(rec.seeds().get(0).afterFilteringSize() > 10);
 
-
   }
 
   /**
-   * Method that tests that we can correctly generate a playlist with more than one song used for
+   * Method that tests that we can correctly generate a playlist with more than
+   * one song used for
    * generation.
    *
    * @throws Exception
