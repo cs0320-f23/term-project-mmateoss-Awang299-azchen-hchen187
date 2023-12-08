@@ -22,8 +22,8 @@ import java.util.concurrent.TimeUnit;
  */
 public class TokenGenerator implements IToken {
 
-  public String client_id;
-  public String client_secret;
+  private String client_id;
+  private String client_secret;
   private String combined;
   private LoadingCache<String, String> tokenCache;
 

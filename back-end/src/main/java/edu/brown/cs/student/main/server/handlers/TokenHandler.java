@@ -43,28 +43,19 @@ public class TokenHandler implements Route {
     Moshi moshi = new Moshi.Builder().build();
     Map<String, String> responseMap = new HashMap<>();
     Set<String> params = req.queryParams();
+
     try {
-      TokenGenerator gen = (TokenGenerator) this.generator;
-      System.out.println(gen.client_id);
-      System.out.println(gen.client_secret);
-      responseMap.put("client_id", gen.client_id);
-      responseMap.put("client_secret", gen.client_secret);
-      return moshi.adapter(Map.class).toJson(responseMap);
+      if (params.size() > 0) {
+        responseMap.put("Result", "Error");
+        responseMap.put("Error Message", "please do not include any parameters when trying to" + " get the token");
+        return moshi.adapter(Map.class).toJson(responseMap);
+      } else {
 
-      // if(params.size() > 0){
-      // responseMap.put("Result", "Error");
-      // responseMap.put("Error Message", "please do not include any parameters when
-      // trying to"
-      // + " get the token");
-      // return moshi.adapter(Map.class).toJson(responseMap);
-      // }
-      // else{
-
-      // String token = this.generator.getToken();
-      // responseMap.put("Result", "Success");
-      // responseMap.put("token", token);
-      // return moshi.adapter(Map.class).toJson(responseMap);
-      // }
+        String token = this.generator.getToken();
+        responseMap.put("Result", "Success");
+        responseMap.put("token", token);
+        return moshi.adapter(Map.class).toJson(responseMap);
+      }
     } // catching any possible exception that could have been thrown by the code
     catch (Exception e) {
       responseMap.clear();
