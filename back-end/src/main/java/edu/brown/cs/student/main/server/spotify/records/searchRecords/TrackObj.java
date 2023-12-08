@@ -1,6 +1,8 @@
 package edu.brown.cs.student.main.server.spotify.records.searchRecords;
 
 
+import java.util.List;
+
 /**
  * Record that takes up the internal part of a song object, here is where the song id can be found.
  *
@@ -15,6 +17,6 @@ package edu.brown.cs.student.main.server.spotify.records.searchRecords;
  *                   with 100 being the most popular.
  */
 public record TrackObj(String id, String uri, String preview_url, String name,
-                       int popularity, AlbumObj album) {
+                       int popularity, AlbumObj album, List<ArtistObj> artists) {
 
 }

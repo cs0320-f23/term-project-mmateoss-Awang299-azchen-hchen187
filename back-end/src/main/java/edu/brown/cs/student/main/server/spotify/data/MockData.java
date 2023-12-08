@@ -9,6 +9,7 @@ import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 /**
  * Class that will be used to get mocked data, allowing
@@ -138,5 +139,11 @@ public class MockData implements IData {
   @Override
   public boolean setToken(String token){
     return false;
+  }
+
+
+  @Override
+  public List<List<String>> getSongsPrompt(String prompt, String limit){
+    return null;
   }
 }

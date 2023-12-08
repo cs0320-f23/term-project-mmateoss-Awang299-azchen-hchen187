@@ -99,5 +99,26 @@ public class SpotifyRequestsTests {
 
   }
 
+  /**
+   * Method that tests that we can get song names and artists through a simple api call.
+   *
+   * @throws Exception exception thrown when making api call to spotify server
+   */
+  @Test
+  public void testGetSongPrompt() throws Exception{
+    String prompt = "the weekend";
+    String limit = "10";
+    Song song = this.data.getSongKeywords(this.token, prompt, limit);
+
+    Assert.assertEquals(song.tracks().items().size(), 10);
+    Assert.assertEquals(song.tracks().items().get(0).album().images().get(0).url(),
+        "https://i.scdn.co/image/ab67616d0000b2734c79d5ec52a6d0302f3add25");
+    Assert.assertEquals(song.tracks().items().get(0).id(),
+        "6gU9OKjOE7ghfEd55oRO57");
+    Assert.assertEquals(song.tracks().items().get(0).name(),
+        "The Weekend");
+
+  }
+
 
 }

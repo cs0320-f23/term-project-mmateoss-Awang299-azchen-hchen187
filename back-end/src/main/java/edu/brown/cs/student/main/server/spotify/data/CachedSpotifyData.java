@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.spotify.data;
 
+import com.beust.ah.A;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -8,6 +9,8 @@ import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Re
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
@@ -318,5 +321,41 @@ public class CachedSpotifyData implements IData {
 
 
   }
+
+
+  /**
+   * Method used to get song objects and needed information for search bar based on any prompt
+   * inputted by the users.
+   *
+   * @param prompt what is being searched
+   * @param limit max number of songs returned
+   *
+   * @return List of list of strings containing all the needed information
+   *
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   */
+  @Override
+  public List<List<String>> getSongsPrompt(String prompt, String limit) throws
+      URISyntaxException, IOException, InterruptedException {
+
+    Song songs = this.data.getSongKeywords(this.token, prompt, limit);
+    List<List<String>> toReturn = new ArrayList<>();
+    for(int i =0; i<songs.tracks().items().size();i++){
+      List<String> innerList = new ArrayList<>();
+      innerList.add(songs.tracks().items().get(i).name());
+      innerList.add(songs.tracks().items().get(i).artists().get(0).name());
+      innerList.add(songs.tracks().items().get(i).id());
+      // TODO: check to make sure that index one is always 300 by 300
+      innerList.add(songs.tracks().items().get(i).album().images().get(1).url());
+
+      toReturn.add(innerList);
+    }
+    return toReturn;
+  }
+
 
 }
