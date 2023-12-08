@@ -53,7 +53,12 @@ public class GetSongHandler implements Route {
     if(params.size() != 3 || token == null || limit == null || query == null){
       responseMap.put("Result", "Error");
       responseMap.put("Error Message", "Please ensure you pass in a token, limit, and query as"
-          + "parameters");
+          + " parameters");
+      return moshi.adapter(Map.class).toJson(responseMap);
+    }
+    if(limit.equals("0") || Integer.valueOf(limit) > 20 || Integer.valueOf(limit) < 0){
+      responseMap.put("Result", "Error");
+      responseMap.put("Error Message", "the limit must be an integer in the range 1-20");
       return moshi.adapter(Map.class).toJson(responseMap);
     }
     try{
