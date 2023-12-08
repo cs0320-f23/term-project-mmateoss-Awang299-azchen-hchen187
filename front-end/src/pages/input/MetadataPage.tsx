@@ -36,7 +36,7 @@ function MetadataPage() {
             Fill in the missing line:
             <br />
             "
-            <span style={{fontWeight: 'normal'}}>
+            <span style={{fontWeight: 'normal', fontSize: '19pt'}}>
             I just need to tell you somthing - 
             </span>
             <br /> 
@@ -55,7 +55,7 @@ function MetadataPage() {
             {' '}"
             <br /> 
             "
-            <span style={{ fontWeight: 'bolder', color: 'var(--green)' }}>_____________________</span>
+            <span style={{ fontWeight: 'bolder', color: 'var(--green)' }}>_____________________________</span>
             {' '}"
             <br />
           </span>
