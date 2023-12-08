@@ -35,6 +35,10 @@ public class RecordTests {
     Assert.assertEquals(rec.seeds().size(),1);
     Assert.assertEquals(rec.seeds().get(0).id(),"0c6xIDDpzE81m2q797ordA");
     Assert.assertEquals(rec.tracks().size(), 20);
+    Assert.assertEquals(rec.tracks().get(0).album().images().get(0).url(),
+        "https://i.scdn.co/image/ab67616d0000b273df306c07c8648c0e955cb94a");
+    Assert.assertEquals(rec.tracks().get(0).album().images().get(0).height(),
+        640);
 
 
   }
