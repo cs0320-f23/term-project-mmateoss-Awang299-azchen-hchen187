@@ -46,6 +46,8 @@ public class CachedSpotifyData implements IData {
               }
             }
         );
+
+    // building the cache that will hold the list of list of strings for the search bar
     this.searchingSongCache = CacheBuilder.newBuilder()
         .maximumSize(40)
         .expireAfterWrite(3, TimeUnit.MINUTES)
@@ -364,6 +366,20 @@ public class CachedSpotifyData implements IData {
     return this.searchingSongCache.get(input);
   }
 
+  /**
+   * Method that builds the list of list of strings to be returned by getSongsPrompt
+   *
+   * @param prompt what the songs gotten will be based off of
+   * @param limit the max number of songs returned
+   *
+   * @return List of list of strings containing all the needed information
+   *
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   */
   private List<List<String>> buildGetSongsPrompts(String prompt, String limit)  throws
       URISyntaxException, IOException, InterruptedException{
     Song songs = this.data.getSongKeywords(this.token, prompt, limit);
