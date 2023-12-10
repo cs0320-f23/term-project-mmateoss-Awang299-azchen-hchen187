@@ -1,89 +1,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
-h1 {
-    font-size: large;
-    color: white;
-}
-
-.songs-page {
+.generation-page {
   background: black;
-  min-height: 100vh;
-}
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  flex: 1;
 
-.main-container {
-    display: flex;
+  .player {
     width: 100%;
-    flex-direction: column;
-    align-items: center;
-}
-
-.progress-container {
-    position: relative;
-    display: flex;
-    width: 100%;
-    height: 8vh;
-    margin-top: 20px;
-    margin-bottom: 40px;
-    flex-direction: row;
-    justify-content: space-evenly;
-    align-items: center;
-}
-
-.progress-bar {
-  position: relative;
-  width: 160px;
-  padding: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  text-align: center;
-  border-radius: 100px;
-  background-color: #f2f2ed;
-}
-
-.progress-bar-highlight {
-  position: relative;
-  width: 160px;
-  padding: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  text-align: center;
-  border-radius: 100px;
-  background-color: var(--lime);
-}
-
-.button-container {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 50px;
-}
-
-.nav-button {
-  border: none;
-  cursor: pointer;
-  position: relative;
-  width: 160px;
-  padding: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  text-align: center;
-  font-size: large;
-  font-weight: 500;
-  font-family: "Kumbh Sans";
-  border-radius: 100px;
-  background-color: #f2f2ed;
-}
-
-.nav-button:hover {
-  background-color: var(--green);
-}
-
-.person-container-small {
-    display: inline-block;
-    transform: scale(0.7);
-    transform-origin: bottom left;
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    margin: 30px;
   }
+}

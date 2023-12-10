@@ -1,26 +1,19 @@
 import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
-import { motion } from 'framer-motion';
-import ProgressBar from '../../components/progress/ProgressBar'
-import NavButton from '../../components/button/NavButton';
-import PersonComponent from '../../components/home/PersonComponent';
 
 import './GenerationPage.css';
 import '../../components/home/Person.css';
+import LyricsGame from '../../components/input/LyricsGame';
+import { useAppContext } from '../../components/input/ContextProvider';
+
 
 function GenerationPage() {
 
+  const {token} = useAppContext();
+  const [trackUri, setTrackUri] = useState(`spotify:track:2E0Lr1ecydv5MjTYYM0WhN`);
+
   return (
-    //initial={{opacity:0}} animate={{opacity: 1}}
-    <div className="songs-page">
-      <motion.div className="body">
-        <div className="main-container">
-          <ProgressBar step={3} />
-          <NavButton nextPage="/result" displayedText="Submit"/>
-          <div className="person-container-small">
-            <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true}/>
-          </div>
-        </div>
-      </motion.div>
+    <div className="generation-page">
+      <LyricsGame token={token} trackUri={trackUri}/>
     </div>
   );
 }

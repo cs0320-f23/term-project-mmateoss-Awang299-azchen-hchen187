@@ -9,8 +9,7 @@ import MetadataPage from './pages/input/MetadataPage';
 import GenerationPage from './pages/input/GenerationPage';
 import GeneratedPlaylistPage from './pages/result/GeneratedPlaylistPage';
 import LoadingPage from './pages/result/LoadingPage';
-import Toolbar from './components/toolbar/Toolbar';
-
+import Toolbar from './components/Toolbar/Toolbar';
 
 
 /**

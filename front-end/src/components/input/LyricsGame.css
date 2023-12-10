@@ -1,0 +1,15 @@
+.lyrics-game {
+    width: 100%;
+
+    .player {
+        width: 100%;
+        
+        ._SliderRSWP {
+            display: none
+        }
+    }
+}
+
+.lyrics-game p {
+    color: white;
+}

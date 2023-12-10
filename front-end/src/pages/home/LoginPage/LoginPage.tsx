@@ -1,9 +1,8 @@
 import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
 import './LoginPage.css';
 import { motion } from 'framer-motion';
-import Toolbar from '../../../components/toolbar/Toolbar';
 import { spotifyLogin } from './SpotifyConnection';
-
+import Toolbar from '../../../components/Toolbar/Toolbar';
 
 
 function LoginPage() {
