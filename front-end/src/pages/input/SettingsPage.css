@@ -5,7 +5,7 @@ h1 {
     color: white;
 }
 
-.songs-page {
+.settings-page {
   background: black;
   min-height: 100vh;
 }
@@ -51,7 +51,6 @@ h1 {
   position: absolute;
   top: 25vh;
   right: 7vh;
-  z-index: 1;
 }
 
 .step-3-lineart {

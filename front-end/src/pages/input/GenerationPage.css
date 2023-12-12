@@ -5,7 +5,7 @@ h1 {
     color: white;
 }
 
-.songs-page {
+.generated-page {
   background: black;
   min-height: 100vh;
 }
@@ -87,3 +87,50 @@ h1 {
     left: 0;
     margin: 30px;
   }
+
+  .input-track-container {
+    position: fixed;
+    display: flex;
+    flex-direction: row;
+    margin-top: 50vh;
+    left: 30vh;
+    height: 70vh;
+    color: white;
+    flex-grow: 1;
+    justify-content: center;
+  }
+  
+  .input-track-overlay {
+    position: absolute;
+    justify-content: center;
+    max-width: 400px;
+    top: 14vh;
+    z-index: 1;
+  }
+
+  .title {
+    color: white;
+    font-size: 12pt;
+  }
+
+  .recommended-tracks-container{
+    display: flex;
+    align-items: center;
+    
+    position: absolute;
+    bottom: 20vh;
+    right: 20vh;
+  }
+
+  .recommended-track-container {
+    background-color: black;
+    margin: 8px;
+    overflow: hidden;
+  }
+
+  .track-container {
+    display: flex;
+    flex-direction: column;
+    width: 100px;
+  }
+

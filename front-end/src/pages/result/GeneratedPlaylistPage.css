@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
+
+h1 {
+    font-size: 100pt;
+    color: white;
+}
+
+.songs-page {
+  background: black;
+  min-height: 100vh;
+}
+
+.main-container {
+    display: flex;
+    width: 100%;
+    align-items: flex-start;
+    justify-content: center;
+    flex-direction: row;
+    /* flex-direction: column;
+    align-items: center; */
+}
+
+.button-container {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  margin: 50px;
+}
+
+.nav-button {
+  border: none;
+  cursor: pointer;
+  position: relative;
+  width: 160px;
+  padding: 10px;
+  margin-right: 20px;
+  margin-left: 20px;
+  text-align: center;
+  font-size: large;
+  font-weight: 500;
+  font-family: "Kumbh Sans";
+  border-radius: 100px;
+  background-color: #f2f2ed;
+}
+
+.nav-button:hover {
+  background-color: var(--green);
+}
+
+.person-container-small {
+    display: inline-block;
+    align-items: center;
+    flex-direction: row;
+    transform: scale(0.7);
+    transform-origin: bottom left;
+    bottom: 0;
+    left: 0;
+    margin: 30px;
+  }

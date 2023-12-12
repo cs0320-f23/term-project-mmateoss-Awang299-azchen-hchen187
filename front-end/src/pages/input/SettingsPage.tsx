@@ -90,7 +90,7 @@ function SettingsPage() {
 
   return (
     //initial={{opacity:0}} animate={{opacity: 1}}
-    <div className="songs-page">
+    <div className="settings-page">
       <motion.div className="body">
         <div className="main-container">
           <div className="step-2-lineart-container">

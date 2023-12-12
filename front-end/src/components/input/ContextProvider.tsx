@@ -24,6 +24,7 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) =
 
     const chooseTrack = (track : string[]) => {
         setSelectedTrack(track);
+        console.log("set track to " + track)
       };
 
     const chooseNativeLanguage = (language: string) => {
