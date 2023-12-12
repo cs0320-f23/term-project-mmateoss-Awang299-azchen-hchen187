@@ -1,59 +1,206 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
 h1 {
-    font-size: 100pt;
-    color: white;
+  font-size: large;
+  color: white;
 }
 
-.songs-page {
-  background: black;
-  min-height: 100vh;
+.generated-page {
+background: black;
+min-height: 100vh;
 }
 
 .main-container {
-    display: flex;
-    width: 100%;
-    align-items: flex-start;
-    justify-content: center;
-    flex-direction: row;
-    /* flex-direction: column;
-    align-items: center; */
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
 }
 
 .button-container {
-  position: absolute;
-  bottom: 0;
-  right: 0;
-  margin: 50px;
+position: absolute;
+bottom: 0;
+right: 0;
+margin: 50px;
 }
 
 .nav-button {
-  border: none;
-  cursor: pointer;
-  position: relative;
-  width: 160px;
-  padding: 10px;
-  margin-right: 20px;
-  margin-left: 20px;
-  text-align: center;
-  font-size: large;
-  font-weight: 500;
-  font-family: "Kumbh Sans";
-  border-radius: 100px;
-  background-color: #f2f2ed;
+border: none;
+cursor: pointer;
+position: relative;
+width: 160px;
+padding: 10px;
+margin-right: 20px;
+margin-left: 20px;
+text-align: center;
+font-size: large;
+font-weight: 500;
+font-family: "Kumbh Sans";
+border-radius: 100px;
+background-color: #f2f2ed;
 }
 
 .nav-button:hover {
-  background-color: var(--green);
+background-color: var(--green);
 }
 
 .person-container-small {
-    display: inline-block;
-    align-items: center;
-    flex-direction: row;
-    transform: scale(0.7);
-    transform-origin: bottom left;
-    bottom: 0;
-    left: 0;
-    margin: 30px;
+  display: inline-block;
+  transform: scale(0.7);
+  transform-origin: bottom left;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  margin: 30px;
+}
+
+.input-track-container-wrapper {
+  position: absolute;
+  bottom: -5vh;
+  left: -7vh;
+  animation: y-axis 1.5s forwards ease-in-out;
+  transition: opacity 0.5s ease-in-out;
+}
+
+.input-track-container-wrapper.hidden {
+  opacity: 0;
+  pointer-events: none; 
+}
+
+.input-track-container {
+  position: absolute;
+  display: flex;
+  flex-direction: row;
+  margin-top: 50vh;
+  bottom: 30vh;
+  left: -7vh;
+  /* left: 30vh; */
+  height: 70vh;
+  color: white;
+  flex-grow: 1;
+  justify-content: center;
+  animation: x-axis 3s forwards linear;
+}
+
+
+@keyframes x-axis {
+  50% {
+    transform:translateX(400px);
   }
+  100% {
+    transform: translateX(400px);
+  }
+}
+
+@keyframes y-axis {
+  50% {
+    transform: translateY(100px);
+  }
+  /* 100% {
+    transform: translateY(100px);
+  } */
+}
+
+.input-track-overlay {
+  position: absolute;
+  justify-content: center;
+  max-width: 400px;
+  top: 14vh;
+  z-index: 1;
+}
+
+.title {
+  color: white;
+  font-size: 12pt;
+}
+
+.recommended-tracks-container{
+  display: flex;
+  flex-wrap: wrap;
+  max-width: 700px;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  bottom: 5vh;
+  right: 20vh;
+  z-index: 1;
+}
+
+.recommended-track-container {
+  width: 200px;
+  margin: 7px;
+  transition: transform 0.3s ease;
+}
+
+.recommended-track-container:hover {
+  transform: scale(1.1);
+}
+
+.recommended-tracks-background {
+  position: absolute;
+  width: 1000px;
+  height: 650px;
+  bottom: -7vh;
+  right: 0;
+  background: url("../../assets/images/GeneratedPlaylistPage/recs-background.png") no-repeat center center;
+  background-size: contain;
+}
+
+.chosen-lineart {
+  position: absolute;
+  width: 220px;
+  height: 220px;
+  background: url("../../assets/images/GeneratedPlaylistPage/circle-lineart.png") no-repeat center center;
+  background-size: contain;
+}
+
+.boom-box-svg {
+  position: absolute;
+  width: 400px;
+  height: 650px;
+  top: -10vh;
+  left: 20vh;
+  background: url("../../assets/images/GeneratedPlaylistPage/boombox-sparkle.svg") no-repeat center center;
+  background-size: contain;
+}
+
+.boom-box-background {
+  position: absolute;
+  width: 500px;
+  height: 650px;
+  top: 5vh;
+  left: -10vh;
+  background: url("../../assets/images/GeneratedPlaylistPage/boom-box-background.svg") no-repeat center center;
+  background-size: contain;
+}
+
+.generation-text-container {
+  position: absolute;
+  max-width: 700px;
+  top: 10vh;
+  right: 10vh;
+  font-size: 25pt;
+  text-align: right;
+  color: white;
+  font-weight: bold;
+  line-height: 50px;
+  text-indent: 20px;
+}
+
+.warning-message-container {
+  height: 200px;
+  width: 150px;
+  border-radius: 50px 50px 50px 10px;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+  display: flex;
+  background-color: var(--lime);
+  margin-left: 300px;
+  color: black;
+  font-size: 20pt;
+}
+
+.no-display {
+  display: none;
+}

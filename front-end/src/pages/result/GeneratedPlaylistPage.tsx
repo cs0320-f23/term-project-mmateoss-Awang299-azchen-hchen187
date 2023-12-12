@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { MouseEventHandler, useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
 
 import './GeneratedPlaylistPage.css';
@@ -8,6 +8,7 @@ import PersonComponent from '../../components/home/PersonComponent';
 import { useAppContext } from '../../components/input/ContextProvider';
 import { recommendationInputData, recommendationOutputData } from '../../mock/MockedData';
 import { RecommendationOutputData, TrackInfo } from '../../components/interfaces/Interface';
+import GeneratedTrackComponent from '../../components/result/GeneratedTrackComponent';
 
 
 async function fetchSongs(selectedTrackTitle: string) : Promise<RecommendationOutputData> {
@@ -30,16 +31,36 @@ async function mockFetchSongs(selectedTrackTitle:string) : Promise<Recommendatio
 
 
 export default function GeneratedPlaylistPage() {
-  console.log("component renders")
-  const { selectedTrack } = useAppContext();
+  const { selectedTrack} = useAppContext();
   const [trackHashmap, setTrackHashmap] = useState<Record<number, TrackInfo>>({})
   const [dataFetched, setDataFetched] = useState(false);
-  // const selectedTrack = recommendationInputData.data;
+  const [displayRecs, setDisplayRecs] = useState(false);
+  const [displayWarning, setDisplayWarning] = useState(false);
+  const [fieldsPopulated, setFieldsPopulated] = useState(false);
+  const [initialSelectedTrack, setInitialSelectedTrack] = useState("");
+  // const [chosenTrack, setChosenTrack] = useState("");
+  const inputTrack = document.getElementById("input-track");
+  //const selectedTrack = recommendationInputData.data;
+
+  const handleButtonRejection = () => {
+    setDisplayWarning(true)
+  }
+
+  useEffect(() => {
+    if (selectedTrack !== undefined) {
+      Object.values(trackHashmap).some((track : TrackInfo) => {
+        if (selectedTrack[0] === track.name) {
+          setFieldsPopulated(true)
+        }})
+      
+      if (initialSelectedTrack === "") {
+        setInitialSelectedTrack(selectedTrack[0])
+      }
+    }
+  }, [selectedTrack])
 
   //fetches for the recommended songs based on user selected song
   useEffect(() => {
-    console.log("inside useeffect")
-    console.log(selectedTrack)
     if (selectedTrack !== undefined) {
       fetchSongs(selectedTrack[0]).then(response => {
         setTrackHashmap(response.tracks.reduce((hashmap, track, i) => {
@@ -51,55 +72,77 @@ export default function GeneratedPlaylistPage() {
           }
           return hashmap;
         }, {} as Record<number, TrackInfo>))
-        console.log(trackHashmap)
         setDataFetched(true)
       })
     }
-  }, [selectedTrack])
+  }, [])
 
 
+  setTimeout(() => {
+    if (inputTrack !== null) {
+      inputTrack.classList.add('hidden');
+      setDisplayRecs(true);
+    }
+  }, 1600);
 
   return (
     <div className="generated-page">
-    <motion.div className="body">
-      <div className="main-container">
-        <div className="input-track-container">
-        <div className="input-track-overlay">
-                <div className="title">{selectedTrack? selectedTrack[0] : "error"}</div>
-                <img
-                  className="track-image"
-                  src={selectedTrack? selectedTrack[3]: "error"}
-                  style={{ width: "100px", height: "100px" }}
-                  alt="album cover"
-                />
+      <motion.div className="body">
+        <div className="main-container">
+          <div className="boom-box-background"></div>
+          <div className="input-track-container-wrapper" id="input-track">
+          <div className="input-track-container">
+            <div className="input-track-overlay">
+              <div className="title" style={{color: "black"}}>
+                {selectedTrack ? selectedTrack[0] : "error"}
               </div>
-        </div>
+              <img
+                className="track-image"
+                src={selectedTrack ? selectedTrack[3] : "error"}
+                style={{ width: "120px", height: "120px" }}
+                alt="album cover"
+              />
+            </div>
+          </div>
+          </div>
 
-        <div className="recommended-tracks-container">
-        {dataFetched && (
-  <>
-    {Object.values(trackHashmap).map((track) => (
-      <div key={track.id} className="recommended-track-container">
-        <div className="title">{track.name}</div>
-        <img
-          className="track-image"
-          src={track.albumUrl}
-          style={{ width: "100px", height: "100px" }}
-          alt="album cover"
-        />
-      </div>
-    ))}
-  </>
-)}
-        </div>
+          <div className="boom-box-svg"></div>
+          <div className="generation-text-container">
+            Here are your generated songs based on 
+            <br/>
+            <span style={{color: "var(--green)"}}>
+            {initialSelectedTrack? initialSelectedTrack: "error"}
+            </span>!
+            <br/>
+            Select one to play with:
+          </div>
 
-      
-        <NavButton nextPage="/" displayedText="Submit" proceedToNextPage={true} onClickRejection={() => {}}/>
-        <div className="person-container-small">
-          <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true}/>
+          <div className="recommended-tracks-container">
+            {dataFetched && displayRecs && (
+              <>
+                {Object.values(trackHashmap).map((track : TrackInfo) => (
+                  <GeneratedTrackComponent track={track}/>
+                ))}
+              </>
+            )}
+          </div>
+
+          <NavButton
+            nextPage="/"
+            displayedText="Submit"
+            proceedToNextPage={fieldsPopulated}
+            onClickRejection={handleButtonRejection}
+          />
+          <div className="person-container-small">
+            <div className={`${displayWarning ? "warning-message-container" : "no-display"}`}>Please input a song!</div>
+            <PersonComponent
+              handleHeadClick={() => {}}
+              headClicked={false}
+              disabledHover={true}
+            />
+          </div>
         </div>
-      </div>
-    </motion.div>
-  </div>
-  )
+      </motion.div>
+    </div>
+  );
 }
