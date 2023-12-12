@@ -29,7 +29,7 @@ public class TokenHandler implements Route {
 
   /**
    * Handle method that takes care of getting the query parameters and then building a
-   * Song based on the string.
+   * token for the frontend to use.
    *
    * @param req request object used to get the query parameters.
    * @param res response object used to create a response.
