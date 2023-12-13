@@ -1,5 +1,6 @@
 package edu.brown.cs.student.Tests.server.spotify;
 
+import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.spotify.data.MockData;
 import org.junit.jupiter.api.Test;
@@ -46,5 +47,25 @@ public class MockedTests {
     TokenGenerator generator = new TokenGenerator();
     String token = generator.getToken();
     Assert.assertTrue(token != null);
+  }
+
+
+  /**
+   * Method that tests that we can correctly replace the characters in a string when post processing
+   * in order to do string equality in java
+   */
+  @Test
+  public void testPostProcess(){
+    String name = "rich+baby+daddy+%28feat.+Sexyy+red+%26+sza%29";
+    MockData data = new MockData(
+        "data/mockedSpotifyJsons/mockedSearch/mockedTrackSearch1.json",
+        "data/mockedSpotifyJsons/"
+            + "mockedRecommendations/mockedRecommendation1.json",
+        "data/mockedSpotifyJsons/mockedAudioFeatures/mockedAudioFeats1.json");
+    String[] names = new String[1];
+    names[0] = name;
+    Recommendation rec = null;
+    data.postProcess(rec, names);
+
   }
 }
