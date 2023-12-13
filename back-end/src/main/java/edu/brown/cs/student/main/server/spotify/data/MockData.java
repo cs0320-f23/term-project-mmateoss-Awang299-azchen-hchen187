@@ -169,4 +169,21 @@ public class MockData implements IData {
     }
     return toReturn;
   }
+
+  /**
+   * Mocked method that returns the same recommendation object.
+   */
+  @Override
+  public Recommendation postProcess(Recommendation rec, String[] names){
+    for(int i =0; i<names.length; i++){
+      String name = names[i];
+      name = name.replaceAll("%26", "&");
+      name = name.replaceAll("%20", " ");
+      name = name.replaceAll("%28", "(");
+      name = name.replaceAll("%29", ")");
+      name = name.replaceAll("\\+", " ");
+      System.out.println(name);
+    }
+    return rec;
+  }
 }

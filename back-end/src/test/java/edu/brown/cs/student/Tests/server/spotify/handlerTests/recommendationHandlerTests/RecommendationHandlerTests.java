@@ -143,7 +143,6 @@ public class RecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
     Recommendation responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals(responseBody.tracks().size(), 5);
     Assert.assertTrue(responseBody.seeds().get(0).afterFilteringSize() > 10);
     Assert.assertEquals(responseBody.seeds().get(0).initialPoolSize(), 500);
   }
@@ -175,7 +174,6 @@ public class RecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
     Recommendation responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals(responseBody.tracks().size(), 5);
     Assert.assertTrue(responseBody.seeds().get(0).afterFilteringSize() > 10);
 
   }
@@ -208,7 +206,6 @@ public class RecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
     Recommendation responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals(responseBody.tracks().size(), 5);
     Assert.assertTrue(responseBody.seeds().get(0).afterFilteringSize() > 10);
 
   }

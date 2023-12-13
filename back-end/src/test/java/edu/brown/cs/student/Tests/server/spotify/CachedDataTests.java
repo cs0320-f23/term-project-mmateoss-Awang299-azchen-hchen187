@@ -52,13 +52,13 @@ public class CachedDataTests {
     names[1] = "Lucid Dreams";
     //285pBltuF7vW8TeWk8hdRR
     names[2] = "Levels";
-    //5UqCQaDshqbIk3pkhy4Pjg
+    //6vOeokRJNZjouabFGDLH1C
 
 
     FeaturesProp feats = data.getFeatures(names);
     Assert.assertEquals(feats.audio_features().get(0).valence(), Float.valueOf("0.452"));
     Assert.assertEquals(feats.audio_features().get(1).danceability(), Float.valueOf("0.511"));
-    Assert.assertEquals(feats.audio_features().get(2).liveness(), Float.valueOf("0.309"));
+    Assert.assertEquals(feats.audio_features().get(2).liveness(), Float.valueOf("0.562"));
 
   }
 
@@ -143,9 +143,8 @@ public class CachedDataTests {
     List<List<String>> results = data.getSongsPrompt(prompt, limit);
     Assert.assertEquals(results.get(0).get(0), "The Weekend");
     Assert.assertEquals(results.get(0).get(1), "SZA");
-    Assert.assertEquals(results.get(0).get(1), "SZA");
     Assert.assertEquals(results.get(1).get(3),
-        "https://i.scdn.co/image/ab67616d00001e02b19d1cc6a00ae1d4ddcbfd37");
+        "https://i.scdn.co/image/ab67616d00001e027fcead687e99583072cc217b");
 
 
 
