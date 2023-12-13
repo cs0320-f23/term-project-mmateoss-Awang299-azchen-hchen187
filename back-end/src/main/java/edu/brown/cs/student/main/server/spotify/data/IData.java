@@ -5,7 +5,8 @@ import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Re
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 
 /**
- * Interface used for dependency injection allowing us to run a server with mocked and real data.
+ * Interface used for dependency injection allowing us to run a server with
+ * mocked and real data.
  */
 public interface IData {
 
@@ -21,8 +22,9 @@ public interface IData {
     /**
      * Method used to get a recommendation either mocked or real
      *
-     * @param limit the max number of songs recommended
-     * @param allNames the names of all the acceptable songs which we want to use to generate a
+     * @param limit    the max number of songs recommended
+     * @param allNames the names of all the acceptable songs which we want to use to
+     *                 generate a
      *                 recommendation
      * @return a recommendation object
      * @throws Exception any exception that could be thrown
@@ -31,12 +33,13 @@ public interface IData {
 
     /**
      * Method used to get a feature object based on the names of songs
+     * 
      * @param allNames the names of acceptable songs whose features we want
      * @return featureProp object
-     * @throws Exception any exception that could be thrown either by mocked or real data.
+     * @throws Exception any exception that could be thrown either by mocked or real
+     *                   data.
      */
     public FeaturesProp getFeatures(String[] allNames) throws Exception;
-
 
     public boolean setToken(String token);
 }
