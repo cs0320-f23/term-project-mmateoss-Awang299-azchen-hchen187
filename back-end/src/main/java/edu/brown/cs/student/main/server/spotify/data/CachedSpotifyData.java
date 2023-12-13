@@ -397,4 +397,28 @@ public class CachedSpotifyData implements IData {
     return toReturn;
   }
 
+  /**
+   * Method that removes the same song from the recommendation
+   * @param rec recommendation object to be processed
+   * @param names names of the songs inputted.
+   * @return processed recommendation object
+   */
+  @Override
+  public Recommendation postProcess(Recommendation rec, String[] names){
+    for(int i =0; i<names.length; i++){
+      String name = names[i];
+      name = name.replaceAll("%26", "&");
+      name = name.replaceAll("%20", " ");
+      name = name.replaceAll("%28", "(");
+      name = name.replaceAll("%29", ")");
+      name = name.replaceAll("\\+", " ");
+      for(int j=0;j<rec.tracks().size();j++){
+        if(name.equals(rec.tracks().get(j).name())){
+          rec.tracks().remove(rec.tracks().get(j));
+        }
+      }
+    }
+    return rec;
+  }
+
 }

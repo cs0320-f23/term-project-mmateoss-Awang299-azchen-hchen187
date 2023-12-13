@@ -1,0 +1,114 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
+
+.about-page {
+    background: black;
+    min-height: 100vh;
+  }
+  
+.main-container {
+    display: flex;
+    width: 100%;
+    /* align-items: flex-start; */
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.mission-container {
+    margin-top: 50px;
+    width: 600px;
+    height: 225px;
+    font-size: 14pt;
+    color: white;
+    text-align: center;
+    z-index: 1;
+}
+
+.about-us-container {
+    width: 400px;
+    height: 300px;
+    font-size: 14pt;
+    color: white;
+    text-align: center;
+}
+
+.profile-container {
+    position: absolute;
+    top: 65vh;
+    width: 70%;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.pfp1 {
+    position: relative;
+    width: 375px;
+    height: 200px;
+    background: url("../../assets/images/AboutPage/marcel.png") no-repeat center center;
+    background-size: contain;
+}
+
+
+.pfp2 {
+    position: relative;
+    width: 375px;
+    height: 200px;
+    margin-right: 100px;
+    background: url("../../assets/images/AboutPage/andrew.png") no-repeat center center;
+    background-size: contain;
+}
+
+.pfp3 {
+    position: relative;
+    width: 375px;
+    height: 200px;
+    margin-left: 100px;
+    background: url("../../assets/images/AboutPage/allen.png") no-repeat center center;
+    background-size: contain;
+}
+
+.pfp4 {
+    position: relative;
+    width: 375px;
+    height: 200px;
+    background: url("../../assets/images/AboutPage/charlene.png") no-repeat center center;
+    background-size: contain;
+}
+
+/* .right-blob {
+    position: absolute;
+    top: -20px;
+    right: -35px;
+    width: 500px;
+    height: 500px;
+    background: url("../../assets/images/AboutPage/right-blob.svg") no-repeat center center;
+    background-size: contain;
+}
+
+.navbar a {
+    z-index: 1;
+    position: relative;
+    font-size: 18px;
+    color: black;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 40px;
+  }
+  
+  .navbar a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: black;
+    transition: .3s;
+  }
+  
+  .navbar a:hover::before {
+    width: 100%;
+  } */

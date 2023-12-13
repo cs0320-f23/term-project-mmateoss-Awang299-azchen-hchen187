@@ -74,7 +74,6 @@ public class RecommendationHandler implements Route {
           + " as a parameter in order to generate recommendations");
       return moshi.adapter(Map.class).toJson(responseMap);
     }
-    //TODO: check to make sure that variability is greater than 0
     if(limit.equals("0") || Integer.valueOf(limit) > 100 || Integer.valueOf(limit) < 0){
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
@@ -84,6 +83,9 @@ public class RecommendationHandler implements Route {
 
     try{
       // returning and generating the actual recommendation
+      int lim = Integer.valueOf(limit);
+      lim += 1;
+      limit = String.valueOf(lim);
       this.spotifyData.setToken(token);
       Recommendation rec = this.spotifyData.getRecommendation(limit, allNames, variability);
       // making sure recommendation returns something
@@ -94,8 +96,9 @@ public class RecommendationHandler implements Route {
             + "variability, please increase variability to generate recommendation");
         return moshi.adapter(Map.class).toJson(responseMap);
       }
+      Recommendation processed = this.spotifyData.postProcess(rec,allNames);
       // returning the recommendation
-      return moshi.adapter(Recommendation.class).toJson(rec);
+      return moshi.adapter(Recommendation.class).toJson(processed);
 
     } // error handling -- taking care of any possible exception and returning informative message
     catch (ExecutionException e){

@@ -55,4 +55,13 @@ public interface IData {
      * @throws Exception any exception that could be thrown while searching.
      */
     public List<List<String>> getSongsPrompt(String prompt, String limit) throws Exception;
+
+    /**
+     * Method that processes the recommendation returned to make sure we don't recommend the same song twice
+     *
+     * @param rec recommendation object to be processed
+     * @param names names of the songs inputted.
+     * @return a processed Recommendation obj.
+     */
+    public Recommendation postProcess(Recommendation rec, String[] names);
 }

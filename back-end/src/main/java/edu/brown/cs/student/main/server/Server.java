@@ -2,6 +2,9 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
+import com.beust.ah.A;
+import edu.brown.cs.student.main.server.audioRecognition.audioData.AudioData;
+import edu.brown.cs.student.main.server.handlers.AudioTextHandler;
 import edu.brown.cs.student.main.server.handlers.GetSongHandler;
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.handlers.AddDislikedSongsHandler;
@@ -36,6 +39,7 @@ public class Server {
     // Creating variables that need to be passed into
     CachedSpotifyData data = new CachedSpotifyData();
     TokenGenerator generator = new TokenGenerator();
+    AudioData audioData = new AudioData();
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data));
@@ -43,6 +47,7 @@ public class Server {
     Spark.get("getSongs", new GetSongHandler(data));
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
+    Spark.post("audioText", new AudioTextHandler(audioData));
 
     Spark.init();
     Spark.awaitInitialization();

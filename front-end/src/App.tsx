@@ -19,25 +19,6 @@ import FAQPage from './pages/home/FAQPage';
  * This is the highest level component!
  */
 function App() {
-
-  const LandingPageComponent = () => (
-      <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        <HomePage />
-      </motion.div>
-  )
-
-  const SongsPageComponent = () => (
-      <motion.div key="songs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        <SongsPage />
-      </motion.div>
-  )
-
-  const SettingsPageComponent = () => (
-    <motion.div key="songs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <SettingsPage />
-    </motion.div>
-)
-
   
   return (
     <ContextProvider>
