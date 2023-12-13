@@ -10,17 +10,27 @@ import LanguageDropdown from '../../components/input/LanguageDropdown';
 import { useAppContext } from '../../components/input/ContextProvider';
 
 function SettingsPage() {
-  const {difficulty, chooseDifficulty, nativeLanguage} = useAppContext();
+  const {difficulty, chooseDifficulty, nativeLanguage, chooseNativeLanguage, songLanguage, chooseSongLanguage} = useAppContext();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
   const [fieldsPopulated, setFieldsPopulated] = useState(false);
   const [displayWarning, setDisplayWarning] = useState(false);
 
+  //resets values upon page render
+  useEffect(() => {
+    console.log("settings page renders")
+    chooseDifficulty("");
+    chooseNativeLanguage("");
+    chooseSongLanguage("");
+  }, [])
+
   //updates fieldsPopulated boolean
   useEffect(() => {
-    if (difficulty !== "" && nativeLanguage !== "") {
+    if (difficulty !== "" && nativeLanguage !== "" && songLanguage !== "") {
       setFieldsPopulated(true)
+    } else {
+      setFieldsPopulated(false)
     }
-  }, [difficulty, nativeLanguage])
+  }, [difficulty, nativeLanguage, songLanguage])
 
   const handleDifficultyButtonClick = (difficulty: string) => {
     chooseDifficulty(difficulty);

@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
+
+.faq-page {
+    background: black;
+    min-height: 100vh;
+  }
+  
+.main-container {
+    display: flex;
+    width: 100%;
+    /* align-items: flex-start; */
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.overview-container {
+    margin-top: 50px;
+    width: 600px;
+    height: 225px;
+    font-size: 14pt;
+    color: white;
+    text-align: center;
+}

@@ -53,21 +53,18 @@ export default function GeneratedPlaylistPage() {
   }
 
   useEffect(() => {
-    if (selectedTrack !== undefined) {
-      Object.values(trackHashmap).some((track : TrackInfo) => {
-        if (selectedTrack[0] === track.name) {
-          setFieldsPopulated(true)
-        }})
-      
-      if (initialSelectedTrack === "") {
-        setInitialSelectedTrack(selectedTrack[0])
-      }
+    Object.values(trackHashmap).some((track : TrackInfo) => {
+      if (selectedTrack[0] === track.name) {
+        setFieldsPopulated(true)
+      }})
+    
+    if (initialSelectedTrack === "") {
+      setInitialSelectedTrack(selectedTrack[0])
     }
   }, [selectedTrack])
 
   //fetches for the recommended songs based on user selected song
   useEffect(() => {
-    if (selectedTrack !== undefined) {
       fetchSongs(selectedTrack[0]).then(response => {
         setTrackHashmap(response.tracks.reduce((hashmap, track, i) => {
           if (i < 5) {
@@ -82,7 +79,6 @@ export default function GeneratedPlaylistPage() {
         }, {} as Record<number, TrackInfo>))
         setDataFetched(true)
       })
-    }
   }, [])
 
 
@@ -102,11 +98,11 @@ export default function GeneratedPlaylistPage() {
           <div className="input-track-container">
             <div className="input-track-overlay">
               <div className="title" style={{color: "black"}}>
-                {selectedTrack ? selectedTrack[0] : "error"}
+                {(selectedTrack.length!==0) ? selectedTrack[0] : "error"}
               </div>
               <img
                 className="track-image"
-                src={selectedTrack ? selectedTrack[3] : "error"}
+                src={(selectedTrack.length!==0) ? selectedTrack[3] : "error"}
                 style={{ width: "120px", height: "120px" }}
                 alt="album cover"
               />

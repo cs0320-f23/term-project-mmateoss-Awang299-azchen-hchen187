@@ -46,12 +46,18 @@ function SongsPage() {
     setDisplayWarning(true)
   }
 
+  //resetting the selectedTrack upon page load
+  useEffect(() => {
+    console.log("page renders")
+    chooseTrack([])
+  }, [])
+
   //updates fieldsPopulated boolean
   useEffect(() => {
-    if (selectedTrack !== undefined) {
-      if (selectedTrack.length !== 0) {
-        setFieldsPopulated(true)
-      } 
+    if (selectedTrack.length !== 0) {
+      setFieldsPopulated(true)
+    } else {
+      setFieldsPopulated(false)
     }
   }, [selectedTrack])
 
@@ -138,7 +144,7 @@ function SongsPage() {
           </Container>
 
           <div className="selected-track-container">
-            {selectedTrack ? (
+            {(selectedTrack.length!==0) ? (
               // Render something when a track is selected
               <div className="selected-track-overlay">
                 <div className="displayed-title">{selectedTrack[0]}</div>
