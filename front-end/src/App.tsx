@@ -10,6 +10,8 @@ import GeneratedPlaylistPage from './pages/result/GeneratedPlaylistPage';
 import LoadingPage from './pages/result/LoadingPage';
 import Toolbar from './components/toolbar/Toolbar';
 import SettingsPage from './pages/input/SettingsPage';
+import AboutPage from './pages/home/AboutPage';
+import FAQPage from './pages/home/FAQPage';
 
 
 
@@ -44,6 +46,8 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/faq" element={<FAQPage />} />
             <Route path="/input/songs" element={<SongsPage />} />
             <Route path="/input/settings" element={<SettingsPage />} />
             <Route path="/input/generation" element={<GenerationPage />} />

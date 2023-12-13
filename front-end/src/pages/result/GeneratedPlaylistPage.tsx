@@ -12,12 +12,18 @@ import GeneratedTrackComponent from '../../components/result/GeneratedTrackCompo
 
 
 async function fetchSongs(selectedTrackTitle: string) : Promise<RecommendationOutputData> {
+
+  let openParen = /\(/gi;
+  let closeParen = /\)/gi;
+  let andSymbol = /&/gi;
+  let title = selectedTrackTitle.replace(openParen, "%28").replace(closeParen, "%29").replace(andSymbol, "%26");
+
   const limit = 5;
   const variability = 0.2;
   const tokenObject = await fetch("http://localhost:3232/token");
   const tokenJson = await tokenObject.json();
   const token = tokenJson.token;
-  const serverInput = "recommendation?allNames=" + selectedTrackTitle + "&token=" + token + "&variability=" + variability + "&limit=" + limit;
+  const serverInput = "recommendation?allNames=" + title + "&token=" + token + "&variability=" + variability + "&limit=" + limit;
   console.log(serverInput)
   const fetched = await fetch("http://localhost:3232/" + serverInput);
   const dataObject = await fetched.json();
@@ -64,11 +70,13 @@ export default function GeneratedPlaylistPage() {
     if (selectedTrack !== undefined) {
       fetchSongs(selectedTrack[0]).then(response => {
         setTrackHashmap(response.tracks.reduce((hashmap, track, i) => {
-          hashmap[i] = {
-            name: track.name,
-            uri: track.uri,
-            id: track.id,
-            albumUrl: track.album.images[1].url,
+          if (i < 5) {
+            hashmap[i] = {
+              name: track.name,
+              uri: track.uri,
+              id: track.id,
+              albumUrl: track.album.images[1].url,
+            }
           }
           return hashmap;
         }, {} as Record<number, TrackInfo>))

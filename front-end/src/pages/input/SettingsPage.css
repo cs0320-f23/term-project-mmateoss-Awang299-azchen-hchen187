@@ -36,8 +36,8 @@ h1 {
 .instructions-container-step2 {
   position: absolute;
   max-width: 350px;
-  top: 27vh;
-  left: 18vh;
+  top: 16vh;
+  left: 23vh;
   font-size: 20pt;
   text-align: left;
   color: white;
@@ -80,7 +80,7 @@ h1 {
     top: 10vh;
     width: 300px;
     position: relative;
-    margin: 20px;
+    margin: 10px;
 }
 
 .language-select {
@@ -174,7 +174,7 @@ h1 {
 
 .difficulty-container {
   position: relative;
-  top: 30vh;
+  top: 25vh;
 }
 
 .difficulty-button {
@@ -210,7 +210,7 @@ h1 {
     font-weight: bold;
     line-height: 40px;
     position: relative;
-    top: 35vh;
+    top: 30vh;
     text-indent: 40px;
     transition: opacity 0.3s ease-in-out;
 }

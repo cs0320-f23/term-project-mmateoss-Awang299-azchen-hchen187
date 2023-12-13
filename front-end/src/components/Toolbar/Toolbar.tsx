@@ -10,8 +10,8 @@ function Toolbar() {
 
             <nav className="navbar">
                 <a href="/">Home</a>
-                <a href="#">About</a>
-                <a href="#">FAQ</a>
+                <a href="/about">About</a>
+                <a href="/faq">FAQ</a>
             </nav>
     </header>
     )

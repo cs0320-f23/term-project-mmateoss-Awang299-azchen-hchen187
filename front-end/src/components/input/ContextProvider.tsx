@@ -5,6 +5,8 @@ import { SongData } from '../interfaces/Interface';
 interface AppContextProps {
   selectedTrack: string[] | undefined;
   chooseTrack: (track: string[]) => void;
+  songLanguage: string;
+  chooseSongLanguage: (language: string) => void;
   nativeLanguage: string;
   chooseNativeLanguage: (language: string) => void;
   totalPoints: number;
@@ -16,6 +18,7 @@ const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) => {
     const [selectedTrack, setSelectedTrack] = useState<string[]>();
+    const [songLanguage, setSongLanguage] = useState("");
     const [nativeLanguage, setNativeLanguage] = useState("");
     const [totalPoints, setTotalPoints] = useState(0);
     const [difficulty, setDifficulty] = useState("");
@@ -29,7 +32,7 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) =
 
     const chooseNativeLanguage = (language: string) => {
       setNativeLanguage(language);
-      console.log(language)
+      console.log("native language: " + language)
     }
 
     const chooseDifficulty = (difficulty: string) => {
@@ -37,10 +40,17 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) =
       console.log(difficulty)
     }
 
+    const chooseSongLanguage = (language: string) => {
+      setSongLanguage(language);
+      console.log("song language; "+language)
+    }
+
 
     const contextInfo : AppContextProps = {
         selectedTrack, 
         chooseTrack,
+        songLanguage, 
+        chooseSongLanguage,
         nativeLanguage,
         chooseNativeLanguage,
         totalPoints, 

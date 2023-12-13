@@ -7,15 +7,21 @@ interface Language {
   label: string;
 }
 
-const LanguageDropdown = () => {
-  const {nativeLanguage, chooseNativeLanguage} = useAppContext();
+interface LanguageDropdownProps {
+  setSongLang: boolean;
+}
+
+const LanguageDropdown = (props: LanguageDropdownProps) => {
+  const {nativeLanguage, chooseNativeLanguage, chooseSongLanguage} = useAppContext();
   
   const handleLanguageSelection = (
     selectedOption: SingleValue<Language>,
     actionMeta: ActionMeta<Language>
   ) => {
     if (selectedOption) {
-        chooseNativeLanguage(selectedOption.label);
+      if (props.setSongLang) {
+        chooseSongLanguage(selectedOption.label)
+      } else chooseNativeLanguage(selectedOption.label);
     }
   };
 

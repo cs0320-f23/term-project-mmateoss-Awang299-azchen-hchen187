@@ -100,7 +100,11 @@ function SettingsPage() {
             Step 2:
             <br></br>
             select your {' '}
-            <span style={{textDecoration: 'underline'}}>native language</span>
+            <span style={{textDecoration: 'underline'}}>song's language</span>:
+            <br></br>
+            <br/>
+            select your {' '}
+            <span style={{textDecoration: 'underline'}}>native language</span>:
           </div>
           <div className="step-3-lineart-container">
             <div className="step-3-lineart" />
@@ -112,7 +116,10 @@ function SettingsPage() {
             <span style={{textDecoration: 'underline'}}>game difficulty</span>
           </div>
           <div className="dropdown-container">
-            <LanguageDropdown />
+            <LanguageDropdown setSongLang={true}/>
+            <br/>
+            <br/>
+            <LanguageDropdown setSongLang={false}/>
           </div>
           <div className="difficulty-container">
             {["easy", "medium", "hard"].map((level) => (
