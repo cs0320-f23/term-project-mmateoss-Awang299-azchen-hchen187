@@ -38,6 +38,19 @@ Used these to learn how to do things in the code
         . Used this to learn about the documentation of the replaceall methdo in java
 
 
+    .
+        .
+
+    .
+        .
+
+    .
+        .
+
+    .
+        .
+
+
 ## Link to Repo
 
 The link to our repo is: https://github.com/cs0320-f23/term-project-mmateoss-Awang299-azchen-hchen187
@@ -54,18 +67,14 @@ This project is split into two directories: the frontend and the backend. The fr
 
 ### Front-End
 
+    . The front-end has as lot of working components and parts. We did this to give our users the best experience possible and make
+    the website as visually appealing as possible. The users follow a specific flow from page to page of the frontend that work together to build the project. 
 
+        .
 
+        .
 
-
-
-
-
-
-
-
-
-
+        .
 
 
 ### Back-End
@@ -88,6 +97,9 @@ This project is split into two directories: the frontend and the backend. The fr
 
     . In order to be able to properly use the web-app a user must be a spotify premium member. This is because the project relies on the spotify web sdk to play songs and time the display of the lyrics. We decided to go with this approach beacuse this was the only well-documented, free, API that contained all the different functionalities that we needed for the rest of the project. Furthermore, due to the size of Spotify and because we noticed that almost all the people we know use spotify, we knew that this would be a safe bet to take on.
 
+    . In order to be able to pass audio files between the front-end and the back-end (to be able to turn the words into text), the back-end needed to be smart. We tried to pass in a base64 encrypted string to the back-end as a query parameter but we ran into the problem that the strings ended up being way too long leading the API call to fail. The way that we were able to circumvent this was by making that audioText handler a post handler and sending a byte array of the audio in the body of the handler. That way, the front-end would be able to send such a large amount of information to the backend to be processed.
+
+
 # Errors/Bugs
 
     . There are no known bugs or errors. We tested pretty thoroughly and feel confident in our project.
@@ -101,7 +113,7 @@ This project is split into two directories: the frontend and the backend. The fr
 
 ### Front-End Tests:
 
-    . To run the tests, make sure that you are CD into repl-mmateoos-thuang49.. You should have playwright installed
+    . To run the tests, make sure that you are CD into the front-end directory. You should have playwright installed
         but if you don't, in your terminal type:
                             npx playwright install
         once that is done, go back to your terminal and run the following commands to run the tests:
@@ -144,4 +156,11 @@ To start the server, navigate in the backend to the server file and in IntelliJ 
 
 ## Accessibility 
 
-    . We paid attention to accessibility when working on this project...
+    . We paid attention to accessibility when working on this project. Some specific choices that we implemented are the following:
+        .
+
+        .
+
+        .
+
+        .
