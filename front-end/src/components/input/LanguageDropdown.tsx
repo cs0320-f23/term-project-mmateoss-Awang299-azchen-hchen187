@@ -30,12 +30,15 @@ const LanguageDropdown = (props: LanguageDropdownProps) => {
     { value: 'es', label: 'Spanish' },
     { value: 'fr', label: 'French' },
     { value: 'de', label: 'German' },
-    { value: 'ch', label: 'Chinese' },
-    { value: 'en', label: 'English' },
-    { value: 'es', label: 'Spanish' },
-    { value: 'fr', label: 'French' },
-    { value: 'de', label: 'German' },
-    { value: 'ch', label: 'Chinese' },
+    { value: 'it', label: 'Italian' },
+    { value: 'ir', label: 'Irish' },
+    { value: 'in', label: 'Indonesian' },
+    { value: 'pl', label: 'Polish' },
+    { value: 'po', label: 'Portuguese' },
+    { value: 'ro', label: 'Romanian' },
+    { value: 'tu', label: 'Turkish' },
+    { value: 'fi', label: 'Filipino' },
+    { value: 'ma', label: 'Malay' },
   ];
 
   return (

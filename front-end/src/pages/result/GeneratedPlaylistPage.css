@@ -115,14 +115,14 @@ background-color: var(--green);
 }
 
 .recommended-tracks-container{
-  pointer-events: none;
+  max-height: 400px;
   display: flex;
   flex-wrap: wrap;
   max-width: 700px;
   align-items: center;
   justify-content: center;
   position: absolute;
-  bottom: 5vh;
+  bottom: 15vh;
   right: 20vh;
   z-index: 1;
 }
