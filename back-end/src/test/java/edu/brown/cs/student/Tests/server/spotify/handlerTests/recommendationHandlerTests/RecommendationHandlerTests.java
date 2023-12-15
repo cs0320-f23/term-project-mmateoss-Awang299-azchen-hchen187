@@ -8,6 +8,7 @@ import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.CachedSpotifyData;
 import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import java.io.IOException;
 import java.net.URI;
@@ -53,7 +54,8 @@ public class RecommendationHandlerTests {
   public void setup() throws Exception {
     // In fact, restart the entire Spark server for every test!
     CachedSpotifyData data = new CachedSpotifyData();
-    Spark.get("recommendation", new RecommendationHandler(data));
+    LyricsData lyricsData = new LyricsData();
+    Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
 
     Spark.init();
     Spark.awaitInitialization(); // don't continue until the server is listening

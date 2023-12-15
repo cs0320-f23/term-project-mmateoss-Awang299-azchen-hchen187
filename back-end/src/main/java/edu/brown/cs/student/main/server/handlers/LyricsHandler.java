@@ -29,7 +29,6 @@ public class LyricsHandler implements Route {
         try {
             String spotifyTrackID = request.queryParams("SpotifyTrackID"); // Required
             String language = request.queryParams("language"); // Optional
-
             if (spotifyTrackID == null) {
                 responseMap.put("Result", "Error");
                 responseMap.put("Error Message", "no track ID provided");
@@ -39,12 +38,23 @@ public class LyricsHandler implements Route {
             // convert language to ISO 639-1 code
             String abbrevLanguage;
             if (language == null) { // Set default language to English
+                if (request.queryParams().size() != 1) {
+                    responseMap.put("Result", "Error");
+                    responseMap.put("Error Message", "invalid parameters provided");
+                    return moshi.adapter(Map.class).toJson(responseMap);
+                }
                 abbrevLanguage = "en";
             } else {
+                if (request.queryParams().size() != 2) {
+                    responseMap.put("Result", "Error");
+                    responseMap.put("Error Message", "invalid parameters provided");
+                    return moshi.adapter(Map.class).toJson(responseMap);
+                }
                 abbrevLanguage = this.getLanguageCode(language);
             }
 
-            ArrayList<String[]> lyrics = this.lyricsData.getLyrics(spotifyTrackID);
+            ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics(spotifyTrackID);
+            // ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics()
 
         } catch (Exception e) {
             responseMap.put("Result", "Error");

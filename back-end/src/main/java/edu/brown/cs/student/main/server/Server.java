@@ -39,7 +39,7 @@ public class Server {
     LyricsData lyricsData = new LyricsData();
 
     // Initializing Spark get handlers
-    Spark.get("recommendation", new RecommendationHandler(data));
+    Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
     Spark.get("token", new TokenHandler(generator));
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
@@ -61,6 +61,5 @@ public class Server {
     } catch (Exception e) {
       System.out.println("Error: " + e.getMessage());
     }
-
   }
 }
