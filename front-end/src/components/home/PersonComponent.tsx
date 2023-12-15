@@ -1,18 +1,20 @@
 import React, { useState, useEffect} from 'react';
 import HeadComponent from './HeadComponent';
 
-
+//interface that specifies values passed into the component
 interface PersonProps {
     handleHeadClick: () => void;
     headClicked: boolean;
     disabledHover: boolean;
 }
 
+//main component to render the person
 function PersonComponent(props: PersonProps) {
   const [HPPosition, setHPPosition] = useState({ x: 0, y: 0 });
   const handleHover = props.disabledHover ? 'disable-hover' : '';
 
 
+  //sets up the variables for event listeners
   useEffect(() => {
     const container = document.querySelector('.head-container') as HTMLElement;
     const head = document.querySelector('.head') as HTMLElement;
@@ -27,6 +29,7 @@ function PersonComponent(props: PersonProps) {
     }
   }, []);
 
+  //method to update component location based on mouse movement
   const updateLocation = (e: { clientX: number; clientY: number; }) => {
     const container = document.querySelector('.head-container') as HTMLElement;
 
@@ -38,6 +41,7 @@ function PersonComponent(props: PersonProps) {
     setHPPosition({x: scaledX, y: scaledY});
   }
 
+  //returns the component
   return (
 
         <div className={`head-container ${handleHover}`}>

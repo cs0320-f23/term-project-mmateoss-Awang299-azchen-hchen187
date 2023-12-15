@@ -1,4 +1,5 @@
 
+//SongData interface to store important information about the track
 export interface SongData {
     title: string,
     artist: string,
@@ -6,11 +7,13 @@ export interface SongData {
     albumUrl: string,
   }
 
+//OutputData interface to process the returned json from backend
 export interface RecommendationOutputData {
   seeds: Seed[];
   tracks: Track[];
 }
 
+//TrackInfo interface to store information about recommended tracks
 export interface TrackInfo {
   id: string;
   uri: string;
@@ -18,13 +21,14 @@ export interface TrackInfo {
   albumUrl: string;
 }
 
+//More narrow interface definitions for the returned recommendation json
 interface Seed {
   afterFilteringSize: number;
   afterRelinkingSize: number;
   href: string;
   id: string;
   initialPoolSize: number;
-  type: string; // This might be a more specific type based on the actual data
+  type: string;
 }
 
 interface Track {

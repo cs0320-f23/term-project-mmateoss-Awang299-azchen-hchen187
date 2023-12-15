@@ -1,3 +1,4 @@
+//mock returned data from searching "daniel"
 export const songsData: {[key: string]: {title: string, artist: string, trackID: string, albumUrl: string}[]} = {
     "d" : [
         {
@@ -223,11 +224,13 @@ export const songsData: {[key: string]: {title: string, artist: string, trackID:
     ]
 }
 
+//mock selectedTrack
 export const recommendationInputData = {
     "Result":"Success",
     "data":["Get You (feat. Kali Uchis)", "Daniel Caesar", "7zFXmv6vqI4qOt4yGf3jYZ10", "https://i.scdn.co/image/ab67616d00001e023138f891f3075c9c5d944037"]
 }
 
+//mock result from calling backend getrecommendations
 export const recommendationOutputData = {
     "seeds":[{
         "afterFilteringSize":145,

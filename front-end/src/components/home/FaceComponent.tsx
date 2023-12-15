@@ -1,16 +1,19 @@
 import React, { useState, useEffect} from 'react';
 import EyeComponent from './EyeComponent';
 
+//interface that specifies values passed into the component
 interface FaceProps {
   headClicked: boolean;
 }
 
+//main component of the face
 function FaceComponent(props: FaceProps) {
   const [nosePosition, setNosePosition] = useState({ x: 0, y: 0 });
   const [mouthPosition, setMouthPosition] = useState({ x: 0, y: 0 });
   const [browPosition, setBrowPosition] = useState({ x: 0, y: 0 });
   
 
+// setting up the event listeners and components
   useEffect(() => {
     const container = document.querySelector('.head-container') as HTMLElement;
     const nose = document.querySelector('.nose') as HTMLElement;
@@ -30,19 +33,21 @@ function FaceComponent(props: FaceProps) {
     }
   }, []);
 
+  //method to handle mouth movement based on mouse movement
   const handleMouseEnter = () => {
     const mouth = document.querySelector('.mouth') as HTMLElement;
     mouth.classList.remove('mouth-shrink')
     mouth.classList.add('mouth-grow')
   }
 
+  //method to reset mouth shape when mouse leaves
   const handleMouseLeave = () => {
     const mouth = document.querySelector('.mouth') as HTMLElement;
     mouth.classList.remove('mouth-grow')
     mouth.classList.add('mouth-shrink')
   }
 
-
+  //method to update location of face components based on mouse movement
   const updateLocation = (e: { clientX: number; clientY: number; }) => {
     const container = document.querySelector('.head-container') as HTMLElement;
 
@@ -56,7 +61,7 @@ function FaceComponent(props: FaceProps) {
     setBrowPosition({x: scaledX, y: scaledY});
   }
 
-
+  //returns the components
   return (
     <div className="face">
       <div className="upper-face">

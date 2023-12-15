@@ -1,14 +1,14 @@
-import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
+import React, { useState, useEffect} from 'react';
 import { motion } from 'framer-motion';
-import ProgressBar from '../../components/progress/ProgressBar'
 import NavButton from '../../components/button/NavButton';
 import PersonComponent from '../../components/home/PersonComponent';
-
-import './SettingsPage.css';
-import '../../components/home/Person.css';
 import LanguageDropdown from '../../components/input/LanguageDropdown';
 import { useAppContext } from '../../components/input/ContextProvider';
 
+import './SettingsPage.css';
+import '../../components/home/Person.css';
+
+//main component of the settings page
 function SettingsPage() {
   const {difficulty, chooseDifficulty, nativeLanguage, chooseNativeLanguage, songLanguage, chooseSongLanguage} = useAppContext();
   const [hoveredButton, setHoveredButton] = useState<string | null>(null);
@@ -32,16 +32,18 @@ function SettingsPage() {
     }
   }, [difficulty, nativeLanguage, songLanguage])
 
+  //method to toggle the clicking of difficulty buttons
   const handleDifficultyButtonClick = (difficulty: string) => {
     chooseDifficulty(difficulty);
     setHoveredButton(null);
-    console.log('button clicked')
   }
 
+  //method to toggle display warning boolean when next page button is rejected
   const handleButtonRejection = () => {
     setDisplayWarning(true);
   }
 
+  //method to store the displayed text and return based on input string
   const getDisplayedText = (input: string) => {
     switch (input) {
       case 'easy':
@@ -88,6 +90,7 @@ function SettingsPage() {
     }
   }
 
+  //method to get button text based on difficulty selected
   const getButtonText = (currDifficulty: string | null) => {
     if (currDifficulty != null && difficulty === "") {
       return getDisplayedText(currDifficulty)
@@ -98,8 +101,8 @@ function SettingsPage() {
 
 
 
+  //returns the page's component
   return (
-    //initial={{opacity:0}} animate={{opacity: 1}}
     <div className="settings-page">
       <motion.div className="body">
         <div className="main-container">

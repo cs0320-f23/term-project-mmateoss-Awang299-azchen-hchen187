@@ -1,17 +1,20 @@
 import React from 'react'
-import { SongData } from '../interfaces/Interface';
 
+//interface that specifies values passed into the component
 interface TrackSearchResultProps {
     track: string[]
     chooseTrack: (selectedTrack: string[]) => void;
 }
 
+//main component to process each track rendered
 export default function TrackSearchResult(props: TrackSearchResultProps) {
 
+    //method to update the useContext
     const handleTrackSelection = () => {
         props.chooseTrack(props.track)
     }
     
+    //returning the component
   return (
         <div className="track-container" onClick={handleTrackSelection}>
         <img

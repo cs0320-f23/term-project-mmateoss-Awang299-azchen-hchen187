@@ -2,18 +2,22 @@ import React from 'react';
 import Select, { ActionMeta, SingleValue } from 'react-select';
 import { useAppContext } from './ContextProvider';
 
+//interface that outlines the shape of the data
 interface Language {
   value: string;
   label: string;
 }
 
+//interface that specifies values passed into the component
 interface LanguageDropdownProps {
   setSongLang: boolean;
 }
 
+//main component of the dropdown selection
 const LanguageDropdown = (props: LanguageDropdownProps) => {
-  const {nativeLanguage, chooseNativeLanguage, chooseSongLanguage} = useAppContext();
+  const {chooseNativeLanguage, chooseSongLanguage} = useAppContext();
   
+  //method to update the useContext with the language chosen
   const handleLanguageSelection = (
     selectedOption: SingleValue<Language>,
     actionMeta: ActionMeta<Language>
@@ -25,6 +29,7 @@ const LanguageDropdown = (props: LanguageDropdownProps) => {
     }
   };
 
+  //list of language options
   const options: Language[] = [
     { value: 'en', label: 'English' },
     { value: 'es', label: 'Spanish' },
@@ -41,11 +46,11 @@ const LanguageDropdown = (props: LanguageDropdownProps) => {
     { value: 'ma', label: 'Malay' },
   ];
 
+  //returns the component 
   return (
     <Select
       options={options}
       placeholder="Select a language"
-      className={nativeLanguage ? nativeLanguage : "Select a language"}
       onChange={handleLanguageSelection}
     />
   );

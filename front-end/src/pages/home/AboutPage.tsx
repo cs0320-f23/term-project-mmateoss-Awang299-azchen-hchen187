@@ -2,6 +2,7 @@ import React from 'react'
 
 import "./AboutPage.css"
 
+//main component of the about page
 export default function AboutPage() {
   return (
     <div className="about-page">

@@ -3,17 +3,18 @@ import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { LineAnimationComponent } from '../../components/home/LineAnimationComponent';
 import PersonComponent from '../../components/home/PersonComponent';
-// import HeadphonesBarAfter from "../../assets/images/HomePage/headphone-bar-after.svg";
 
 import './HomePage.css';
 import '../../components/home/Person.css';
 
+//main component of the homepage
 function HomePage() {
     const navigate = useNavigate();
     const [animate, setAnimate] = useState<boolean>(false);
     const [headClicked, setHeadClicked] = useState<boolean>(false);
     const transition = {duration: 1, ease: [0.43, 0.13, 0.23, 0.96]}
     
+    //method to handle navigating to the next page when head is clicked
     const handleHeadClick = () => {
       setAnimate(true);
       setTimeout(() => {
@@ -25,21 +26,20 @@ function HomePage() {
       }, 1000);
     }
   
+    //outlining the transition for rendering the next page
     const animateStyle = {
       scale: headClicked ? 50 : 1,
       transformOrigin: '50% 25%',
     };
   
-  
+    //returning the page component
     return (
       <>
-        {/* //TODO: fix this animate/ exit issue */}
         <div className="home-page">
           <motion.div exit={{ opacity: 0 }} transition={transition} className="main-container">
             <div className="filler-container"></div>
             <LineAnimationComponent startAnimation={animate} />
             <div className="person-container">
-              {/* //TODO: same issue with this one */}
               <motion.div key="text-container" exit={{ opacity: 0 }} transition={transition} className="text-container">
                 <div className="text-bottom">
                   this is a super cool website
@@ -48,13 +48,6 @@ function HomePage() {
                   <br></br>
                   yeet
                 </div>
-                {/* <div className="text-bottom">
-                    a different bit of text to 
-                    <br></br>
-                    make this website even cooler lolllllllllll 
-                    <br></br>
-                    yeehaw
-                  </div> */}
               </motion.div>
               <motion.div
                 initial={{ scale: 1 }}

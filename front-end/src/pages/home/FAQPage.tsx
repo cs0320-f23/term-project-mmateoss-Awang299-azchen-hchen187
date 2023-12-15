@@ -2,6 +2,7 @@ import React from 'react'
 
 import "./FAQPage.css"
 
+//main component of the faq page
 export default function FAQPage() {
   return (
     <div className="faq-page">

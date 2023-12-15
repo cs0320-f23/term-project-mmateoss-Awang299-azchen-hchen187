@@ -1,16 +1,16 @@
-import React, { MouseEventHandler, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { motion } from 'framer-motion';
-
-import './GeneratedPlaylistPage.css';
-import '../../components/home/Person.css';
 import NavButton from '../../components/button/NavButton';
 import PersonComponent from '../../components/home/PersonComponent';
 import { useAppContext } from '../../components/input/ContextProvider';
-import { recommendationInputData, recommendationOutputData } from '../../mock/MockedData';
+import { recommendationOutputData } from '../../mock/MockedData';
 import { RecommendationOutputData, TrackInfo } from '../../components/interfaces/Interface';
 import GeneratedTrackComponent from '../../components/result/GeneratedTrackComponent';
 
+import './GeneratedPlaylistPage.css';
+import '../../components/home/Person.css';
 
+//async method to make backend api calls to get the recommended songs
 async function fetchSongs(selectedTrackTitle: string) : Promise<RecommendationOutputData> {
 
   let openParen = /\(/gi;
@@ -30,12 +30,13 @@ async function fetchSongs(selectedTrackTitle: string) : Promise<RecommendationOu
   return dataObject;
 }
 
+//method to call the mock data
 async function mockFetchSongs(selectedTrackTitle:string) : Promise<RecommendationOutputData> {
   return recommendationOutputData;
 }
 
 
-
+//main component of the generatedplaylist page
 export default function GeneratedPlaylistPage() {
   const { selectedTrack} = useAppContext();
   const [trackHashmap, setTrackHashmap] = useState<Record<number, TrackInfo>>({})
@@ -44,14 +45,16 @@ export default function GeneratedPlaylistPage() {
   const [displayWarning, setDisplayWarning] = useState(false);
   const [fieldsPopulated, setFieldsPopulated] = useState(false);
   const [initialSelectedTrack, setInitialSelectedTrack] = useState("");
-  // const [chosenTrack, setChosenTrack] = useState("");
   const inputTrack = document.getElementById("input-track");
   //const selectedTrack = recommendationInputData.data;
 
+  //method to handle when next page conditions arent met
   const handleButtonRejection = () => {
     setDisplayWarning(true)
   }
 
+  //useeffect to check if fields are populated and initializes the usestate to display 
+  //the original song
   useEffect(() => {
     Object.values(trackHashmap).some((track : TrackInfo) => {
       if (selectedTrack[0] === track.name) {
@@ -82,6 +85,7 @@ export default function GeneratedPlaylistPage() {
   }, [])
 
 
+  //timeout to add buffer for displaying the recommended songs
   setTimeout(() => {
     if (inputTrack !== null) {
       inputTrack.classList.add('hidden');
@@ -89,6 +93,7 @@ export default function GeneratedPlaylistPage() {
     }
   }, 1600);
 
+  //returns the components
   return (
     <div className="generated-page">
       <motion.div className="body">

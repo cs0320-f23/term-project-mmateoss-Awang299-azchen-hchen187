@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
+/* css styling for the faq page */
+
 .faq-page {
     background: black;
     min-height: 100vh;
@@ -8,7 +10,6 @@
 .main-container {
     display: flex;
     width: 100%;
-    /* align-items: flex-start; */
     justify-content: center;
     flex-direction: column;
     margin: 0;

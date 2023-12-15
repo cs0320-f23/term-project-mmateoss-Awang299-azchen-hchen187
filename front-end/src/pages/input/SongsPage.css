@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
+/* css styling for the songs page*/ 
+
 h1 {
     font-size: 100pt;
     color: white;
@@ -16,8 +18,6 @@ h1 {
     align-items: flex-start;
     justify-content: center;
     flex-direction: row;
-    /* flex-direction: column;
-    align-items: center; */
 }
 
 .button-container {
@@ -244,10 +244,7 @@ path {
   border-radius: 20px;
 }
 
-/* todo: change colour of x button */
 input[type="search"]::-webkit-search-clear-button {
-  /* -webkit-appearance: none;
-  appearance: none; */
   margin-right: 8px;
   cursor: pointer;
   width: 16px; 

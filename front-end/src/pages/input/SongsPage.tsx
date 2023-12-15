@@ -1,17 +1,16 @@
-import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import ProgressBar from '../../components/progress/ProgressBar'
 import NavButton from '../../components/button/NavButton';
 import PersonComponent from '../../components/home/PersonComponent';
-
-import './SongsPage.css';
-import '../../components/home/Person.css';
 import { Container, Form } from 'react-bootstrap';
 import { mockGetSongs } from '../../mock/MockAPICalls';
 import TrackSearchResult from '../../components/input/TrackSearchResult';
-import { SongData } from '../../components/interfaces/Interface';
 import { useAppContext } from '../../components/input/ContextProvider';
 
+import './SongsPage.css';
+import '../../components/home/Person.css';
+
+//async function to make backend api calls to get the songs
 async function fetchSongs(input: string) : Promise<{Result: string, data: string[][]}> {
   const limit = 10;
   const tokenObject = await fetch("http://localhost:3232/token");
@@ -24,12 +23,13 @@ async function fetchSongs(input: string) : Promise<{Result: string, data: string
   return dataObject;
 }
 
+//mock function to get mock data
 async function fetchMockedSongs(input: string) {
   const dataObject = mockGetSongs(input);
   return dataObject;
 }
 
-
+//main component of the songs page
 function SongsPage() {
   const { selectedTrack, chooseTrack } = useAppContext();
   const [search, setSearch] = useState("")
@@ -38,10 +38,12 @@ function SongsPage() {
   const [fieldsPopulated, setFieldsPopulated] = useState(false);
   const [displayWarning, setDisplayWarning] = useState(false);
 
+  //method to toggle the search bar
   const handleSearchClick = () => {
     setIsActive(true);
   }
 
+  //method to handle when next page conditions aren't satisfied
   const handleButtonRejection = () => {
     setDisplayWarning(true)
   }
@@ -69,13 +71,12 @@ function SongsPage() {
     fetchSongs(search).then(response => {
       console.log(response)
       if (cancel) {
-        console.log("cancel is true")
         return 
       }
       if (response.Result === "Success") {
         setSearchResults(response.data)
       } else {
-        //todo: handle error response
+        console.log(response)
       }
     })
     return () => {
@@ -83,8 +84,8 @@ function SongsPage() {
     }
   }, [search])
 
+  //returns the component
   return (
-    //initial={{opacity:0}} animate={{opacity: 1}}
     <div className="songs-page">
       <motion.div className="body">
         <div className="main-container">
@@ -139,13 +140,10 @@ function SongsPage() {
                 ))}
               </div>
             </div>
-
-            {/* <div style={{ color: "white" }}>Bottom</div> */}
           </Container>
 
           <div className="selected-track-container">
             {(selectedTrack.length!==0) ? (
-              // Render something when a track is selected
               <div className="selected-track-overlay">
                 <div className="displayed-title">{selectedTrack[0]}</div>
                 <img

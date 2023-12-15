@@ -1,9 +1,10 @@
 import React from "react";
 import "./Toolbar.css"
 
+//Main component of the tool bar
 function Toolbar() {
-    
 
+    //returns the component
     return (
     <header className="header">
         <a href="/" className="logo">SpotiDuo</a>

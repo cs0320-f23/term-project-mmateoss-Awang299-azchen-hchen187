@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
+/* css styling for generatedplaylist page */
+
 h1 {
   font-size: large;
   color: white;
@@ -74,7 +76,6 @@ background-color: var(--green);
   margin-top: 50vh;
   bottom: 30vh;
   left: -7vh;
-  /* left: 30vh; */
   height: 70vh;
   color: white;
   flex-grow: 1;
@@ -96,9 +97,6 @@ background-color: var(--green);
   50% {
     transform: translateY(100px);
   }
-  /* 100% {
-    transform: translateY(100px);
-  } */
 }
 
 .input-track-overlay {
