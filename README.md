@@ -37,7 +37,6 @@ Used these to learn how to do things in the code
     .https://www.javatpoint.com/java-string-replaceall
         . Used this to learn about the documentation of the replaceall methdo in java
 
-
     .
         .
 
@@ -139,7 +138,7 @@ This project is split into two directories: the frontend and the backend. The fr
 
 An important thing to note, is that if you do not have different dependencies installed it will not run, so please run the following commands in your terminal when first downloading:
 
-    (input commands here)
+    npm install
 
 To run the fron-end, navigate to the front-end directory and in the terminal run the command:
 
