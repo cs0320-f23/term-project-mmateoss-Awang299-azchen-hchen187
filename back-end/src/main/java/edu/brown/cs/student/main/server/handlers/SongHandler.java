@@ -17,13 +17,13 @@ public class SongHandler implements Route {
   /**
    * Constructor for the SongHandler class
    */
-  public SongHandler(){
-
+  public SongHandler() {
 
   }
 
   /**
-   * Handle method that takes care of getting the query parameters and then building a
+   * Handle method that takes care of getting the query parameters and then
+   * building a
    * Song based on the string.
    *
    * @param req request object used to get the query parameters.
@@ -32,8 +32,7 @@ public class SongHandler implements Route {
    * @return returns what is mapped to the server. A song object in this case
    */
   @Override
-  public Object handle(Request req, Response res){
-
+  public Object handle(Request req, Response res) {
     return null;
   }
 

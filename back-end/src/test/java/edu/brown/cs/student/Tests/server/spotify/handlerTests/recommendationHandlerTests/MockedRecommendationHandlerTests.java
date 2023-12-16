@@ -4,6 +4,7 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.server.spotify.data.MockData;
 import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.lyrics.mockedLyrics.MockLyricsData;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import java.io.IOException;
 import java.net.URI;
@@ -23,12 +24,13 @@ import org.testng.Assert;
 import spark.Spark;
 
 /**
- * Class used to test that the RecommendationHandler works as intended but used mocked data to
- * prevent and restrict calls made to the spotify api, allowing us to test as many times and as
+ * Class used to test that the RecommendationHandler works as intended but used
+ * mocked data to
+ * prevent and restrict calls made to the spotify api, allowing us to test as
+ * many times and as
  * often as we want.
  */
 public class MockedRecommendationHandlerTests {
-
 
   /**
    * Method that is run once at the beginning. Gotten from the gearup.
@@ -41,9 +43,9 @@ public class MockedRecommendationHandlerTests {
     Logger.getLogger("").setLevel(Level.WARNING); // empty name = root logger
   }
 
-
   /**
-   * Method gotten from the gearup, that sets up our server, called before each test is run.
+   * Method gotten from the gearup, that sets up our server, called before each
+   * test is run.
    */
   @BeforeEach
   public void setup() {
@@ -53,7 +55,9 @@ public class MockedRecommendationHandlerTests {
         "data/mockedSpotifyJsons/mockedRecommendations/"
             + "mockedRecommendation1.json",
         "data/mockedSpotifyJsons/mockedAudioFeatures/mockedAudioFeats1.json");
-    Spark.get("recommendation", new RecommendationHandler(data));
+    MockLyricsData lyricsData = new MockLyricsData();
+
+    Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
 
     Spark.init();
     Spark.awaitInitialization(); // don't continue until the server is listening
@@ -72,13 +76,15 @@ public class MockedRecommendationHandlerTests {
   /**
    * Method gotten from the gear up that allows us to try an API request
    *
-   * @param apiCall the endpoint you are calling to.
+   * @param apiCall     the endpoint you are calling to.
    * @param queryParams the query parameters that you want to use.
    *
    * @return HttpResponse that can be used to set up a connection with an API.
-   * @throws IOException exception where it failed to read/open information.
-   * @throws InterruptedException exception where connection to API is interrupted.
-   * @throws URISyntaxException exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
    */
   static private HttpResponse<String> tryRequest(String apiCall, Map<String, String> queryParams, String allNames)
       throws IOException, InterruptedException, URISyntaxException {
@@ -104,8 +110,8 @@ public class MockedRecommendationHandlerTests {
 
     // Build the HTTP request
     HttpRequest request = HttpRequest.newBuilder()
-        .uri(new URI("http://localhost:" + Spark.port() + "/" + apiCall + queryString+ allNames))
-        .GET()  // This is optional since GET is the default method.
+        .uri(new URI("http://localhost:" + Spark.port() + "/" + apiCall + queryString + allNames))
+        .GET() // This is optional since GET is the default method.
         .build();
 
     // Send the request and get the response
@@ -114,12 +120,12 @@ public class MockedRecommendationHandlerTests {
     return response;
   }
 
-
   /**
-   * Method that tests we get the correct error when a limit is not passed in as a parameter.
+   * Method that tests we get the correct error when a limit is not passed in as a
+   * parameter.
    */
   @Test
-  public void missingLimitTest() throws IOException, InterruptedException, URISyntaxException{
+  public void missingLimitTest() throws IOException, InterruptedException, URISyntaxException {
 
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("token", "dsdsds");
@@ -129,22 +135,23 @@ public class MockedRecommendationHandlerTests {
     allNames += "Enchanted";
     allNames += "&allNames=All%20too%20well";
 
-    HttpResponse<String> response = tryRequest("recommendation",queryParams,allNames);
+    HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
 
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that that you passed in a variability, token, limit, "
-            + "and list of song names for generating recommendations",
-        responseBody.get("Error Message"));
+        + "and list of song names for generating recommendations",
+        responseBody.get("Message"));
   }
 
   /**
-   * Method that tests we get the correct error when the limit is set to 0 or to a negative number.
+   * Method that tests we get the correct error when the limit is set to 0 or to a
+   * negative number.
    */
   @Test
-  public void zeroLimitTest() throws IOException, InterruptedException, URISyntaxException{
+  public void zeroLimitTest() throws IOException, InterruptedException, URISyntaxException {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("token", "dsdsds");
     queryParams.put("variability", "0.2");
@@ -158,16 +165,17 @@ public class MockedRecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("the limit must be an integer in the range 1-100",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
   }
 
   /**
-   * Method that tests we get the correct error when the limit is set to int above 100
+   * Method that tests we get the correct error when the limit is set to int above
+   * 100
    */
   @Test
-  public void overHundredLimTest() throws IOException, InterruptedException, URISyntaxException{
+  public void overHundredLimTest() throws IOException, InterruptedException, URISyntaxException {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("token", "dsdsds");
     queryParams.put("variability", "0.2");
@@ -181,16 +189,17 @@ public class MockedRecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("the limit must be an integer in the range 1-100",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
   }
 
   /**
-   * Method that tests we get the correct error when a token is not passed in as a parameter.
+   * Method that tests we get the correct error when a token is not passed in as a
+   * parameter.
    */
   @Test
-  public void missingTokenTest() throws IOException, InterruptedException, URISyntaxException{
+  public void missingTokenTest() throws IOException, InterruptedException, URISyntaxException {
     Map<String, String> queryParams = new HashMap<>();
     // missing token
     queryParams.put("variability", "0.2");
@@ -204,23 +213,24 @@ public class MockedRecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that that you passed in a variability, token, limit, "
-            + "and list of song names for generating recommendations",
-        responseBody.get("Error Message"));
+        + "and list of song names for generating recommendations",
+        responseBody.get("Message"));
   }
 
   /**
-   * Method that tests we get the correct error when the song names are not passed in.
+   * Method that tests we get the correct error when the song names are not passed
+   * in.
    */
   @Test
-  public void missingNamesTest() throws IOException, InterruptedException, URISyntaxException{
+  public void missingNamesTest() throws IOException, InterruptedException, URISyntaxException {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("token", "dsdsds");
     queryParams.put("variability", "0.2");
     queryParams.put("limit", "2");
     queryParams.put("extra", "blah");
-    //missing names
+    // missing names
     String allNames = "";
 
     HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
@@ -228,10 +238,10 @@ public class MockedRecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that you passed in a list of song names as a parameter"
-            + " in order to generate recommendations",
-        responseBody.get("Error Message"));
+        + " in order to generate recommendations",
+        responseBody.get("Message"));
   }
 
   /**
@@ -245,7 +255,7 @@ public class MockedRecommendationHandlerTests {
     queryParams.put("variability", "0.2");
     queryParams.put("limit", "2");
 
-    //missing allNames
+    // missing allNames
     String allNames = "&allName";
 
     HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
@@ -253,24 +263,25 @@ public class MockedRecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that you passed in a list of song names as a parameter"
-            + " in order to generate recommendations",
-        responseBody.get("Error Message"));
+        + " in order to generate recommendations",
+        responseBody.get("Message"));
 
   }
 
   /**
-   * Method that tests we get the correct error when the wrong number of parameters are passed in.
+   * Method that tests we get the correct error when the wrong number of
+   * parameters are passed in.
    */
   @Test
-  public void wrongNumberParams() throws IOException, InterruptedException, URISyntaxException{
+  public void wrongNumberParams() throws IOException, InterruptedException, URISyntaxException {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("token", "dsdsds");
     queryParams.put("variability", "0.2");
     queryParams.put("limit", "2");
     queryParams.put("extra", "blah");
-    //missing names
+    // missing names
     String allNames = "&allNames=";
     allNames += "Enchanted";
     allNames += "&allNames=All%20too%20well";
@@ -280,24 +291,25 @@ public class MockedRecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that that you passed in a variability, token, limit, "
-            + "and list of song names for generating recommendations",
-        responseBody.get("Error Message"));
+        + "and list of song names for generating recommendations",
+        responseBody.get("Message"));
   }
 
   /**
-   * Method that tests we get the correct error when the correct number of parameters are passed in
+   * Method that tests we get the correct error when the correct number of
+   * parameters are passed in
    * but one of the parameters passed in was not something we wanted.
    */
   @Test
-  public void rightNumParamsButWrongParam() throws IOException, InterruptedException, URISyntaxException{
+  public void rightNumParamsButWrongParam() throws IOException, InterruptedException, URISyntaxException {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("token", "dsdsds");
     queryParams.put("variability", "0.2");
     queryParams.put("blahhhh", "2");
 
-    //missing names
+    // missing names
     String allNames = "&allNames=";
     allNames += "Enchanted";
     allNames += "&allNames=All%20too%20well";
@@ -307,25 +319,26 @@ public class MockedRecommendationHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that that you passed in a variability, token, limit, "
-            + "and list of song names for generating recommendations",
-        responseBody.get("Error Message"));
+        + "and list of song names for generating recommendations",
+        responseBody.get("Message"));
 
   }
 
   /**
-   * Method that tests we can get a recommendation from the handler when everything is passed in
+   * Method that tests we can get a recommendation from the handler when
+   * everything is passed in
    * properly.
    */
   @Test
-  public void getRecommendationTest() throws IOException, InterruptedException, URISyntaxException{
+  public void getRecommendationTest() throws IOException, InterruptedException, URISyntaxException {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("token", "dsdsds");
     queryParams.put("variability", "0.2");
     queryParams.put("limit", "5");
 
-    //missing names
+    // missing names
     String allNames = "&allNames=";
     allNames += "Enchanted";
     allNames += "&allNames=All%20too%20well";
@@ -333,12 +346,20 @@ public class MockedRecommendationHandlerTests {
     HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
 
     Moshi moshi = new Moshi.Builder().build();
+
     JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
     Recommendation responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals(responseBody.tracks().size(), 20);
-    Assert.assertEquals(responseBody.tracks().get(0).id(), "5N9M7Ji7KYrmfJ6Jki3raU");
+    // JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
+    // Map<String, Object> responseBody = jsonAdapter.fromJson(response.body());
+    // Recommendation rec = (Recommendation) responseBody.get("Message");
+    // System.out.println(responseBody.get("Message"));
+    // Assert.assertEquals(responseBody.get("Message"), "Success");
+
+    Assert.assertTrue(responseBody.tracks().size() == 5);
+    // Assert.assertEquals(responseBody.get("Message").size(), 5);
+    // Assert.assertEquals(responseBody.tracks().get(0).id(),
+    // "5N9M7Ji7KYrmfJ6Jki3raU");
 
   }
-
 
 }

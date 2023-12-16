@@ -2,9 +2,11 @@ package edu.brown.cs.student.Tests.server.spotify.handlerTests.getSongHandlerTes
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
+
+import edu.brown.cs.student.main.server.CachedSpotifyData;
 import edu.brown.cs.student.main.server.handlers.GetSongHandler;
 import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
-import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
+import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.spotify.data.MockData;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import java.io.IOException;
@@ -27,6 +29,7 @@ import spark.Spark;
 public class GetSongsHandlerTests {
 
   private String token;
+
   /**
    * Method that is run once at the beginning. Gotten from the gearup.
    */
@@ -38,16 +41,17 @@ public class GetSongsHandlerTests {
     Logger.getLogger("").setLevel(Level.WARNING); // empty name = root logger
   }
 
-
   /**
-   * Method gotten from the gearup, that sets up our server, called before each test is run.
+   * Method gotten from the gearup, that sets up our server, called before each
+   * test is run.
    */
   @BeforeEach
-  public void setup() throws Exception{
+  public void setup() throws Exception {
     // In fact, restart the entire Spark server for every test!
     CachedSpotifyData data = new CachedSpotifyData();
-    Spark.get("recommendation", new RecommendationHandler(data));
-    Spark.get("getSongs", new GetSongHandler(data));
+    LyricsData lyricsData = new LyricsData();
+    Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
+    Spark.get("getSongs", new GetSongHandler(data, lyricsData));
 
     Spark.init();
     Spark.awaitInitialization(); // don't continue until the server is listening
@@ -70,13 +74,15 @@ public class GetSongsHandlerTests {
   /**
    * Method gotten from the gear up that allows us to try an API request
    *
-   * @param apiCall the endpoint you are calling to.
+   * @param apiCall     the endpoint you are calling to.
    * @param queryParams the query parameters that you want to use.
    *
    * @return HttpResponse that can be used to set up a connection with an API.
-   * @throws IOException exception where it failed to read/open information.
-   * @throws InterruptedException exception where connection to API is interrupted.
-   * @throws URISyntaxException exception where URI syntax is incorrect.
+   * @throws IOException          exception where it failed to read/open
+   *                              information.
+   * @throws InterruptedException exception where connection to API is
+   *                              interrupted.
+   * @throws URISyntaxException   exception where URI syntax is incorrect.
    */
   static private HttpResponse<String> tryRequest(String apiCall, Map<String, String> queryParams)
       throws IOException, InterruptedException, URISyntaxException {
@@ -103,7 +109,7 @@ public class GetSongsHandlerTests {
     // Build the HTTP request
     HttpRequest request = HttpRequest.newBuilder()
         .uri(new URI("http://localhost:" + Spark.port() + "/" + apiCall + queryString))
-        .GET()  // This is optional since GET is the default method.
+        .GET() // This is optional since GET is the default method.
         .build();
 
     // Send the request and get the response
@@ -116,21 +122,19 @@ public class GetSongsHandlerTests {
    * Method that tests when token is not included as a parameter.
    */
   @Test
-  public void testNoToken() throws Exception{
+  public void testNoToken() throws Exception {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("limit", "10");
     queryParams.put("query", "blah");
 
-
-
-    HttpResponse<String> response = tryRequest("getSongs",queryParams);
+    HttpResponse<String> response = tryRequest("getSongs", queryParams);
 
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, Object> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
+    Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("Please ensure you pass in a token, limit, and query as"
-            + " parameters",
+        + " parameters",
         responseBody.get("Error Message"));
   }
 
@@ -138,19 +142,18 @@ public class GetSongsHandlerTests {
    * Method checking that the handler works with the correct parameters.
    */
   @Test
-  public void testCorrectParams() throws Exception{
+  public void testCorrectParams() throws Exception {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("limit", "10");
     queryParams.put("query", "taylor");
     queryParams.put("token", this.token);
 
-    HttpResponse<String> response = tryRequest("getSongs",queryParams);
+    HttpResponse<String> response = tryRequest("getSongs", queryParams);
 
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, Object> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Success",responseBody.get("Result"));
+    Assert.assertEquals("Success", responseBody.get("Result"));
   }
-
 
 }
