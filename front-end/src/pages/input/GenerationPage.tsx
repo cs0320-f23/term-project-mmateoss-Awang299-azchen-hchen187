@@ -5,6 +5,8 @@ import '../../components/home/Person.css';
 import LyricsGame from '../../components/input/LyricsGame';
 import { useAppContext } from '../../components/input/ContextProvider';
 import { LyricLine } from '../../components/input/Types';
+import PersonComponent from '../../components/home/PersonComponent';
+import NavButton from '../../components/button/NavButton';
 
 const mockLyricsResponse : LyricLine[] = [
   {startTime: 16, learningLyric: "She was all, that I could see", nativeLyric: "Ella era todo, lo que podía ver"},
@@ -20,16 +22,65 @@ const mockLyricsResponse : LyricLine[] = [
   {startTime: 63, learningLyric: "", nativeLyric: ""},
 ];
 
-
-
 function GenerationPage() {
 
-  const { token, difficulty } = useAppContext();
-  const [trackUri, setTrackUri] = useState(`spotify:track:2E0Lr1ecydv5MjTYYM0WhN`);
+  const { token, difficulty, selectedTrack, nativeLanguage } = useAppContext();
+  const [score, setScore] = useState(0)
+  const [trackUri, setTrackUri] = useState("");
+  const [lyrics, setLyrics] = useState<LyricLine[] | null>(null);
+
+  const mockTrackUri = "spotify:track:2E0Lr1ecydv5MjTYYM0WhN"
+
+  const fetchLyrics = async (trackId : string, nativeLanguage : string) => {
+    const lyricsObject = await fetch(`http://localhost:3232/getLyrics?SpotifyTrackID=${trackId}&toLanguage=${nativeLanguage}`);
+    const lyricsJson = await lyricsObject.json();
+    if (lyricsJson.result) {
+      const lyricsArr = lyricsJson.message;
+      let songLyrics: LyricLine[] = [];
+      lyricsArr.map((lyric: string[]) =>
+        songLyrics.push({ startTime: parseInt(lyric[0]), learningLyric: lyric[1], nativeLyric: lyric[2] })
+      );
+
+      setLyrics(songLyrics)
+    } else {
+      console.error("error getting lyrics")
+    }
+  }
+
+  useEffect(() => {
+    fetchLyrics(selectedTrack[2], nativeLanguage)
+    setTrackUri(`spotify:track:${selectedTrack[2]}`)
+  }, [])
 
   return (
     <div className="generation-page">
-      <LyricsGame token={token} trackUri={trackUri} lyrics={mockLyricsResponse} difficulty={"medium"}/>
+      <div className="generation-page-container">
+        <div className="left">
+          {/* {console.log('selectedTrack')} */}
+          {/* <img src={selectedTrack[3]} alt="album cover" /> */}
+          <img
+            src="https://i.scdn.co/image/ab67616d00001e0238876c52ff708856ae680d7e"
+            alt="album cover"
+            style={{ height: "15rem", width: "15rem" }}
+          />
+          <p>
+            Easy On My Eyes - Stephen Sanchez
+            {selectedTrack[1]}
+          </p>
+          <div className="person-container-small">
+            <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true} />
+          </div>
+        </div>
+        <div className="middle">
+          <LyricsGame token={token} trackUri={mockTrackUri} lyrics={mockLyricsResponse} difficulty={"medium"} score={score} setScore={setScore} />
+          {/* {lyrics && <LyricsGame token={token} trackUri={trackUri} lyrics={lyrics} difficulty={difficulty} score={score} setScore={setScore} />} */}
+        </div>
+
+        <div className="right">
+          <p>Score: {score} </p>
+          <NavButton nextPage="/result" displayedText="Leave" proceedToNextPage={true} onClickRejection={() => {}} />
+        </div>
+      </div>
     </div>
   );
 }

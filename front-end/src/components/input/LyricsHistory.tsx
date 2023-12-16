@@ -5,9 +5,10 @@ import { HistoryLyric } from "./Types"
 
 interface LyricsHistoryProps {
     history : HistoryLyric[],
+    result : boolean,
 }
 
-export default function LyricsHistory({ history } : LyricsHistoryProps) {
+export default function LyricsHistory({ history, result } : LyricsHistoryProps) {
 
     const historyEndRef = useRef<HTMLDivElement | null>(null);
     useEffect(() => {
@@ -18,7 +19,7 @@ export default function LyricsHistory({ history } : LyricsHistoryProps) {
     }, [history]);
 
     return (
-      <div className="lyrics-history">
+      <div className={result ? "lyrics-history result" : "lyrics-history"}>
         {history.map((historyLyric) => (
           <div className="lyric">
             <p>{historyLyric.lyric.beginning + " "}</p>

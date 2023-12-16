@@ -1,7 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
 .generation-page {
-.generation-page {
   background: black;
   display: flex;
   align-items: center;
@@ -9,7 +8,29 @@
   flex-direction: column;
   flex: 1;
 
-  .player {
+  .generation-page-container {
+    display: flex;
+    flex-direction: row;
     width: 100%;
+    height: 80vh;
+    color: white;
+
+    .left {
+      flex: 1;
+    }
+    .middle {
+      display: flex;
+      align-items: flex-end;
+      flex: 1;
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
   }
+
+
 }
