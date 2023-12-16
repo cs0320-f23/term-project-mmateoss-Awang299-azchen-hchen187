@@ -31,7 +31,7 @@ public class LyricsHandler implements Route {
             String language = request.queryParams("language"); // Optional
             if (spotifyTrackID == null) {
                 responseMap.put("Result", "Error");
-                responseMap.put("Error Message", "no track ID provided");
+                responseMap.put("Message", "no track ID provided");
                 return moshi.adapter(Map.class).toJson(responseMap);
             }
 
@@ -40,28 +40,29 @@ public class LyricsHandler implements Route {
             if (language == null) { // Set default language to English
                 if (request.queryParams().size() != 1) {
                     responseMap.put("Result", "Error");
-                    responseMap.put("Error Message", "invalid parameters provided");
+                    responseMap.put("Message", "invalid parameters provided");
                     return moshi.adapter(Map.class).toJson(responseMap);
                 }
                 abbrevLanguage = "en";
             } else {
                 if (request.queryParams().size() != 2) {
                     responseMap.put("Result", "Error");
-                    responseMap.put("Error Message", "invalid parameters provided");
+                    responseMap.put("Message", "invalid parameters provided");
                     return moshi.adapter(Map.class).toJson(responseMap);
                 }
                 abbrevLanguage = this.getLanguageCode(language);
             }
 
             ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics(spotifyTrackID);
-            // ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics()
+            responseMap.put("Result", "Success");
+            responseMap.put("Message", defaultLyrics);
+            return moshi.adapter(Map.class).toJson(responseMap);
 
         } catch (Exception e) {
             responseMap.put("Result", "Error");
-            responseMap.put("Error Message", e.getMessage());
+            responseMap.put("Message", e.getMessage());
             return moshi.adapter(Map.class).toJson(responseMap);
         }
-        throw new UnsupportedOperationException("Unimplemented method 'handle'");
     }
 
     /**
