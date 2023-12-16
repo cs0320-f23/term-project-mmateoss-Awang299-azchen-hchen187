@@ -1,6 +1,6 @@
 package edu.brown.cs.student.main.server.spotify.tokens;
 
-import io.github.cdimascio.dotenv.Dotenv;
+//import io.github.cdimascio.dotenv.Dotenv;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -33,9 +33,9 @@ public class TokenGenerator implements IToken {
   public TokenGenerator() {
     // TODO: Input your client_id and client_secret here to generate tokens for
     // testing
-    Dotenv dotenv = Dotenv.load();
-    this.client_id = dotenv.get("SPOTIFY_CLIENT_ID");
-    this.client_secret = dotenv.get("SPOTIFY_CLIENT_SECRET");
+   // Dotenv dotenv = Dotenv.load();
+    this.client_id = "62f77f3bf89c4d9eacd7276d2255e4d0";
+    this.client_secret = "5417180516eb4a748dc254e0b545b06e";
     this.combined = this.client_id + ":" + this.client_secret;
 
     // building the cache that will hold a token for an hour, which is how long
