@@ -24,7 +24,7 @@ public class ScoreHandler implements Route {
     }
 
     @Override
-    public Object handle(Request req, Response res) throws Exception {
+    public Object handle(Request req, Response res) {
         Moshi moshi = new Moshi.Builder().build();
         Set<String> params = req.queryParams();
         String id = req.queryParams("spotifyID");
@@ -40,24 +40,33 @@ public class ScoreHandler implements Route {
             responseMap.put("Message", "please ensure that that you passed in a spotifyID, correctWord, and guessWord");
             return moshi.adapter(Map.class).toJson(responseMap);
         }
-        ArrayList<String[]> lyrics = this.lyricsData.getLyrics(id);
-        int lineCount = lyrics.size();
-        for (String[] line : lyrics) {
-            if (line[1].equals("")) {
-                lineCount -= 1;
+
+        try {
+            ArrayList<String[]> lyrics = this.lyricsData.getLyrics(id);
+            int lineCount = lyrics.size();
+            for (String[] line : lyrics) {
+                if (line[1].equals("")) {
+                    lineCount -= 1;
+                }
             }
+
+            double score = (1
+                    - ((double) LevenshteinDistance(correctWord, guessWord) /
+                            Math.max(correctWord.length(), guessWord.length())))
+                    * 1000 / lineCount;
+
+            Map<String, Object> responseMap = new HashMap<>();
+            responseMap.put("Result", "Success");
+            responseMap.put("Message", score);
+            // responseMap.put("lineCount", lineCount);
+            return moshi.adapter(Map.class).toJson(responseMap);
+        } catch (Exception e) {
+            Map<String, Object> responseMap = new HashMap<>();
+            responseMap.put("Result", "Error");
+            responseMap.put("Message", e.getMessage());
+            return moshi.adapter(Map.class).toJson(responseMap);
         }
 
-        double score = (1
-                - ((double) LevenshteinDistance(correctWord, guessWord) /
-                        Math.max(correctWord.length(), guessWord.length())))
-                * 100 / lineCount;
-
-        Map<String, Object> responseMap = new HashMap<>();
-        responseMap.put("Result", "Success");
-        responseMap.put("Message", score);
-        // responseMap.put("lineCount", lineCount);
-        return moshi.adapter(Map.class).toJson(responseMap);
     }
 
     /**
