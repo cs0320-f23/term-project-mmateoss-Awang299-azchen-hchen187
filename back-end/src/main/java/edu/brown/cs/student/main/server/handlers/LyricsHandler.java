@@ -63,32 +63,33 @@ public class LyricsHandler implements Route {
             System.out.println("fromLanguage: " + fromLanguage);
             int count = 0;
             ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics(spotifyTrackID);
-            StringBuilder superLine = new StringBuilder("");
-            for (String[] line : defaultLyrics) {
-                // if (line[1].equals("")) {
-                // continue;
-                // }
-                superLine.append(line[1] + ":");
-            }
-            String[] resString = this.translateData.getTranslation(superLine.toString(), fromLanguage, toLanguage)
-                    .split(":");
-            for (int i = 0; i < defaultLyrics.size(); i++) {
-                // if (defaultLyrics.get(i)[1].equals("")) {
-                // continue;
-                // }
-                defaultLyrics.get(i)[2] = resString[i];
-            }
-            for (String val : resString) {
-                System.out.println(val);
-            }
+            // StringBuilder superLine = new StringBuilder("");
             // for (String[] line : defaultLyrics) {
-            // if (line[1].equals("")) {
-            // continue;
+            // // if (line[1].equals("")) {
+            // // continue;
+            // // }
+            // superLine.append(line[1] + ":");
             // }
-            // count += line[1].length();
-            // line[2] = this.translateData.getTranslation(line[1], fromLanguage,
-            // toLanguage);
+            // String[] resString = this.translateData.getTranslation(superLine.toString(),
+            // fromLanguage, toLanguage)
+            // .split(":");
+            // for (int i = 0; i < defaultLyrics.size(); i++) {
+            // // if (defaultLyrics.get(i)[1].equals("")) {
+            // // continue;
+            // // }
+            // defaultLyrics.get(i)[2] = resString[i];
             // }
+            // for (String val : resString) {
+            // System.out.println(val);
+            // }
+            for (String[] line : defaultLyrics) {
+                if (line[1].equals("")) {
+                    continue;
+                }
+                count += line[1].length();
+                line[2] = this.translateData.getTranslation(line[1], fromLanguage,
+                        toLanguage);
+            }
             // defaultLyrics.get(0)[2] =
             // this.translateData.getTranslation(defaultLyrics.get(0)[1], fromLanguage,
             // toLanguage);
