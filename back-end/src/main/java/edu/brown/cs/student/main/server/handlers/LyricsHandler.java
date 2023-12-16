@@ -9,7 +9,7 @@ import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.server.lyrics.data.ILyricsData;
 import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.translate.data.ITranslateData;
-import edu.brown.cs.student.main.server.translate.data.TranslateData;
+import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -25,7 +25,7 @@ public class LyricsHandler implements Route {
 
     public LyricsHandler() {
         this.lyricsData = new LyricsData();
-        this.translateData = new TranslateData();
+        this.translateData = new LibreTranslateData();
     }
 
     @Override

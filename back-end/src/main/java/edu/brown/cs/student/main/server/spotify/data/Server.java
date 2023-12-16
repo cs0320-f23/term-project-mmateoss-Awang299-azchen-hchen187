@@ -16,7 +16,7 @@ import edu.brown.cs.student.main.server.handlers.ScoreHandler;
 import edu.brown.cs.student.main.server.handlers.TokenHandler;
 import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
-import edu.brown.cs.student.main.server.translate.data.TranslateData;
+import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
 import spark.Spark;
 
 /**
@@ -46,7 +46,7 @@ public class Server {
     TokenGenerator generator = new TokenGenerator();
     AudioData audioData = new AudioData();
     LyricsData lyricsData = new LyricsData();
-    TranslateData translateData = new TranslateData();
+    LibreTranslateData translateData = new LibreTranslateData();
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
@@ -64,7 +64,7 @@ public class Server {
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
 
-    TranslateData data1 = new TranslateData();
+    LibreTranslateData data1 = new LibreTranslateData();
     try {
       String res = data1.getTranslation("I am absolutely super cool", "en", "fr");
       System.out.println(res);
