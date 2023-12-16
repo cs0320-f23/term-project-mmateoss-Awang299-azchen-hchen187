@@ -58,14 +58,11 @@ function SettingsPage() {
       case 'medium':
         return (
           <span>
-            Fill in the missing line:
+            Fill in the missing words:
             <br />
             "
-            <span style={{fontWeight: 'normal', fontSize: '19pt'}}>
-            I just need to tell you somthing - 
-            </span>
-            <br /> 
-            <span style={{ fontWeight: 'bolder', textDecoration: 'underline', color: 'var(--green)' }}> I really really really really really really like you.</span>
+            <span style = {{fontWeight: "normal"}}>Baby shark</span>
+            <span style={{ fontWeight: 'bolder', textDecoration: 'underline', color: 'var(--green)' }}> doo doo doo doo doo doo</span>
             {' '}"
             <br />
           </span>
@@ -73,11 +70,7 @@ function SettingsPage() {
       case 'hard':
         return (
           <span>
-            Fill in the missing lines:
-            <br /> 
-            "
-            <span style={{ fontWeight: 'bolder', color: 'var(--green)'}}>________________</span>
-            {' '}"
+            Fill in the missing line:
             <br /> 
             "
             <span style={{ fontWeight: 'bolder', color: 'var(--green)' }}>_____________________________</span>
@@ -105,53 +98,63 @@ function SettingsPage() {
   return (
     <div className="settings-page">
       <motion.div className="body">
-        <div className="main-container">
-          <div className="step-2-lineart-container">
-            <div className="step-2-lineart" />
+        <div className="main-container-settings">
+          <div className="left-container">
+            <div className="step-2-lineart-container">
+              <div className="step-2-lineart" />
+            </div>
+            <div className="instructions-container-step2">
+              Step 2:
+              <br></br>
+              select your {' '}
+              <span style={{textDecoration: 'underline'}}>song's language</span>:
+              <br></br>
+              <br/>
+              select your {' '}
+              <span style={{textDecoration: 'underline'}}>native language</span>:
+            </div>
           </div>
-          <div className="instructions-container-step2">
-            Step 2:
-            <br></br>
-            select your {' '}
-            <span style={{textDecoration: 'underline'}}>song's language</span>:
-            <br></br>
-            <br/>
-            select your {' '}
-            <span style={{textDecoration: 'underline'}}>native language</span>:
+
+          <div className="middle-container">
+            <div className="dropdown-container">
+              <LanguageDropdown setSongLang={true}/>
+              <br/>
+              <br/>
+              <LanguageDropdown setSongLang={false}/>
+            </div>
+            <div className="difficulty-container">
+              {["easy", "medium", "hard"].map((level) => (
+                <button
+                  key={level}
+                  onClick={() => handleDifficultyButtonClick(level)}
+                  className={`difficulty-button ${
+                    difficulty === level ? "clicked" : ""
+                  }`}
+                  onMouseEnter={() => setHoveredButton(level)}
+                  onMouseLeave={() => setHoveredButton(null)}
+                >
+                  {level}
+                </button>
+              ))}
+            </div>
+            <div className="difficulty-text-container">
+              {<p>{getButtonText(hoveredButton)}</p>}
+            </div>
           </div>
-          <div className="step-3-lineart-container">
-            <div className="step-3-lineart" />
+
+          <div className="right-container">
+            <div className="step-3-lineart-container">
+              <div className="step-3-lineart" />
+            </div>
+            <div className="instructions-container-step3">
+              Step 3:
+              <br></br>
+              select your {' '}
+              <span style={{textDecoration: 'underline'}}>game difficulty</span>
+            </div>
           </div>
-          <div className="instructions-container-step3">
-            Step 3:
-            <br></br>
-            select your {' '}
-            <span style={{textDecoration: 'underline'}}>game difficulty</span>
-          </div>
-          <div className="dropdown-container">
-            <LanguageDropdown setSongLang={true}/>
-            <br/>
-            <br/>
-            <LanguageDropdown setSongLang={false}/>
-          </div>
-          <div className="difficulty-container">
-            {["easy", "medium", "hard"].map((level) => (
-              <button
-                key={level}
-                onClick={() => handleDifficultyButtonClick(level)}
-                className={`difficulty-button ${
-                  difficulty === level ? "clicked" : ""
-                }`}
-                onMouseEnter={() => setHoveredButton(level)}
-                onMouseLeave={() => setHoveredButton(null)}
-              >
-                {level}
-              </button>
-            ))}
-          </div>
-          <div className="difficulty-text-container">
-            {<p>{getButtonText(hoveredButton)}</p>}
-          </div>
+        
+          
           <NavButton nextPage="/input/generation" displayedText="Start Game" proceedToNextPage={fieldsPopulated} onClickRejection={handleButtonRejection} />
           <div className="person-container-small">
             <div className={`${displayWarning ? "warning-message-container" : ""}`}>Please input the languages & difficulty!</div>

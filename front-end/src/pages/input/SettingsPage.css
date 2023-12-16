@@ -12,17 +12,41 @@ h1 {
   min-height: 100vh;
 }
 
-.main-container {
+.main-container-settings {
+    padding-top: 2%;
     display: flex;
     width: 100%;
-    flex-direction: column;
-    align-items: center;
+    flex-direction: row;
+    justify-content: center;
+}
+
+.left-container {
+  /* background-color: pink; */
+  position: relative;
+  max-width: 400px;
+}
+
+.middle-container {
+  /* background-color: seagreen; */
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 600px;
+}
+
+.right-container {
+  /* background-color: #ccc; */
+  position: relative;
 }
 
 .step-2-lineart-container {
-  position: absolute;
+  position: relative;
+  top: -7%;
+  left: 5%;
+  /* position: absolute;
   top: 7vh;
-  left: 9vh;
+  left: 9vh; */
 }
 
 .step-2-lineart {
@@ -37,9 +61,10 @@ h1 {
 
 .instructions-container-step2 {
   position: absolute;
-  max-width: 350px;
-  top: 16vh;
-  left: 23vh;
+  /* background-color: seagreen; */
+  width: 350px;
+  top: 8%;
+  left: 25%;
   font-size: 20pt;
   text-align: left;
   color: white;
@@ -50,9 +75,12 @@ h1 {
 
 
 .step-3-lineart-container {
-  position: absolute;
+  position: relative;
+  top: 20%;
+  right: 5%;
+  /* position: absolute;
   top: 25vh;
-  right: 7vh;
+  right: 7vh; */
 }
 
 .step-3-lineart {
@@ -68,8 +96,8 @@ h1 {
 .instructions-container-step3 {
   position: absolute;
   max-width: 200px;
-  top: 35vh;
-  right: 20vh;
+  top: 35%;
+  right: 25%;
   font-size: 20pt;
   text-align: right;
   color: white;
@@ -79,6 +107,7 @@ h1 {
 }
 
 .dropdown-container {
+    align-items: center;
     top: 10vh;
     width: 300px;
     position: relative;
