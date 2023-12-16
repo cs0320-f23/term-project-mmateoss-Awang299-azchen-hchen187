@@ -1,9 +1,11 @@
 import React from 'react';
 
+//interface that specifies values passed into the component
 interface LineAnimationProps {
     startAnimation: boolean;
 }
 
+//main component of the line animation
 export function LineAnimationComponent(props: LineAnimationProps) {
 
   return (

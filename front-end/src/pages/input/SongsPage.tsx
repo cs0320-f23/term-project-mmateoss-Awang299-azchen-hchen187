@@ -1,73 +1,106 @@
-import React, { useState, useEffect, useInsertionEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
-import ProgressBar from '../../components/progress/ProgressBar'
 import NavButton from '../../components/button/NavButton';
 import PersonComponent from '../../components/home/PersonComponent';
-
-import './SongsPage.css';
-import '../../components/home/Person.css';
 import { Container, Form } from 'react-bootstrap';
 import { mockGetSongs } from '../../mock/MockAPICalls';
 import TrackSearchResult from '../../components/input/TrackSearchResult';
-import { SongData } from '../../components/interfaces/Interface';
 import { useAppContext } from '../../components/input/ContextProvider';
 
-async function fetchSongs(input: string) : Promise<string> {
-  //todo: update serverinput string
-  const serverInput = "getSongs?" + "whateverparemeter=" + input;
+import './SongsPage.css';
+import '../../components/home/Person.css';
+
+//async function to make backend api calls to get the songs
+async function fetchSongs(input: string) : Promise<{Result: string, data: string[][]}> {
+  const limit = 10;
+  const tokenObject = await fetch("http://localhost:3232/token");
+  const tokenJson = await tokenObject.json();
+  const token = tokenJson.token;
+  const serverInput = "getSongs?token=" + token + "&limit=" + limit + "&query=" + input;
+  console.log(serverInput)
   const fetched = await fetch("http://localhost:3232/" + serverInput);
   const dataObject = await fetched.json();
   return dataObject;
 }
 
+//mock function to get mock data
 async function fetchMockedSongs(input: string) {
   const dataObject = mockGetSongs(input);
   return dataObject;
 }
 
-
+//main component of the songs page
 function SongsPage() {
   const { selectedTrack, chooseTrack } = useAppContext();
   const [search, setSearch] = useState("")
-  const [searchResults, setSearchResults] = useState<SongData[]>([])
+  const [searchResults, setSearchResults] = useState<string[][]>([])
   const [isActive, setIsActive] = useState(false);
+  const [fieldsPopulated, setFieldsPopulated] = useState(false);
+  const [displayWarning, setDisplayWarning] = useState(false);
+  const [searched, setSearched] = useState(false);
 
+  //method to toggle the search bar
   const handleSearchClick = () => {
     setIsActive(true);
   }
 
-  //displays selected song
+  //method to handle when next page conditions aren't satisfied
+  const handleButtonRejection = () => {
+    setDisplayWarning(true)
+  }
+
+  //resetting the selectedTrack upon page load
   useEffect(() => {
-    console.log("new track chosen")
-    console.log(selectedTrack)
+    console.log("page renders")
+    chooseTrack([])
+  }, [])
+
+  //updates fieldsPopulated boolean
+  useEffect(() => {
+    if (selectedTrack.length !== 0) {
+      setFieldsPopulated(true)
+    } else {
+      setFieldsPopulated(false)
+    }
   }, [selectedTrack])
 
   //handles searching of songs
   useEffect(() => {
-    if (!search) return setSearchResults([]);
+    if (!search) {
+      setSearched(false);
+      setSearchResults([]);
+      return;
+    }
+  
 
     let cancel = false;
-    fetchMockedSongs(search).then(response => {
+    const fetchJson = async () => {
       if (cancel) {
-        console.log("cancel is true")
-        return 
+        return
       }
-      if (response.result === "success") {
-        if (Array.isArray(response.data)) {
-          setSearchResults(response.data)
-          console.log(searchResults)
+      fetchSongs(search).then(response => {
+        console.log(response)
+        if (response.Result === "Success") {
+            setSearchResults(response.data)
+        } else {
+
         }
-      } else {
-        //error
-      }
-    })
+      })
+    }
+
+    const delayTimer = setTimeout(() => {
+      fetchJson();
+      setSearched(true)
+    }, 500);
+
     return () => {
       cancel = true;
-    }
+      clearTimeout(delayTimer);
+    };
   }, [search])
 
+  //returns the component
   return (
-    //initial={{opacity:0}} animate={{opacity: 1}}
     <div className="songs-page">
       <motion.div className="body">
         <div className="main-container">
@@ -113,27 +146,36 @@ function SongsPage() {
             </div>
             <div className="track">
               <div className="track-container-wrapper">
-                {searchResults.map((track) => (
-                  <TrackSearchResult
-                    track={track}
-                    key={track.trackID}
-                    chooseTrack={chooseTrack}
-                  />
-                ))}
+                {searched ? (
+                  searchResults.length > 0 ? (
+                    searchResults.map((track) => (
+                      <TrackSearchResult
+                        track={track}
+                        key={track[2]}
+                        chooseTrack={chooseTrack}
+                      />
+                    ))
+                  ) : (
+                    <div
+                    key={"0"}
+                    className="recommended-track-container"
+                    onClick={() => {}}
+                  >
+                    <p style={{textAlign: "center"}}>Loading...</p>
+                  </div>
+                  )
+                ) : null}
               </div>
             </div>
-
-            {/* <div style={{ color: "white" }}>Bottom</div> */}
           </Container>
 
           <div className="selected-track-container">
-            {selectedTrack ? (
-              // Render something when a track is selected
+            {selectedTrack.length !== 0 ? (
               <div className="selected-track-overlay">
-                <div className="displayed-title">{selectedTrack.title}</div>
+                <div className="displayed-title">{selectedTrack[0]}</div>
                 <img
                   className="track-image"
-                  src={selectedTrack.albumUrl}
+                  src={selectedTrack[3]}
                   style={{ width: "250px", height: "250px" }}
                   alt="album cover"
                 />
@@ -150,8 +192,18 @@ function SongsPage() {
             </div>
           </div>
 
-          <NavButton nextPage="/input/metadata" displayedText="Next"/>
+          <NavButton
+            nextPage="/input/settings"
+            displayedText="Next"
+            proceedToNextPage={fieldsPopulated}
+            onClickRejection={handleButtonRejection}
+          />
           <div className="person-container-small">
+            <div
+              className={`${displayWarning ? "warning-message-container" : ""}`}
+            >
+              Please input a song!
+            </div>
             <PersonComponent
               handleHeadClick={() => {}}
               headClicked={false}

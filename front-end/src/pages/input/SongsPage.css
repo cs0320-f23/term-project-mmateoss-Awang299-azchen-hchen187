@@ -1,5 +1,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
 
+/* css styling for the songs page*/ 
+
 h1 {
     font-size: 100pt;
     color: white;
@@ -16,8 +18,6 @@ h1 {
     align-items: flex-start;
     justify-content: center;
     flex-direction: row;
-    /* flex-direction: column;
-    align-items: center; */
 }
 
 .button-container {
@@ -47,11 +47,26 @@ h1 {
   background-color: var(--green);
 }
 
+.warning-message-container {
+  height: 150px;
+  width: 120px;
+  border-radius: 50px 50px 50px 10px;
+  text-align: center;
+  align-items: center;
+  vertical-align: middle;
+  display: flex;
+  background-color: var(--lime);
+  margin-left: 300px;
+  color: black;
+  font-size: 20pt;
+}
+
 .person-container-small {
   display: inline-block;
+  align-items: center;
+  flex-direction: row;
   transform: scale(0.7);
   transform-origin: bottom left;
-  position: absolute;
   bottom: 0;
   left: 0;
   margin: 30px;
@@ -64,11 +79,6 @@ h1 {
   top: 30;
   left: 0;
   transform: rotate(15deg);
-  /* width: 100%;
-  height: 100%;
-  top: 0;
-  left: 50;
-  z-index: 0; */
 }
 
 path {
@@ -234,10 +244,7 @@ path {
   border-radius: 20px;
 }
 
-/* todo: change colour of x button */
 input[type="search"]::-webkit-search-clear-button {
-  /* -webkit-appearance: none;
-  appearance: none; */
   margin-right: 8px;
   cursor: pointer;
   width: 16px; 
@@ -266,7 +273,7 @@ input[type="search"]::-webkit-search-clear-button {
 }
 
 .displayed-title {
-  padding-top: 15px;
+  padding-top: 10px;
   padding-bottom: 35px;
   font-size: 14pt;
   font-weight: bold;

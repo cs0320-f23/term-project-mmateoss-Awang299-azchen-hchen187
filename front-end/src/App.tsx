@@ -1,40 +1,22 @@
-import './App.css';
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
-import {AnimatePresence, motion} from 'framer-motion';
 import React from 'react';
 import { ContextProvider } from './components/input/ContextProvider';
 import HomePage from './pages/home/HomePage';
 import SongsPage from './pages/input/SongsPage';
-import MetadataPage from './pages/input/MetadataPage';
 import GenerationPage from './pages/input/GenerationPage';
 import GeneratedPlaylistPage from './pages/result/GeneratedPlaylistPage';
-import LoadingPage from './pages/result/LoadingPage';
-import Toolbar from './components/Toolbar/Toolbar';
+import Toolbar from './components/toolbar/Toolbar';
+import SettingsPage from './pages/input/SettingsPage';
+import AboutPage from './pages/home/AboutPage';
+import FAQPage from './pages/home/FAQPage';
+
+import './App.css';
 
 
 /**
  * This is the highest level component!
  */
 function App() {
-
-  const LandingPageComponent = () => (
-      <motion.div key="home" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        <HomePage />
-      </motion.div>
-  )
-
-  const SongsPageComponent = () => (
-      <motion.div key="songs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-        <SongsPage />
-      </motion.div>
-  )
-
-  const MetadataPageComponent = () => (
-    <motion.div key="songs" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}>
-      <MetadataPage />
-    </motion.div>
-)
-
   
   return (
     <ContextProvider>
@@ -43,8 +25,10 @@ function App() {
         <Router>
           <Routes>
             <Route path="/" element={<HomePage />} />
+            <Route path="/about" element={<AboutPage />} />
+            <Route path="/faq" element={<FAQPage />} />
             <Route path="/input/songs" element={<SongsPage />} />
-            <Route path="/input/metadata" element={<MetadataPage />} />
+            <Route path="/input/settings" element={<SettingsPage />} />
             <Route path="/input/generation" element={<GenerationPage />} />
             <Route path="/result" element={<GeneratedPlaylistPage />} />
           </Routes>

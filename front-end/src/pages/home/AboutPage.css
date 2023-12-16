@@ -1,0 +1,81 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
+
+/* css styling for the about page */
+
+.about-page {
+    background: black;
+    min-height: 100vh;
+  }
+  
+.main-container {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    flex-direction: column;
+    margin: 0;
+    padding: 0;
+}
+
+.mission-container {
+    margin-top: 50px;
+    width: 600px;
+    height: 225px;
+    font-size: 14pt;
+    color: white;
+    text-align: center;
+    z-index: 1;
+}
+
+.about-us-container {
+    width: 400px;
+    height: 300px;
+    font-size: 14pt;
+    color: white;
+    text-align: center;
+}
+
+.profile-container {
+    position: absolute;
+    top: 65vh;
+    width: 70%;
+    height: 200px;
+    display: flex;
+    flex-direction: row;
+
+}
+
+.pfp1 {
+    position: relative;
+    width: 375px;
+    height: 200px;
+    background: url("../../assets/images/AboutPage/marcel.png") no-repeat center center;
+    background-size: contain;
+}
+
+
+.pfp2 {
+    position: relative;
+    width: 375px;
+    height: 200px;
+    margin-right: 100px;
+    background: url("../../assets/images/AboutPage/andrew.png") no-repeat center center;
+    background-size: contain;
+}
+
+.pfp3 {
+    position: relative;
+    width: 375px;
+    height: 200px;
+    margin-left: 100px;
+    background: url("../../assets/images/AboutPage/allen.png") no-repeat center center;
+    background-size: contain;
+}
+
+.pfp4 {
+    position: relative;
+    width: 375px;
+    height: 200px;
+    background: url("../../assets/images/AboutPage/charlene.png") no-repeat center center;
+    background-size: contain;
+}
+

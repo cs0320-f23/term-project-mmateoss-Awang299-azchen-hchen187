@@ -2,8 +2,10 @@ import React, { createContext, ReactNode, useContext, useEffect, useState } from
 import { SongData } from '../interfaces/Interface';
 
 interface AppContextProps {
-  selectedTrack: SongData | undefined;
-  chooseTrack: (track: SongData) => void;
+  selectedTrack: string[];
+  chooseTrack: (track: string[]) => void;
+  songLanguage: string;
+  chooseSongLanguage: (language: string) => void;
   nativeLanguage: string;
   chooseNativeLanguage: (language: string) => void;
   totalPoints: number;
@@ -16,22 +18,25 @@ interface AppContextProps {
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
 export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) => {
-    const [selectedTrack, setSelectedTrack] = useState<SongData>();
+    const [selectedTrack, setSelectedTrack] = useState<string[]>([]);
+    const [songLanguage, setSongLanguage] = useState("");
     const [nativeLanguage, setNativeLanguage] = useState("");
     const [totalPoints, setTotalPoints] = useState(0);
+    const [difficulty, setDifficulty] = useState("");
     const [difficulty, setDifficulty] = useState("easy");
     const [token, setToken] = useState(`BQBaiyZjtvlbt0gYsT70L_9V2wThd3WJmrMmlc065a3AGgaUbzWw8kpSzpngPWYBW8kDSK9y-e5Xufxv0XmpsoePpyHGalchNXXLfMI1QM7Mj-k-_n7E7kBvFQYeyxRBx6gJGmlOeZ-mIw4yvNPDCxOomStNEjHPUsr1RkZnNbxuR6-10cKp-QNa-BH_Tm1UldJzjYrdRHE
 
 
     `)
 
-    const chooseTrack = (track : SongData) => {
+    const chooseTrack = (track : string[]) => {
         setSelectedTrack(track);
+        console.log("set track to " + track)
       };
 
     const chooseNativeLanguage = (language: string) => {
       setNativeLanguage(language);
-      console.log(language)
+      console.log("native language: " + language)
     }
 
     const chooseDifficulty = (difficulty: string) => {
@@ -39,10 +44,17 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) =
       console.log(difficulty)
     }
 
+    const chooseSongLanguage = (language: string) => {
+      setSongLanguage(language);
+      console.log("song language; "+language)
+    }
+
 
     const contextInfo : AppContextProps = {
         selectedTrack, 
         chooseTrack,
+        songLanguage, 
+        chooseSongLanguage,
         nativeLanguage,
         chooseNativeLanguage,
         totalPoints, 

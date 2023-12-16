@@ -1,3 +1,4 @@
+//mock returned data from searching "daniel"
 export const songsData: {[key: string]: {title: string, artist: string, trackID: string, albumUrl: string}[]} = {
     "d" : [
         {
@@ -222,3 +223,95 @@ export const songsData: {[key: string]: {title: string, artist: string, trackID:
         }
     ]
 }
+
+//mock selectedTrack
+export const recommendationInputData = {
+    "Result":"Success",
+    "data":["Get You (feat. Kali Uchis)", "Daniel Caesar", "7zFXmv6vqI4qOt4yGf3jYZ10", "https://i.scdn.co/image/ab67616d00001e023138f891f3075c9c5d944037"]
+}
+
+//mock result from calling backend getrecommendations
+export const recommendationOutputData = {
+    "seeds":[{
+        "afterFilteringSize":145,
+        "afterRelinkingSize":145,
+        "href":"https://api.spotify.com/v1/tracks/4DM60RC0fVoHbVRtl4Fjdp",
+        "id":"4DM60RC0fVoHbVRtl4Fjdp",
+        "initialPoolSize":500,
+        "type":"TRACK"
+        }],
+    "tracks":[{
+        "duration_ms":177893,
+        "explicit":false,
+        "href":"https://api.spotify.com/v1/tracks/3zkRrruaS6ZeZbbRaKbj9p",
+        "id":"3zkRrruaS6ZeZbbRaKbj9p",
+        "uri":"spotify:track:3zkRrruaS6ZeZbbRaKbj9p",
+        "track_number":2,
+        "preview_url":"https://p.scdn.co/mp3-preview/f862c056b8a6de83f36ffe1aacd66454ee21df4b?cid=62f77f3bf89c4d9eacd7276d2255e4d0",
+        "name":"SWIPE",
+        "album":{
+            "images":[
+                {"url":"https://i.scdn.co/image/ab67616d0000b27395a4e4b9d3bd90227250c0d8","height":640,"width":640},
+                {"url":"https://i.scdn.co/image/ab67616d00001e0295a4e4b9d3bd90227250c0d8","height":300,"width":300},
+                {"url":"https://i.scdn.co/image/ab67616d0000485195a4e4b9d3bd90227250c0d8","height":64,"width":64}]}
+            },
+            {
+        "duration_ms":165426,
+        "explicit":false,
+        "href":"https://api.spotify.com/v1/tracks/2DkO9y7DB9S9nBg5u0VDoW",
+        "id":"2DkO9y7DB9S9nBg5u0VDoW",
+        "uri":"spotify:track:2DkO9y7DB9S9nBg5u0VDoW",
+        "track_number":2,
+        "preview_url":"https://p.scdn.co/mp3-preview/8b28216871b3a52c465709082e6e84d7e8fde131?cid=62f77f3bf89c4d9eacd7276d2255e4d0",
+        "name":"AGASSY",
+        "album":{
+            "images":[
+                {"url":"https://i.scdn.co/image/ab67616d0000b2730c1f1054d3a170ee26430c79","height":640,"width":640},
+                {"url":"https://i.scdn.co/image/ab67616d00001e020c1f1054d3a170ee26430c79","height":300,"width":300},
+                {"url":"https://i.scdn.co/image/ab67616d000048510c1f1054d3a170ee26430c79","height":64,"width":64}]}
+            },
+            {
+        "duration_ms":198520,
+        "explicit":false,
+        "href":"https://api.spotify.com/v1/tracks/6Pjzy9avwlVr4UAbxkQQmh",
+        "id":"6Pjzy9avwlVr4UAbxkQQmh",
+        "uri":"spotify:track:6Pjzy9avwlVr4UAbxkQQmh",
+        "track_number":1,
+        "preview_url":"https://p.scdn.co/mp3-preview/70da06487cbbeed8004bdfb85fbe979655ca91df?cid=62f77f3bf89c4d9eacd7276d2255e4d0",
+        "name":"NEW DANCE",
+        "album":{
+            "images":[
+                {"url":"https://i.scdn.co/image/ab67616d0000b27307c9742c8e4de5cee2d237e2","height":640,"width":640},
+                {"url":"https://i.scdn.co/image/ab67616d00001e0207c9742c8e4de5cee2d237e2","height":300,"width":300},
+                {"url":"https://i.scdn.co/image/ab67616d0000485107c9742c8e4de5cee2d237e2","height":64,"width":64}]}
+            },
+            {
+        "duration_ms":225574,
+        "explicit":false,
+        "href":"https://api.spotify.com/v1/tracks/0HWzu5wDNPI1f365KKICdz",
+        "id":"0HWzu5wDNPI1f365KKICdz",
+        "uri":"spotify:track:0HWzu5wDNPI1f365KKICdz",
+        "track_number":2,
+        "preview_url":"https://p.scdn.co/mp3-preview/4076db4c1269e47f16b5d51c9c86dbf9f2bd04c5?cid=62f77f3bf89c4d9eacd7276d2255e4d0",
+        "name":"Good-bye Baby",
+        "album":{
+            "images":[
+                {"url":"https://i.scdn.co/image/ab67616d0000b273801b445495d4886afb7370d7","height":640,"width":640},
+                {"url":"https://i.scdn.co/image/ab67616d00001e02801b445495d4886afb7370d7","height":300,"width":300},
+                {"url":"https://i.scdn.co/image/ab67616d00004851801b445495d4886afb7370d7","height":64,"width":64}]}
+            },
+            {
+        "duration_ms":203640,
+        "explicit":false,
+        "href":"https://api.spotify.com/v1/tracks/0BhMw9r3eOLMLXRFBLCt6O",
+        "id":"0BhMw9r3eOLMLXRFBLCt6O",
+        "uri":"spotify:track:0BhMw9r3eOLMLXRFBLCt6O",
+        "track_number":1,
+        "preview_url":"https://p.scdn.co/mp3-preview/277fa258f048a9c9cc9ffe9948c5e7106129e29a?cid=62f77f3bf89c4d9eacd7276d2255e4d0",
+        "name":"Very Very Very",
+        "album":{
+            "images":[
+                {"url":"https://i.scdn.co/image/ab67616d0000b273266f95f6353cb2b974f67fa7","height":640,"width":640},
+                {"url":"https://i.scdn.co/image/ab67616d00001e02266f95f6353cb2b974f67fa7","height":300,"width":300},
+                {"url":"https://i.scdn.co/image/ab67616d00004851266f95f6353cb2b974f67fa7","height":64,"width":64}]}}
+    ]}
