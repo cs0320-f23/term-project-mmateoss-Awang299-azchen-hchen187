@@ -3,20 +3,11 @@ package edu.brown.cs.student.main.server.handlers;
 import com.squareup.moshi.Moshi;
 
 import edu.brown.cs.student.main.server.lyrics.data.ILyricsData;
-import edu.brown.cs.student.main.server.spotify.data.IData;
 
-import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
-import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.TrackProps;
-
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -66,6 +57,7 @@ public class ScoreHandler implements Route {
     }
 
     /**
+     * https://leetcode.com/problems/edit-distance/solutions/3230662/clean-codes-full-explanation-dynamic-programming-c-java-python3/
      * 
      * @param word1- String of word 1
      * @param word2- String of word 2
@@ -85,45 +77,12 @@ public class ScoreHandler implements Route {
 
         for (int i = 1; i <= m; ++i)
             for (int j = 1; j <= n; ++j)
-                if (word1.charAt(i - 1) == word2.charAt(j - 1))// same characters
-                    dp[i][j] = dp[i - 1][j - 1];// no operation
+                if (word1.charAt(i - 1) == word2.charAt(j - 1))
+                    dp[i][j] = dp[i - 1][j - 1];
                 else
                     dp[i][j] = Math.min(dp[i - 1][j - 1], Math.min(dp[i - 1][j], dp[i][j - 1])) + 1; // replace //delete
                                                                                                      // //insert
 
         return dp[m][n];
     }
-    // if (x.length() == 0) {
-    // return y.length();
-    // } else if (y.length() == 0) {
-    // return x.length();
-    // }
-    // int[][] dp = new int[x.length()][y.length()];
-
-    // for (int i = 0; i < x.length(); i++) {
-    // for (int j = 0; j < y.length(); j++) {
-    // dp[i][j] = Math.max(x.length(), y.length());
-    // }
-    // }
-
-    // for (int i = 0; i < x.length(); i++) {
-    // for (int j = 0; j < y.length(); j++) {
-    // if (i != 0) {
-    // dp[i][j] = Math.min(dp[i][j], dp[i - 1][j]);
-    // }
-    // if (j != 0) {
-    // dp[i][j] = Math.min(dp[i][j], dp[i][j - 1]);
-    // }
-    // if (i != 0 && j != 0) {
-    // dp[i][j] = Math.min(dp[i][j], dp[i - 1][j - 1]);
-    // }
-    // if (x.charAt(i) != y.charAt(j)) {
-    // dp[i][j] += 1;
-    // }
-    // }
-    // }
-
-    // return dp[x.length() - 1][y.length() - 1];
-    // }
-
 }
