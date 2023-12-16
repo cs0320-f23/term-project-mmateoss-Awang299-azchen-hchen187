@@ -1,8 +1,5 @@
 package edu.brown.cs.student.main.server.lyrics.data;
 
-import com.google.common.cache.CacheBuilder;
-import com.google.common.cache.CacheLoader;
-import com.google.common.cache.LoadingCache;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
@@ -116,18 +113,19 @@ public class LyricsData implements ILyricsData {
      * Obtains and parses LineObj object into the desired String[]
      * 
      * @param LineObj representing a line of LRC
-     * @return String[2] representing [timestamp in seconds, lyrics]
+     * @return String[3] representing [timestamp in seconds, lyrics]
      * @throws Exception
      */
     private String[] ParseLine(LineObj line) throws Exception {
-        String[] newLine = new String[2];
-        // Parse timestamp into String[2] of the form [minutes, seconds]
+        String[] newLine = new String[3];
+        // Parse timestamp into String[3] of the form [minutes, seconds]
         String[] parsedTime = line.timeTag().split(":");
         if (parsedTime.length != 2) {
             throw new Exception("Timestamp not formatted as \"minutes:seconds\"");
         }
         newLine[0] = ((Float) ((Float.parseFloat(parsedTime[0]) * 60) + Float.parseFloat(parsedTime[1]))).toString();
         newLine[1] = line.words().replace("\u266a", "");
+        newLine[2] = "";
         return newLine;
     }
 }

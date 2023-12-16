@@ -12,9 +12,11 @@ import edu.brown.cs.student.main.server.handlers.AddDislikedSongsHandler;
 import edu.brown.cs.student.main.server.handlers.AddInputSongsHandler;
 import edu.brown.cs.student.main.server.handlers.LyricsHandler;
 import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
+import edu.brown.cs.student.main.server.handlers.ScoreHandler;
 import edu.brown.cs.student.main.server.handlers.TokenHandler;
 import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
+import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
 import spark.Spark;
 
 /**
@@ -44,6 +46,7 @@ public class Server {
     TokenGenerator generator = new TokenGenerator();
     AudioData audioData = new AudioData();
     LyricsData lyricsData = new LyricsData();
+    LibreTranslateData translateData = new LibreTranslateData();
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
@@ -52,7 +55,8 @@ public class Server {
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
     Spark.post("audioText", new AudioTextHandler(audioData));
-    Spark.get("lyrics", new LyricsHandler(lyricsData));
+    Spark.get("getLyrics", new LyricsHandler(lyricsData, translateData));
+    Spark.get("getScore", new ScoreHandler(lyricsData));
 
     Spark.init();
     Spark.awaitInitialization();
@@ -60,7 +64,16 @@ public class Server {
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
 
-    LyricsData data1 = new LyricsData();
+    LibreTranslateData data1 = new LibreTranslateData();
+    try {
+      String res = data1.getTranslation("I am absolutely super cool", "en", "fr");
+      System.out.println(res);
+      System.out.println("done");
+    } catch (Exception e) {
+      System.out.println("Invalid BRUH");
+    }
+
+    // LyricsData data1 = new LyricsData();
     // try {
     // for (String[] arr : data1.getLyrics("2i2gDpKKWjvnRTOZRhaPh2")) {
     // System.out.println(arr[0] + " " + arr[1]);

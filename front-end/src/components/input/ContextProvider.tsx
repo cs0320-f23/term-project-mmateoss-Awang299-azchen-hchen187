@@ -1,4 +1,3 @@
-import { IntegerType } from 'mongodb';
 import React, { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 import { SongData } from '../interfaces/Interface';
 
@@ -12,6 +11,8 @@ interface AppContextProps {
   totalPoints: number;
   difficulty: string;
   chooseDifficulty: (difficulty: string) => void;
+  token: string;
+  setToken: (token : string) => void;
 }
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
@@ -21,9 +22,9 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) =
     const [songLanguage, setSongLanguage] = useState("");
     const [nativeLanguage, setNativeLanguage] = useState("");
     const [totalPoints, setTotalPoints] = useState(0);
-    const [difficulty, setDifficulty] = useState("");
-
-    
+    const [difficulty, setDifficulty] = useState("easy");
+    const [token, setToken] = useState(`BQAyiNcNBeixqSF2PKa6BJlmLW2NAovt5KtbFljXxnnPtAKlIdzdSj3imlXlk9eaG92w8C63Mbbwxo7sk2c6qiYsSTjRZkTLI3KGWWpaX3fiCrdfe5LZE6HcHt12C9KaEhC3sqBjsJTRvPcDZ0ldm7qXerVe43xW03eT_YfTCJAxl8LI7bFnFT3KQ9S9LmDdrtClZ1MKVfU
+    `)
 
     const chooseTrack = (track : string[]) => {
         setSelectedTrack(track);
@@ -56,6 +57,8 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) =
         totalPoints, 
         difficulty,
         chooseDifficulty,
+        token,
+        setToken,
     }
 
   return (
