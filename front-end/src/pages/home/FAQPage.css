@@ -7,7 +7,7 @@
     min-height: 100vh;
   }
   
-.main-container {
+.main-container-faq {
     display: flex;
     width: 100%;
     justify-content: center;
@@ -17,17 +17,64 @@
 }
 
 .person-container-faq {
-    height: 500px;
-    background-color: seagreen;
+    margin-top: 150px;
+    margin-right: 30px;
+    height: 300px;
 }
 
 .overview-container {
     background-color: pink;
-    margin-top: 50px;
+    margin-top: 80px;
     width: 600px;
-    height: 225px;
+    padding: 20px;
+    border-radius: 20px;
     font-size: 14pt;
-    color: white;
+    color: black;
     text-align: left;
     line-height: 30px;
 }
+
+.y-wrapper {
+    position: absolute;
+    bottom: -5vh;
+    left: -7vh;
+    animation: y-axis 3s forwards ease-in-out;
+  }
+
+  .z-wrapper {
+    position: absolute;
+    bottom: -5vh;
+    left: -7vh;
+    animation: z-axis 5s infinite ease-in-out;
+  }
+  
+  
+  .x-wrapper {
+    position: absolute;
+    bottom: 50vh;
+    left: 50vh;
+    width: 50px;
+    height: 50px;
+    background-color: white;
+    border-radius: 10px;
+    animation: x-axis 10s infinite linear;
+  }
+  
+  
+  @keyframes x-axis {
+    50% {
+      transform:translateX(800px);
+    }
+  }
+  
+  @keyframes y-axis {
+    50% {
+      transform: translateY(100px);
+    }
+  }
+
+  @keyframes z-axis {
+    50% {
+      transform: translateZ(300px);
+    }
+  }

@@ -7,28 +7,33 @@ import "./FAQPage.css"
 export default function FAQPage() {
   return (
     <div className="faq-page">
-        <div className="main-container">
+        <div className="main-container-faq">
+          {/* <div className="z-wrapper">
+            <div className="y-wrapper">
+              <div className="x-wrapper"></div>
+            </div>
+          </div> */}
             <div className="person-container-faq">
               <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={false}/>
             </div>
             <div className="overview-container">
-                Overview of how it works:
+                <span style={{fontWeight: "bold", fontSize:"18pt"}}>Overview of how it works:</span>
                 <br/>
-                1. Input the song you want to learn
+                <b>1.</b> Input the song you want to learn
                 <br/>
-                2. Specify the language you want to learn in the chosen song
+                <b>2.</b> Specify the language you want to learn in the chosen song
                 <br/>
-                3. Select the language you are most comfortable with {'(your native language)'}
+                <b>3.</b> Select the language you are most comfortable with {'(your native language)'}
                 <br/>
-                4. Select the level of difficulty you want your game to be
+                <b>4.</b> Select the level of difficulty you want your game to be
                 <br/>
-                5. Play game! The song audio will be played and you just have to fill in the
-                missing word/line{'(s)'}. The more accurate you are, the more points you will get!
+                <b>5.</b> Play game! The song audio will be played and you just have to fill in the
+                missing word{'(s)'}/line. The more accurate you are, the more points you will get!
                 <br/> 
-                6. Once you finish a round, you can choose to play with other songs we recommend based
+                <b>6.</b> Once you finish a round, you can choose to play with other songs we recommend based
                 on your initial song and discover new artists!
                 <br/>
-                7. Have fun!
+                <b>7.</b> Have fun!
             </div>
         </div>
     </div>

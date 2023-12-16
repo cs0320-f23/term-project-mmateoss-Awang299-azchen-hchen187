@@ -37,6 +37,7 @@ function SongsPage() {
   const [isActive, setIsActive] = useState(false);
   const [fieldsPopulated, setFieldsPopulated] = useState(false);
   const [displayWarning, setDisplayWarning] = useState(false);
+  const [searched, setSearched] = useState(false);
 
   //method to toggle the search bar
   const handleSearchClick = () => {
@@ -65,23 +66,37 @@ function SongsPage() {
 
   //handles searching of songs
   useEffect(() => {
-    if (!search) return setSearchResults([]);
+    if (!search) {
+      setSearched(false);
+      setSearchResults([]);
+      return;
+    }
+  
 
     let cancel = false;
-    fetchSongs(search).then(response => {
-      console.log(response)
+    const fetchJson = async () => {
       if (cancel) {
-        return 
+        return
       }
-      if (response.Result === "Success") {
-        setSearchResults(response.data)
-      } else {
+      fetchSongs(search).then(response => {
         console.log(response)
-      }
-    })
+        if (response.Result === "Success") {
+            setSearchResults(response.data)
+        } else {
+
+        }
+      })
+    }
+
+    const delayTimer = setTimeout(() => {
+      fetchJson();
+      setSearched(true)
+    }, 500);
+
     return () => {
       cancel = true;
-    }
+      clearTimeout(delayTimer);
+    };
   }, [search])
 
   //returns the component
@@ -131,19 +146,31 @@ function SongsPage() {
             </div>
             <div className="track">
               <div className="track-container-wrapper">
-                {searchResults.map((track) => (
-                  <TrackSearchResult
-                    track={track}
-                    key={track[2]}
-                    chooseTrack={chooseTrack}
-                  />
-                ))}
+                {searched ? (
+                  searchResults.length > 0 ? (
+                    searchResults.map((track) => (
+                      <TrackSearchResult
+                        track={track}
+                        key={track[2]}
+                        chooseTrack={chooseTrack}
+                      />
+                    ))
+                  ) : (
+                    <div
+                    key={"0"}
+                    className="recommended-track-container"
+                    onClick={() => {}}
+                  >
+                    <p style={{textAlign: "center"}}>Loading...</p>
+                  </div>
+                  )
+                ) : null}
               </div>
             </div>
           </Container>
 
           <div className="selected-track-container">
-            {(selectedTrack.length!==0) ? (
+            {selectedTrack.length !== 0 ? (
               <div className="selected-track-overlay">
                 <div className="displayed-title">{selectedTrack[0]}</div>
                 <img
@@ -165,9 +192,18 @@ function SongsPage() {
             </div>
           </div>
 
-          <NavButton nextPage="/input/settings" displayedText="Next" proceedToNextPage={fieldsPopulated} onClickRejection={handleButtonRejection}/>
+          <NavButton
+            nextPage="/input/settings"
+            displayedText="Next"
+            proceedToNextPage={fieldsPopulated}
+            onClickRejection={handleButtonRejection}
+          />
           <div className="person-container-small">
-            <div className={`${displayWarning ? "warning-message-container" : ""}`}>Please input a song!</div>
+            <div
+              className={`${displayWarning ? "warning-message-container" : ""}`}
+            >
+              Please input a song!
+            </div>
             <PersonComponent
               handleHeadClick={() => {}}
               headClicked={false}
