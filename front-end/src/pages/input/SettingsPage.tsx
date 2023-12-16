@@ -58,7 +58,7 @@ function SettingsPage() {
       case 'medium':
         return (
           <span>
-            Fill in the missing line:
+            Fill in the missing words:
             <br />
             "
             <span style={{fontWeight: 'normal', fontSize: '19pt'}}>
