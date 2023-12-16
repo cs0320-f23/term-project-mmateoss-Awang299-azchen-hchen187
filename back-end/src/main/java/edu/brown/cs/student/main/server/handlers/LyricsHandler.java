@@ -9,7 +9,7 @@ import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.server.lyrics.data.ILyricsData;
 import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.translate.data.ITranslateData;
-import edu.brown.cs.student.main.server.translate.data.TranslateData;
+import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -25,7 +25,7 @@ public class LyricsHandler implements Route {
 
     public LyricsHandler() {
         this.lyricsData = new LyricsData();
-        this.translateData = new TranslateData();
+        this.translateData = new LibreTranslateData();
     }
 
     @Override
@@ -65,28 +65,30 @@ public class LyricsHandler implements Route {
             ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics(spotifyTrackID);
             StringBuilder superLine = new StringBuilder("");
             for (String[] line : defaultLyrics) {
-//                if (line[1].equals("")) {
-//                    continue;
-//                }
+                // if (line[1].equals("")) {
+                // continue;
+                // }
                 superLine.append(line[1] + ":");
             }
-            String[] resString = this.translateData.getTranslation(superLine.toString(), fromLanguage, toLanguage).split(":");
+            String[] resString = this.translateData.getTranslation(superLine.toString(), fromLanguage, toLanguage)
+                    .split(":");
             for (int i = 0; i < defaultLyrics.size(); i++) {
-//                if (defaultLyrics.get(i)[1].equals("")) {
-//                    continue;
-//                }
+                // if (defaultLyrics.get(i)[1].equals("")) {
+                // continue;
+                // }
                 defaultLyrics.get(i)[2] = resString[i];
             }
             for (String val : resString) {
                 System.out.println(val);
             }
-//            for (String[] line : defaultLyrics) {
-//                if (line[1].equals("")) {
-//                    continue;
-//                }
-//                count += line[1].length();
-//                line[2] = this.translateData.getTranslation(line[1], fromLanguage, toLanguage);
-//            }
+            // for (String[] line : defaultLyrics) {
+            // if (line[1].equals("")) {
+            // continue;
+            // }
+            // count += line[1].length();
+            // line[2] = this.translateData.getTranslation(line[1], fromLanguage,
+            // toLanguage);
+            // }
             // defaultLyrics.get(0)[2] =
             // this.translateData.getTranslation(defaultLyrics.get(0)[1], fromLanguage,
             // toLanguage);
