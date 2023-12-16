@@ -18,12 +18,11 @@
 
 .mission-container {
     margin-top: 50px;
-    width: 600px;
+    max-width: 600px;
     height: 225px;
     font-size: 14pt;
     color: white;
     text-align: center;
-    z-index: 1;
 }
 
 .about-us-container {
