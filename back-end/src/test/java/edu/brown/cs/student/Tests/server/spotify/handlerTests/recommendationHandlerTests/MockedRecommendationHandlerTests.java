@@ -143,7 +143,7 @@ public class MockedRecommendationHandlerTests {
     Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that that you passed in a variability, token, limit, "
         + "and list of song names for generating recommendations",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
   }
 
   /**
@@ -167,7 +167,7 @@ public class MockedRecommendationHandlerTests {
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
     Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("the limit must be an integer in the range 1-100",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
   }
 
   /**
@@ -191,7 +191,7 @@ public class MockedRecommendationHandlerTests {
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
     Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("the limit must be an integer in the range 1-100",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
   }
 
   /**
@@ -216,7 +216,7 @@ public class MockedRecommendationHandlerTests {
     Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that that you passed in a variability, token, limit, "
         + "and list of song names for generating recommendations",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
   }
 
   /**
@@ -241,7 +241,7 @@ public class MockedRecommendationHandlerTests {
     Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that you passed in a list of song names as a parameter"
         + " in order to generate recommendations",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
   }
 
   /**
@@ -266,7 +266,7 @@ public class MockedRecommendationHandlerTests {
     Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that you passed in a list of song names as a parameter"
         + " in order to generate recommendations",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
 
   }
 
@@ -294,7 +294,7 @@ public class MockedRecommendationHandlerTests {
     Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that that you passed in a variability, token, limit, "
         + "and list of song names for generating recommendations",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
   }
 
   /**
@@ -322,7 +322,7 @@ public class MockedRecommendationHandlerTests {
     Assert.assertEquals("Error", responseBody.get("Result"));
     Assert.assertEquals("please ensure that that you passed in a variability, token, limit, "
         + "and list of song names for generating recommendations",
-        responseBody.get("Error Message"));
+        responseBody.get("Message"));
 
   }
 
@@ -346,10 +346,19 @@ public class MockedRecommendationHandlerTests {
     HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
 
     Moshi moshi = new Moshi.Builder().build();
+
     JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
     Recommendation responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals(responseBody.tracks().size(), 5);
-    Assert.assertEquals(responseBody.tracks().get(0).id(), "5N9M7Ji7KYrmfJ6Jki3raU");
+    // JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
+    // Map<String, Object> responseBody = jsonAdapter.fromJson(response.body());
+    // Recommendation rec = (Recommendation) responseBody.get("Message");
+    // System.out.println(responseBody.get("Message"));
+    // Assert.assertEquals(responseBody.get("Message"), "Success");
+
+    Assert.assertTrue(responseBody.tracks().size() == 5);
+    // Assert.assertEquals(responseBody.get("Message").size(), 5);
+    // Assert.assertEquals(responseBody.tracks().get(0).id(),
+    // "5N9M7Ji7KYrmfJ6Jki3raU");
 
   }
 

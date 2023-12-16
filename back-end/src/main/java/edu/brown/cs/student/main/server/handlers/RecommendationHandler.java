@@ -75,22 +75,21 @@ public class RecommendationHandler implements Route {
     if (params.size() != 4 || variability == null || token == null || limit == null) {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", "please ensure that that you passed in a variability,"
+      responseMap.put("Message", "please ensure that that you passed in a variability,"
           + " token, limit, and list of song names for generating recommendations");
       return moshi.adapter(Map.class).toJson(responseMap);
     }
     if (allNames == null || allNames.length == 0) {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", "please ensure that you passed in a list of song names"
+      responseMap.put("Message", "please ensure that you passed in a list of song names"
           + " as a parameter in order to generate recommendations");
       return moshi.adapter(Map.class).toJson(responseMap);
     }
-    // TODO: check to make sure that variability is greater than 0
     if (limit.equals("0") || Integer.valueOf(limit) > 100 || Integer.valueOf(limit) < 0) {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", "the limit must be an integer in the range 1-100");
+      responseMap.put("Message", "the limit must be an integer in the range 1-100");
       return moshi.adapter(Map.class).toJson(responseMap);
     }
 
@@ -98,43 +97,46 @@ public class RecommendationHandler implements Route {
       // set the token
       this.spotifyData.setToken(token);
 
-      // making sure at least 1 recommendation is returned
-      Recommendation rec = this.RecommendationAlgorithm(Integer.parseInt(limit), 1, 5, allNames, variability);
-      // returning the recommendation
+      Recommendation rec = this.RecommendationAlgorithm(Integer.parseInt(limit), 1, 10, allNames, variability);
+
       return moshi.adapter(Recommendation.class).toJson(rec);
+      // Map<String, Object> responseMap = new HashMap<>();
+      // responseMap.put("Result", "Success");
+      // responseMap.put("Message", rec);
+      // return moshi.adapter(Map.class).toJson(responseMap);
 
     } // error handling -- taking care of any possible exception and returning
       // informative message
     catch (ExecutionException e) {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", "failed to get object from within the Cache");
+      responseMap.put("Message", "failed to get object from within the Cache");
       return moshi.adapter(Map.class).toJson(responseMap);
 
     } catch (IOException e) {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", "Failed to reach Spotify API server");
+      responseMap.put("Message", "Failed to reach Spotify API server");
       return moshi.adapter(Map.class).toJson(responseMap);
 
     } catch (URISyntaxException e) {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", "Malformed URI for API calls, please check the syntax of"
+      responseMap.put("Message", "Malformed URI for API calls, please check the syntax of"
           + "the created URIs");
       return moshi.adapter(Map.class).toJson(responseMap);
 
     } catch (InterruptedException e) {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", "connection interrupted, while working to get data from "
+      responseMap.put("Message", "connection interrupted, while working to get data from "
           + "Spotify API server");
       return moshi.adapter(Map.class).toJson(responseMap);
 
     } catch (Exception e) {
       Map<String, Object> responseMap = new HashMap<>();
       responseMap.put("Result", "Error");
-      responseMap.put("Error Message", e.getMessage());
+      responseMap.put("Message", e.getMessage());
       return moshi.adapter(Map.class).toJson(responseMap);
     }
 
@@ -171,8 +173,10 @@ public class RecommendationHandler implements Route {
       // Get at least 50 Spotify song recommendations
       rec = this.spotifyData.getRecommendation(String.valueOf(Math.max(50, maxRecommendations)), allNames,
           variability);
+      // Recommendation processed = rec;
+      Recommendation processed = this.spotifyData.postProcess(rec, allNames);
       // Checks that a lyric for the song exists
-      for (TrackProps track : rec.tracks()) {
+      for (TrackProps track : processed.tracks()) {
         if (filteredTracks.size() >= maxRecommendations) {
           break;
         } else if (!setTracks.contains(track) && this.lyricsData.LyricsExist(track.id())) {

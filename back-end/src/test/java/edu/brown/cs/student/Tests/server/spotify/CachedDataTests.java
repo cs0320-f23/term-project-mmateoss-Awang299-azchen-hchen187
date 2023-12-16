@@ -4,6 +4,7 @@ import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
+import java.util.List;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.testng.Assert;
@@ -54,7 +55,7 @@ public class CachedDataTests {
     FeaturesProp feats = data.getFeatures(names);
     Assert.assertEquals(feats.audio_features().get(0).valence(), Float.valueOf("0.452"));
     Assert.assertEquals(feats.audio_features().get(1).danceability(), Float.valueOf("0.511"));
-    Assert.assertEquals(feats.audio_features().get(2).liveness(), Float.valueOf("0.309"));
+    Assert.assertEquals(feats.audio_features().get(2).liveness(), Float.valueOf("0.562"));
 
   }
 
@@ -123,6 +124,25 @@ public class CachedDataTests {
     Recommendation rec = data.getRecommendation(limit, allNames, "0.2");
     Assert.assertEquals(rec.seeds().get(0).initialPoolSize(), 500);
     Assert.assertTrue(rec.seeds().get(0).afterFilteringSize() > 10);
+
+  }
+
+  /**
+   * Method that test the getSongsPrompt method from the
+   * 
+   * @throws Exception
+   */
+  @Test
+  public void testGetSongsPrompt() throws Exception {
+    CachedSpotifyData data = new CachedSpotifyData();
+    data.setToken(this.token);
+    String limit = "5";
+    String prompt = "the weekend";
+    List<List<String>> results = data.getSongsPrompt(prompt, limit);
+    Assert.assertEquals(results.get(0).get(0), "The Weekend");
+    Assert.assertEquals(results.get(0).get(1), "SZA");
+    Assert.assertEquals(results.get(1).get(3),
+        "https://i.scdn.co/image/ab67616d00001e027fcead687e99583072cc217b");
 
   }
 

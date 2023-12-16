@@ -1,7 +1,13 @@
-package edu.brown.cs.student.main.server;
+package edu.brown.cs.student.main.server.spotify.data;
 
 import static spark.Spark.after;
 
+import com.beust.ah.A;
+
+import edu.brown.cs.student.main.server.CachedSpotifyData;
+import edu.brown.cs.student.main.server.audioRecognition.audioData.AudioData;
+import edu.brown.cs.student.main.server.handlers.AudioTextHandler;
+import edu.brown.cs.student.main.server.handlers.GetSongHandler;
 import edu.brown.cs.student.main.server.handlers.AddDislikedSongsHandler;
 import edu.brown.cs.student.main.server.handlers.AddInputSongsHandler;
 import edu.brown.cs.student.main.server.handlers.LyricsHandler;
@@ -36,13 +42,16 @@ public class Server {
     // Creating variables that need to be passed into
     CachedSpotifyData data = new CachedSpotifyData();
     TokenGenerator generator = new TokenGenerator();
+    AudioData audioData = new AudioData();
     LyricsData lyricsData = new LyricsData();
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
     Spark.get("token", new TokenHandler(generator));
+    Spark.get("getSongs", new GetSongHandler(data, lyricsData));
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
+    Spark.post("audioText", new AudioTextHandler(audioData));
     Spark.get("lyrics", new LyricsHandler(lyricsData));
 
     Spark.init();
@@ -52,14 +61,14 @@ public class Server {
     System.out.println("Server started at http://localhost:" + port);
 
     LyricsData data1 = new LyricsData();
-    try {
-      for (String[] arr : data1.getLyrics("2i2gDpKKWjvnRTOZRhaPh2")) {
-        System.out.println(arr[0] + "  " + arr[1]);
-      }
-      System.out.println("Finished.");
+    // try {
+    // for (String[] arr : data1.getLyrics("2i2gDpKKWjvnRTOZRhaPh2")) {
+    // System.out.println(arr[0] + " " + arr[1]);
+    // }
+    // System.out.println("Finished.");
 
-    } catch (Exception e) {
-      System.out.println("Error: " + e.getMessage());
-    }
+    // } catch (Exception e) {
+    // System.out.println("Error: " + e.getMessage());
+    // }
   }
 }

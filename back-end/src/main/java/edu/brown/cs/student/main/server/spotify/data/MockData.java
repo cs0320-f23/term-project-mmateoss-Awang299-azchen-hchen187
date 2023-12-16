@@ -9,6 +9,8 @@ import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Class that will be used to get mocked data, allowing
@@ -138,5 +140,50 @@ public class MockData implements IData {
   @Override
   public boolean setToken(String token){
     return false;
+  }
+
+
+  /**
+   * Method that returns a list of list of strings containing a lot of information of the songs
+   * returned for the user to use in order to get the valuable info to create the search bar.
+   * @param prompt what is searching for the song
+   * @param limit max number of songs returned
+   * @return list of list of strings with info for the songs
+   * @throws Exception any exception thrown while creating the mocked response.
+   */
+  @Override
+  public List<List<String>> getSongsPrompt(String prompt, String limit) throws Exception{
+    FileReader reader = new FileReader(this.mockedSongPath);
+    SongDataSource songData = new SongDataSource(reader);
+    songData.loadJson();
+    Song songs = songData.getJsonObj();
+    List<List<String>> toReturn = new ArrayList<>();
+    for(int i =0; i<songs.tracks().items().size();i++){
+      List<String> innerList = new ArrayList<>();
+      innerList.add(songs.tracks().items().get(i).name());
+      innerList.add(songs.tracks().items().get(i).artists().get(0).name());
+      innerList.add(songs.tracks().items().get(i).id());
+      innerList.add(songs.tracks().items().get(i).album().images().get(1).url());
+
+      toReturn.add(innerList);
+    }
+    return toReturn;
+  }
+
+  /**
+   * Mocked method that returns the same recommendation object.
+   */
+  @Override
+  public Recommendation postProcess(Recommendation rec, String[] names){
+    for(int i =0; i<names.length; i++){
+      String name = names[i];
+      name = name.replaceAll("%26", "&");
+      name = name.replaceAll("%20", " ");
+      name = name.replaceAll("%28", "(");
+      name = name.replaceAll("%29", ")");
+      name = name.replaceAll("\\+", " ");
+      System.out.println(name);
+    }
+    return rec;
   }
 }

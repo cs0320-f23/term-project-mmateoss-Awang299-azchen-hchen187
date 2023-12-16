@@ -19,6 +19,7 @@ package edu.brown.cs.student.main.server.spotify.records.recommendationRecords;
  * @param name The name of the track.
  */
 public record TrackProps(int duration_ms, boolean explicit, String href, String id,
-                         String uri, int track_number, String preview_url, String name) {
+                         String uri, int track_number, String preview_url, String name,
+                         AlbumRec album) {
 
 }
