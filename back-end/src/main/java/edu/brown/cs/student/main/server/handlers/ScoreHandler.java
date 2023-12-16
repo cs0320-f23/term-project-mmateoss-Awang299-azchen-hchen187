@@ -42,21 +42,26 @@ public class ScoreHandler implements Route {
         }
         ArrayList<String[]> lyrics = this.lyricsData.getLyrics(id);
         int lineCount = lyrics.size();
+        for (String[] line : lyrics) {
+            if (line[1].equals("")) {
+                lineCount -= 1;
+            }
+        }
 
         double score = (1
                 - ((double) LevenshteinDistance(correctWord, guessWord) /
                         Math.max(correctWord.length(), guessWord.length())))
                 * 100 / lineCount;
-        // double score = LevenshteinDistance(correctWord, guessWord);
 
         Map<String, Object> responseMap = new HashMap<>();
         responseMap.put("Result", "Success");
         responseMap.put("Message", score);
-        responseMap.put("lineCount", lineCount);
+        // responseMap.put("lineCount", lineCount);
         return moshi.adapter(Map.class).toJson(responseMap);
     }
 
     /**
+     * Learn more about Levenshtein's Distance here:
      * https://leetcode.com/problems/edit-distance/solutions/3230662/clean-codes-full-explanation-dynamic-programming-c-java-python3/
      * 
      * @param word1- String of word 1
