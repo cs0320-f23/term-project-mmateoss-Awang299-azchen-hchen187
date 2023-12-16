@@ -4,16 +4,12 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
-import edu.brown.cs.student.main.server.lyrics.lyricsRecords.ErrorLyricsObject;
-import edu.brown.cs.student.main.server.lyrics.lyricsRecords.LineObj;
-import edu.brown.cs.student.main.server.lyrics.lyricsRecords.LyricsObject;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
-import java.util.ArrayList;
 import java.util.Map;
 
 /**
