@@ -124,7 +124,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
       if (newLyricNumber + 1 < lyrics.length) {
         const soundLyricNumber = lyricNumber + 1;
 
-        while (lyrics[newLyricNumber].learningLyric === "") {
+        while (lyrics[newLyricNumber].learningLyric === "" || lyrics[newLyricNumber].learningLyric === "♪") {
           newLyricNumber += 1;
         }
 

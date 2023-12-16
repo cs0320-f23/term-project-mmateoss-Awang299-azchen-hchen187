@@ -34,6 +34,8 @@ function GenerationPage() {
   const fetchLyrics = async (trackId : string, nativeLanguage : string) => {
     const lyricsObject = await fetch(`http://localhost:3232/getLyrics?SpotifyTrackID=${trackId}&toLanguage=${nativeLanguage}`);
     const lyricsJson = await lyricsObject.json();
+    
+    console.log("result", lyricsJson.result)
     if (lyricsJson.result) {
       const lyricsArr = lyricsJson.message;
       let songLyrics: LyricLine[] = [];
@@ -50,6 +52,11 @@ function GenerationPage() {
   useEffect(() => {
     fetchLyrics(selectedTrack[2], nativeLanguage)
     setTrackUri(`spotify:track:${selectedTrack[2]}`)
+    console.log("testing")
+    console.log(selectedTrack[2])
+
+    console.log(lyrics)
+    
   }, [])
 
   return (
@@ -72,7 +79,7 @@ function GenerationPage() {
           </div>
         </div>
         <div className="middle">
-          <LyricsGame token={token} trackUri={mockTrackUri} lyrics={mockLyricsResponse} difficulty={"medium"} score={score} setScore={setScore} />
+          <LyricsGame token={token} trackUri={trackUri} lyrics={mockLyricsResponse} difficulty={"medium"} score={score} setScore={setScore} />
           {/* {lyrics && <LyricsGame token={token} trackUri={trackUri} lyrics={lyrics} difficulty={difficulty} score={score} setScore={setScore} />} */}
         </div>
 

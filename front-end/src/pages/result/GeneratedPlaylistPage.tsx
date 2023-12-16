@@ -69,7 +69,7 @@ export default function GeneratedPlaylistPage() {
   //fetches for the recommended songs based on user selected song
   useEffect(() => {
       fetchSongs(selectedTrack[0]).then(response => {
-        setTrackHashmap(response.tracks.reduce((hashmap, track, i) => {
+        setTrackHashmap(response.tracks.reduce((hashmap, track, i : number) => {
           if (i < 5) {
             hashmap[i] = {
               name: track.name,
