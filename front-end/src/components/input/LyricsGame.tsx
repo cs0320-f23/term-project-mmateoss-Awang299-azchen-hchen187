@@ -172,42 +172,44 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   }
 
   return (
-    <div className="lyrics-game" style={{ justifyContent : gameOver ? "flex-start" : "" }}>
+    <div
+      className="lyrics-game"
+      style={{ justifyContent: gameOver ? "flex-start" : "" }}
+    >
       <h2>Fill In the Lyric</h2>
-      {!gameOver && <div className="game">
-        <LyricsHistory history={history} result={false}/>
-        {currentGameLyric && lyricNumber >= 0 && (
-          <InputLyric
-            gameLyric={currentGameLyric}
-            handleSubmitAnswer={handleSubmitAnswer}
-            userGuess={userGuess}
-            setUserGuess={setUserGuess}
-            difficulty={difficulty}
-            nativeLyric={lyrics[lyricNumber].nativeLyric}
-          />
-        )}
+      {!gameOver && (
+        <div className="game">
+          <LyricsHistory history={history} result={false} />
+          {currentGameLyric && lyricNumber >= 0 && (
+            <InputLyric
+              gameLyric={currentGameLyric}
+              handleSubmitAnswer={handleSubmitAnswer}
+              userGuess={userGuess}
+              setUserGuess={setUserGuess}
+              difficulty={difficulty}
+              nativeLyric={lyrics[lyricNumber].nativeLyric}
+            />
+          )}
 
-        <div className="player">
-          <SpotifyPlayer
-            token={token}
-            uris={trackUri ? [trackUri] : []}
-            getPlayer={(player: Spotify.Player) => setPlayer(player)}
-            play={play}
-            callback={(state: CallbackState) => setPlay(state.isPlaying)}
-            hideAttribution
-            hideCoverArt
-            styles={{
-              bgColor: "black",
-              sliderHandleColor: "white",
-              color: "white",
-            }}
-          />
+          <div className="player">
+            <SpotifyPlayer
+              token={token}
+              uris={trackUri ? [trackUri] : []}
+              getPlayer={(player: Spotify.Player) => setPlayer(player)}
+              play={play}
+              callback={(state: CallbackState) => setPlay(state.isPlaying)}
+              hideAttribution
+              hideCoverArt
+              styles={{
+                bgColor: "black",
+                sliderHandleColor: "white",
+                color: "white",
+              }}
+            />
+          </div>
         </div>
-      </div>}
-      {gameOver && 
-       <LyricsHistory history={history} result={true}/>
-      }
-      
+      )}
+      {gameOver && <LyricsHistory history={history} result={true} />}
     </div>
   );
 }
