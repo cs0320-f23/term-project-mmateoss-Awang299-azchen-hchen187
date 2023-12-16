@@ -3,41 +3,39 @@ import React, { useEffect, useState } from "react";
 import SpotifyPlayer, { CallbackState } from 'react-spotify-web-playback';
 
 import "./LyricsGame.css"
-import { collapseTextChangeRangesAcrossMultipleVersions } from "typescript";
+import LyricsHistory from "./LyricsHistory";
+import { LyricLine, HistoryLyric, GameLyric } from "./Types"
 
-type LyricLine = [number, string];
-
-const mockLyricsResponse : LyricLine[] = [
-  [16, "She was all that I could see"],
-  [23, "She was all that was in front of me"],
-  [27, ""],
-  [32, "Try to climb the mountain peaks"],
-  [39, "What if I only ever reach the sea?"],
-  [43, "Would you stay awake and wait for me?"],
-  [47, ""],
-  [50, "Hold me under until I see her light"],
-  [54, "Take it easy on my eyes"],
-  [58, "Take it easy on my eyes"],
-  [63, ""],
-]
-
-interface PlayerProps {
-    trackUri : string,
-    token : string,
+export interface PlayerProps {
+  trackUri : string,
+  token : string,
+  lyrics: LyricLine[],
+  difficulty: string,
 }
 
-export default function LyricsGame({trackUri, token}: PlayerProps) {
+
+export default function LyricsGame({trackUri, token, lyrics, difficulty }: PlayerProps) {
+  // game controls
   const [player, setPlayer] = useState<Spotify.Player | null>(null);
   const [currentPosition, setCurrentPosition] = useState<number>(0)
   const [lyricNumber, setLyricNumber] = useState<number>(-1)
-  const [currentInterval, setCurrentInterval] = useState<number[]>([0,0])
+  const [currentInterval, setCurrentInterval] = useState<number[]>([-1,-1])
   const [play, setPlay] = useState<boolean>(true)
+  
+  // current game variables
   const [answer, setAnswer] = useState('');
+  const [currentGameLyric, setCurrentGameLyric] = useState<GameLyric>({beginning: "", answer: "", end: ""})
+  const [userGuess, setUserGuess] = useState('');
+  const [attempts, setAttempts] = useState(0)
 
-  const handlePlayerStateChange = (state : CallbackState) => {
-    console.log()
-    setPlay(state.isPlaying)
-  }
+  // overall game variables
+  const [score, setScore] = useState(0)
+  const [history, setHistory] = useState<HistoryLyric[]>([])
+  const [gameOver, setGameOver] = useState(false)
+
+  useEffect(() => {
+    initializeGame()
+  }, [])
 
   useEffect(() => {
     const intervalId = setInterval(() => {
@@ -52,60 +50,173 @@ export default function LyricsGame({trackUri, token}: PlayerProps) {
   }, [player]);
 
   useEffect(() => {
-    if (currentPosition < currentInterval[0] || currentPosition >= currentInterval[1]) {
+    if (currentPosition >= currentInterval[1]) {
       setPlay(false)
       player?.seek(currentInterval[0] * 1000).then(() => {console.log("changed position")})
     }
   }, [currentPosition])
 
-  const handleSubmitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (answer === "correct") {
-      let newLyricNumber = lyricNumber + 1;
+  const initializeGame = () => {
+    let newLyricNumber = lyricNumber + 1;
 
-      while (mockLyricsResponse[newLyricNumber][1] === "") {
-        newLyricNumber += 1
-      }
-      
-      const startTime = mockLyricsResponse[newLyricNumber][0]
-      const endTime = mockLyricsResponse[newLyricNumber+1][0]
-
-      console.log(startTime, endTime)
-      
-      player?.seek(startTime * 1000)
-
-      console.log(newLyricNumber, currentInterval)
-      
-      setLyricNumber(newLyricNumber)
-      setCurrentInterval([startTime, endTime-1])
+    while (lyrics[newLyricNumber].learningLyric === "") {
+      newLyricNumber += 1
     }
+
+    const startTime = lyrics[newLyricNumber].startTime
+    const endTime = lyrics[newLyricNumber+1].startTime
+
+    setLyricNumber(newLyricNumber)
+    setCurrentInterval([startTime, endTime-1])
+
+    generateAnswer(newLyricNumber)
+    setPlay(true)
   }
 
+  const generateAnswer = (generateLyricNumber : number) => {
+    const lyric = lyrics[generateLyricNumber].learningLyric
+    const lyricArr = lyric.split(" ");
+    console.log(lyricArr)
+    let answerLength = 1;
+
+    switch (difficulty) {
+      case "easy": answerLength = 1; break
+      case "medium": answerLength = Math.floor(lyricArr.length / 3) + 1; break
+      case "hard": answerLength = lyricArr.length; break
+    }
+    console.log(answerLength)
+    
+    const validIdxs = lyricArr.length - answerLength + 1
+    const randomIdx = Math.floor(Math.random() * validIdxs)
+    const newAnswer = lyricArr.slice(randomIdx, randomIdx + answerLength).join(' ')
+
+    const answerIdx = lyric.indexOf(newAnswer)
+    const beginning = lyric.substring(0, answerIdx)
+    const end = lyric.substring(answerIdx + newAnswer.length)
+
+    console.log({beginning, answer: newAnswer, end})
+    setCurrentGameLyric({beginning, answer: newAnswer, end})
+    setAnswer(newAnswer)
+  }
+
+  const cleanString = (str : string) => {
+    return str.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "")
+  }
+
+  const handleSubmitAnswer = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+  
+    const newAttempts = attempts + 1
+    console.log(newAttempts)
+    const guessCorrect = cleanString(userGuess) === cleanString(answer)
+    if (guessCorrect || newAttempts >= 3) {
+      let newLyricNumber = lyricNumber + 1;
+
+      if (newLyricNumber + 1 < lyrics.length) {
+        const soundLyricNumber = lyricNumber + 1;
+
+        while (lyrics[newLyricNumber].learningLyric === "") {
+          newLyricNumber += 1;
+        }
+
+        const startTime = lyrics[newLyricNumber].startTime;
+        const endTime = lyrics[newLyricNumber + 1].startTime;
+
+        player?.seek(lyrics[soundLyricNumber].startTime * 1000);
+        let newHistoryLyric : HistoryLyric;
+        
+        if (!guessCorrect) {
+          newHistoryLyric = { lyric: currentGameLyric, userGuess: userGuess, correct: false };
+        } else {
+          setScore((prevScore) => prevScore + Math.floor(answer.length / newAttempts));
+          newHistoryLyric = { lyric: currentGameLyric, userGuess: userGuess, correct: true };
+        }
+        
+        setHistory((prevHistory) => prevHistory.concat(newHistoryLyric));
+        setAttempts(0);
+        setLyricNumber(newLyricNumber);
+        setCurrentInterval([startTime, endTime - 1]);
+        generateAnswer(newLyricNumber);
+      } else {
+        setGameOver(true)
+      }
+    } else {
+      setAttempts(newAttempts)
+    }
+    setUserGuess("")
+  }
+  
   return (
     <div className="lyrics-game">
-      {lyricNumber >= 0 && <p> {mockLyricsResponse[lyricNumber][1]} </p>}
-      <button onClick={() => setPlay(true)}>
-        Play
-      </button>
+      <LyricsHistory history={history} />
+      {currentGameLyric && lyricNumber >= 0 && (
+        <InputLyric
+          gameLyric={currentGameLyric}
+          handleSubmitAnswer={handleSubmitAnswer}
+          userGuess={userGuess}
+          setUserGuess={setUserGuess}
+          difficulty={difficulty}
+          nativeLyric={lyrics[lyricNumber].nativeLyric}
+        />
+      )}
 
-      <form onSubmit={handleSubmitAnswer}>
-        <input type="text" value={answer} onChange={(e) => setAnswer(e.target.value)} placeholder="Enter your answer" />
-        <button type="submit">Submit</button>
-      </form>
-
-      <p>Time: {currentPosition}s</p>
+      <p>Score: {score} </p>
 
       <div className="player">
         <SpotifyPlayer
           token={token}
           uris={trackUri ? [trackUri] : []}
-          styles={{ bgColor: "white" }}
-          getPlayer={(player : Spotify.Player) => setPlayer(player)}
+          getPlayer={(player: Spotify.Player) => setPlayer(player)}
           play={play}
-          callback={handlePlayerStateChange}
-          hideAttribution={false}
+          callback={(state: CallbackState) => setPlay(state.isPlaying)}
+          hideAttribution
+          hideCoverArt
+          styles={{ 
+            bgColor: "black",
+            sliderHandleColor: "white",
+            color: "white",
+          }}
         />
       </div>
     </div>
   );
 }
+
+interface inputLyricProps {
+  gameLyric : GameLyric,
+  handleSubmitAnswer : (e : React.FormEvent<HTMLFormElement>) => void,
+  userGuess : string,
+  setUserGuess : (userGuess: string) => void,
+  difficulty: string,
+  nativeLyric: string,
+}
+
+const InputLyric = ({ gameLyric, handleSubmitAnswer, userGuess, setUserGuess, difficulty, nativeLyric }: inputLyricProps) => {
+  let inputWidth = 0;
+  switch(difficulty) {
+    case "easy" : inputWidth = gameLyric.answer.length; break
+    case "medium" : inputWidth = gameLyric.answer.length / 1.5; break
+    case "hard" : inputWidth = gameLyric.answer.length / 2; break
+  }
+
+  return (
+    <>
+      <div className="input">
+        <div className="input-lyric">
+          <p>{gameLyric.beginning}</p>
+          <form onSubmit={handleSubmitAnswer}>
+            <input
+              className="user-input"
+              type="text"
+              value={userGuess}
+              onChange={(e) => setUserGuess(e.target.value)}
+              style={{ width: inputWidth + "rem" }}
+            />
+          </form>
+          <p>{gameLyric.end}</p>
+        </div>
+        <p> {nativeLyric} </p>
+      </div>
+    </>
+  );
+};

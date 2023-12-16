@@ -1,0 +1,32 @@
+.lyrics-history {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    scroll-behavior: smooth;
+    overflow-y: auto;
+    max-height: 15rem;
+
+    .lyric {
+        display: flex;
+
+        .guess {
+            margin-left: 0.4rem;
+            margin-right: 0.4rem;
+        }
+
+        .guess-correct {
+            color: #98FB98;
+            border-bottom: 1px solid #98FB98;
+        }
+        
+        .guess-incorrect {
+            color: #F08080;
+            text-decoration: line-through;
+            text-decoration-color: #F08080;;
+        }
+    }
+}
+
+::-webkit-scrollbar {
+    width: 0;
+}

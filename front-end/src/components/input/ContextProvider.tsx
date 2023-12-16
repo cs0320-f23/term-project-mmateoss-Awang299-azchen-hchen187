@@ -20,7 +20,8 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) =
     const [nativeLanguage, setNativeLanguage] = useState("");
     const [totalPoints, setTotalPoints] = useState(0);
     const [difficulty, setDifficulty] = useState("easy");
-    const [token, setToken] = useState(`BQBl1c7vtZkFDciB6PnkUuT2kjW3YvhCnqwELCunU4Eg_Myqq3pHTrMjH4X1sdfbDkVsjl0VqmUAcBEm3N8wN_hMHkbKD02anVYsWML6GwiOXRV9iqYO66KHeP4pEk_en_WPlkrXiPHj6ipyEdc0Hrvi9-vcNjSZijNQz-ULrqMcJMyEK1ulMICiOG9H_cACK3h6iVrpB_U
+    const [token, setToken] = useState(`BQBaiyZjtvlbt0gYsT70L_9V2wThd3WJmrMmlc065a3AGgaUbzWw8kpSzpngPWYBW8kDSK9y-e5Xufxv0XmpsoePpyHGalchNXXLfMI1QM7Mj-k-_n7E7kBvFQYeyxRBx6gJGmlOeZ-mIw4yvNPDCxOomStNEjHPUsr1RkZnNbxuR6-10cKp-QNa-BH_Tm1UldJzjYrdRHE
+
 
     `)
 
