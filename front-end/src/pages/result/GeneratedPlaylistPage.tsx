@@ -91,7 +91,7 @@ export default function GeneratedPlaylistPage() {
       inputTrack.classList.add('hidden');
       setDisplayRecs(true);
     }
-  }, 1600);
+  }, 1000);
 
   //returns the components
   return (
