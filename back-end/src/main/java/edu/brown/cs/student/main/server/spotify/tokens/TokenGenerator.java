@@ -1,5 +1,6 @@
 package edu.brown.cs.student.main.server.spotify.tokens;
 
+import io.github.cdimascio.dotenv.Dotenv;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
@@ -19,7 +20,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * Class that serves as a way of generating a spotify token for testing
  */
-public class TokenGenerator implements IToken{
+public class TokenGenerator implements IToken {
 
   private String client_id;
   private String client_secret;
@@ -29,13 +30,16 @@ public class TokenGenerator implements IToken{
   /**
    * Constructor for the TokenGenerator class
    */
-  public TokenGenerator(){
-    //TODO: Input your client_id and client_secret here to generate tokens for testing
-    this.client_id = "";
-    this.client_secret = "";
-    this.combined = this.client_id+":"+this.client_secret;
+  public TokenGenerator() {
+    // TODO: Input your client_id and client_secret here to generate tokens for
+    // testing
+    Dotenv dotenv = Dotenv.load();
+    this.client_id = dotenv.get("SPOTIFY_CLIENT_ID");
+    this.client_secret = dotenv.get("SPOTIFY_CLIENT_SECRET");
+    this.combined = this.client_id + ":" + this.client_secret;
 
-    // building the cache that will hold a token for an hour, which is how long before it needs to
+    // building the cache that will hold a token for an hour, which is how long
+    // before it needs to
     // be regenerated
     this.tokenCache = CacheBuilder.newBuilder()
         .maximumSize(1)
@@ -47,17 +51,18 @@ public class TokenGenerator implements IToken{
 
                 return generateToken();
               }
-            }
-        );
+            });
 
   }
 
-  // learned how to create base64 encoded string: https://www.baeldung.com/java-base64-encode-and-decode
+  // learned how to create base64 encoded string:
+  // https://www.baeldung.com/java-base64-encode-and-decode
   // what and how to use bodyPublishers
   // https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpRequest.BodyPublishers.html
 
   /**
-   * Method that makes an API call to the spotify API and sets the token to the instance variable
+   * Method that makes an API call to the spotify API and sets the token to the
+   * instance variable
    *
    * @throws URISyntaxException   exception where URI syntax is incorrect.
    * @throws IOException          exception where it failed to read/open
@@ -66,14 +71,13 @@ public class TokenGenerator implements IToken{
    *                              interrupted.
    */
   private String generateToken() throws IOException, InterruptedException, URISyntaxException {
-    String uriString ="https://accounts.spotify.com/api/token";
+    String uriString = "https://accounts.spotify.com/api/token";
     String base64Encoded = Base64.getEncoder().encodeToString(this.combined.getBytes());
-
 
     HttpRequest buildRequest = HttpRequest.newBuilder()
         .uri(new URI(uriString))
-        .header("Authorization", "Basic "+base64Encoded)
-        .header("Content-Type","application/x-www-form-urlencoded")
+        .header("Authorization", "Basic " + base64Encoded)
+        .header("Content-Type", "application/x-www-form-urlencoded")
         .POST(HttpRequest.BodyPublishers.ofString("grant_type=client_credentials"))
         .build();
     // building a response with the HttpRequest
@@ -98,6 +102,5 @@ public class TokenGenerator implements IToken{
     token = this.tokenCache.get("token");
     return token;
   }
-
 
 }

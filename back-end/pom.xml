@@ -72,10 +72,19 @@
       <version>5.4.0</version>
       <scope>test</scope>
     </dependency>
+    <!--
+           Guava Caching library
+    -->
     <dependency>
       <groupId>com.google.guava</groupId>
       <artifactId>guava</artifactId>
       <version>16.0.1</version>
+    </dependency>
+
+    <dependency>
+      <groupId>io.github.cdimascio</groupId>
+      <artifactId>dotenv-java</artifactId>
+      <version>3.0.0</version>
     </dependency>
 
   </dependencies>

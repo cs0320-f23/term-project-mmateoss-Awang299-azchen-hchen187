@@ -11,25 +11,32 @@ import spark.Response;
 import spark.Route;
 
 /**
- * TokenHandler class, used to allow the frontend to get access to a spotify access token which
- * they can then use to get a playback sdk or to make other calls to the backend.
+ * TokenHandler class, used to allow the frontend to get access to a spotify
+ * access token which
+ * they can then use to get a playback sdk or to make other calls to the
+ * backend.
  */
 public class TokenHandler implements Route {
 
   private IToken generator;
 
-
   /**
    * Constructor for the TokenHandler
    */
-  public TokenHandler(IToken generator){
+  public TokenHandler(IToken generator) {
     this.generator = generator;
 
   }
 
   /**
+<<<<<<< HEAD
+   * Handle method that takes care of getting the query parameters and then
+   * building a
+   * Song based on the string.
+=======
    * Handle method that takes care of getting the query parameters and then building a
    * token for the frontend to use.
+>>>>>>> main
    *
    * @param req request object used to get the query parameters.
    * @param res response object used to create a response.
@@ -37,18 +44,17 @@ public class TokenHandler implements Route {
    * @return returns what is mapped to the server. A song object in this case
    */
   @Override
-  public Object handle(Request req, Response res){
+  public Object handle(Request req, Response res) {
     Moshi moshi = new Moshi.Builder().build();
     Map<String, String> responseMap = new HashMap<>();
     Set<String> params = req.queryParams();
-    try{
-      if(params.size() > 0){
+
+    try {
+      if (params.size() > 0) {
         responseMap.put("Result", "Error");
-        responseMap.put("Error Message", "please do not include any parameters when trying to"
-            + " get the token");
+        responseMap.put("Error Message", "please do not include any parameters when trying to" + " get the token");
         return moshi.adapter(Map.class).toJson(responseMap);
-      }
-      else{
+      } else {
 
         String token = this.generator.getToken();
         responseMap.put("Result", "Success");
@@ -56,13 +62,12 @@ public class TokenHandler implements Route {
         return moshi.adapter(Map.class).toJson(responseMap);
       }
     } // catching any possible exception that could have been thrown by the code
-    catch(Exception e){
+    catch (Exception e) {
       responseMap.clear();
       responseMap.put("Result", "Error");
       responseMap.put("Error message", e.getMessage());
       return moshi.adapter(Map.class).toJson(responseMap);
     }
   }
-
 
 }
