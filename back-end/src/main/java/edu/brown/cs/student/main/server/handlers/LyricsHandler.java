@@ -68,10 +68,11 @@ public class LyricsHandler implements Route {
                     continue;
                 }
                 count += line[1].length();
-                // line[2] = this.translateData.getTranslation(line[1], "en", abbrevLanguage);
+                line[2] = this.translateData.getTranslation(line[1], fromLanguage, toLanguage);
             }
-            defaultLyrics.get(0)[2] = this.translateData.getTranslation(defaultLyrics.get(0)[1], fromLanguage,
-                    toLanguage);
+            // defaultLyrics.get(0)[2] =
+            // this.translateData.getTranslation(defaultLyrics.get(0)[1], fromLanguage,
+            // toLanguage);
             responseMap.put("Result", "Success");
             responseMap.put("Message", defaultLyrics);
             responseMap.put("Count", count);
