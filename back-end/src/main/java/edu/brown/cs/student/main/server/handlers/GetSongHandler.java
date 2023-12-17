@@ -72,8 +72,8 @@ public class GetSongHandler implements Route {
 
       this.data.setToken(token);
       List<List<String>> result = this.data.getSongsPrompt(query, limit);
-      responseMap.put("Result", "Success");
       result = this.parseSongs(1, result);
+      responseMap.put("Result", "Success");
       responseMap.put("data", result);
       return moshi.adapter(Map.class).toJson(responseMap);
 
@@ -104,7 +104,7 @@ public class GetSongHandler implements Route {
   }
 
   private List<List<String>> parseSongs(int minSongs, List<List<String>> songObj) throws Exception {
-    // making sure at least 1 recommendation is returne
+    // making sure at least 1 recommendation is returned
     List<List<String>> toReturn = new ArrayList<>();
     for (List<String> song : songObj) {
       if (this.lyricsData.LyricsExist(song.get(2))) {

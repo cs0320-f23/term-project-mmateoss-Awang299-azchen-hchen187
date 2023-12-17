@@ -4,13 +4,19 @@ import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
 
+import edu.brown.cs.student.main.server.translate.records.TranslateResult;
+import edu.brown.cs.student.main.server.translate.records.AzureRecords.TranslateInfo;
+
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import java.util.List;
 import java.util.Map;
+
+import javax.print.attribute.SetOfIntegerSyntax;
 
 /**
  * Class that will be used to get the needed data from the spotify API, allowing
@@ -31,10 +37,10 @@ public class LibreTranslateData implements ITranslateData {
          * @throws URISyntaxException
          */
         @Override
-        public String getTranslation(String text, String fromLanguage, String toLanguage)
+        public TranslateResult getTranslation(String text, String fromLanguage, String toLanguage)
                         throws IOException, InterruptedException, URISyntaxException {
                 if (fromLanguage.equals(toLanguage)) {
-                        return text;
+                        return new TranslateResult(text, fromLanguage);
                 }
 
                 HttpRequest buildRequest = HttpRequest.newBuilder()
@@ -55,6 +61,6 @@ public class LibreTranslateData implements ITranslateData {
                 JsonAdapter<Map<String, String>> dataAdapter = moshi
                                 .adapter(Types.newParameterizedType(Map.class, String.class, String.class));
                 Map<String, String> body = dataAdapter.fromJson(response.body());
-                return body.get("translatedText");
+                return new TranslateResult(body.get("translatedText"), fromLanguage);
         }
 }

@@ -29,7 +29,7 @@ public class LyricsHandler implements Route {
     }
 
     @Override
-    public Object handle(Request request, Response response) throws Exception {
+    public Object handle(Request request, Response response) {
         Map<String, Object> responseMap = new HashMap<String, Object>();
         Moshi moshi = new Moshi.Builder().build();
         try {
@@ -40,6 +40,10 @@ public class LyricsHandler implements Route {
             if (spotifyTrackID == null) {
                 responseMap.put("Result", "Error");
                 responseMap.put("Message", "no track ID provided");
+                return moshi.adapter(Map.class).toJson(responseMap);
+            } else if (toLanguage == null) {
+                responseMap.put("Result", "Error");
+                responseMap.put("Message", "no toLanguage provided");
                 return moshi.adapter(Map.class).toJson(responseMap);
             }
 
@@ -87,8 +91,8 @@ public class LyricsHandler implements Route {
                     continue;
                 }
                 count += line[1].length();
-                line[2] = this.translateData.getTranslation(line[1], fromLanguage,
-                        toLanguage);
+                line[2] = this.translateData.getTranslation(line[1].trim(), fromLanguage,
+                        toLanguage).translatedText();
             }
             // defaultLyrics.get(0)[2] =
             // this.translateData.getTranslation(defaultLyrics.get(0)[1], fromLanguage,

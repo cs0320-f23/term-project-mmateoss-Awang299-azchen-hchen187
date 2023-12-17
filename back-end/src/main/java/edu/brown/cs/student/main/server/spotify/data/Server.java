@@ -16,6 +16,7 @@ import edu.brown.cs.student.main.server.handlers.ScoreHandler;
 import edu.brown.cs.student.main.server.handlers.TokenHandler;
 import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
+import edu.brown.cs.student.main.server.translate.data.AzureTranslateData;
 import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
 import spark.Spark;
 
@@ -64,14 +65,25 @@ public class Server {
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
 
-    LibreTranslateData data1 = new LibreTranslateData();
-    try {
-      String res = data1.getTranslation("I am absolutely super cool", "en", "fr");
-      System.out.println(res);
-      System.out.println("done");
-    } catch (Exception e) {
-      System.out.println("Invalid BRUH");
-    }
+    // AzureTranslateData data3 = new AzureTranslateData();
+    // try {
+    //   String res = data3.getTranslation("I just want to get high with my lover?", "en",
+    //       "es").translatedText();
+    //   System.out.println(res);
+    //   System.out.println("done");
+    // } catch (Exception e) {
+    //   System.out.println("Invalid BRUH");
+    // }
+
+    // LibreTranslateData data2 = new LibreTranslateData();
+    // try {
+    // String res = data2.getTranslation("I am absolutely super cool", "en",
+    // "es").translatedText();
+    // System.out.println(res);
+    // System.out.println("done");
+    // } catch (Exception e) {
+    // System.out.println("Invalid BRUH");
+    // }
 
     // LyricsData data1 = new LyricsData();
     // try {
