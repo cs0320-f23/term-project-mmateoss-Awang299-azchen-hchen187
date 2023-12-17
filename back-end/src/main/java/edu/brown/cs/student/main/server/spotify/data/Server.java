@@ -18,6 +18,7 @@ import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.translate.data.AzureTranslateData;
 import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
+import edu.brown.cs.student.main.server.translate.mockedData.MockTranslateData;
 import spark.Spark;
 
 /**
@@ -48,6 +49,7 @@ public class Server {
     AudioData audioData = new AudioData();
     LyricsData lyricsData = new LyricsData();
     LibreTranslateData translateData = new LibreTranslateData();
+    MockTranslateData mockTranslateData = new MockTranslateData();
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
@@ -65,14 +67,16 @@ public class Server {
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
 
-    // AzureTranslateData data3 = new AzureTranslateData();
-    // try {
-    //   String res = data3.getTranslation("I just want to get high with my lover?", "en",
-    //       "es").translatedText();
-    //   System.out.println(res);
-    //   System.out.println("done");
+    // ureTranslateData data3 = new AzureTranslateData();
+    //
+    //
+    // String res = data3.getTranslation("I just want to get high with my lover?",
+    // "en",
+    // "es").translatedText();
+    // System.out.println(res);
+    // System.out.println("done");
     // } catch (Exception e) {
-    //   System.out.println("Invalid BRUH");
+    // System.out.println("Invalid BRUH");
     // }
 
     // LibreTranslateData data2 = new LibreTranslateData();
