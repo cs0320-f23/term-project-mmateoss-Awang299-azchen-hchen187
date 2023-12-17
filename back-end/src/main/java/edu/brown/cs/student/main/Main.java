@@ -1,7 +1,5 @@
 package edu.brown.cs.student.main;
 
-
-
 /** The Main class of our project. This is where execution begins. */
 public final class Main {
   /**
@@ -24,12 +22,8 @@ public final class Main {
    *
    * @param args - the arguments inputted to the command line by the user
    */
-  private Main(String[] args) {
-
-  }
+  private Main(String[] args) {}
 
   /** Method called when the program runs. */
-  private void run() {
-
-  }
+  private void run() {}
 }

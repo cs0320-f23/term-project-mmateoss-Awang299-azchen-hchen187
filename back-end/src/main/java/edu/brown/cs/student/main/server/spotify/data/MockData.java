@@ -7,14 +7,12 @@ import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.Fea
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.FileReader;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Class that will be used to get mocked data, allowing
- * our server to use it accordingly without having to connect to the spotify api.
+ * Class that will be used to get mocked data, allowing our server to use it accordingly without
+ * having to connect to the spotify api.
  */
 public class MockData implements IData {
 
@@ -22,36 +20,30 @@ public class MockData implements IData {
   private String mockedRecommendationPath;
   private String mockedFeaturesPath;
 
-
-  /**
-   * Constructor for the MockData class.
-   */
-  public MockData(String mockedSongPath,
-      String mockedRecommendationPath, String mockedFeaturesPath) {
+  /** Constructor for the MockData class. */
+  public MockData(
+      String mockedSongPath, String mockedRecommendationPath, String mockedFeaturesPath) {
 
     this.mockedSongPath = mockedSongPath;
     this.mockedRecommendationPath = mockedRecommendationPath;
     this.mockedFeaturesPath = mockedFeaturesPath;
-
   }
 
   /**
-   * Method that allows the server to get a song object from the names of the songs inputted
-   * In this case uses mockedData.
+   * Method that allows the server to get a song object from the names of the songs inputted In this
+   * case uses mockedData.
    *
    * @return song object for the name of the songs inputted.
    * @exception Exception IOException where the json file cant be read.
    */
   @Override
-  public Song getSong(String songName) throws Exception{
+  public Song getSong(String songName) throws Exception {
 
     FileReader reader = new FileReader(this.mockedSongPath);
     SongDataSource songData = new SongDataSource(reader);
     songData.loadJson();
     return songData.getJsonObj();
-
   }
-
 
   /**
    * Method used to get a recommendation object from mocked Data.
@@ -60,15 +52,14 @@ public class MockData implements IData {
    * @exception Exception IOException where the json file cant be read.
    */
   @Override
-  public Recommendation getRecommendation( String limit, String[] allNames, String variability) throws Exception{
+  public Recommendation getRecommendation(String limit, String[] allNames, String variability)
+      throws Exception {
 
     FileReader reader = new FileReader(this.mockedRecommendationPath);
     RecommendationDataSource dataSource = new RecommendationDataSource(reader);
     dataSource.loadJson();
     return dataSource.getJsonObj();
-
   }
-
 
   /**
    * Method used to get a mocked FeatureProps object.
@@ -85,7 +76,6 @@ public class MockData implements IData {
     return dataSource.getJsonObj();
   }
 
-
   /**
    * Helper method that gets all the song ids and puts them into a string in order for getFeatures
    * to get all the features for the songs. This method is for testing purposes in order to make
@@ -93,28 +83,25 @@ public class MockData implements IData {
    *
    * @param allNames String or List<String> that contains all the names of the
    * @return a string that is comma separated, containing all the track ids for the songs
-   *
    */
   public String getSongIds(String[] allNames) throws Exception {
 
     String ids = "";
-    int lastIdx = allNames.length-1;
+    int lastIdx = allNames.length - 1;
     // loop through the list of song names and
-    for(int i=0; i<allNames.length;i++){
+    for (int i = 0; i < allNames.length; i++) {
       String filePath = allNames[i];
       Song songObj = this.getSongSpecificIds(filePath);
-      if(i == lastIdx){
-        ids = ids+songObj.tracks().items().get(0).id();
-      }
-      else{
-        ids = ids+songObj.tracks().items().get(0).id()+",";
+      if (i == lastIdx) {
+        ids = ids + songObj.tracks().items().get(0).id();
+      } else {
+        ids = ids + songObj.tracks().items().get(0).id() + ",";
       }
     }
 
     // returning the built string with all the ids
     return ids;
   }
-
 
   /**
    * Helper method that creates a song object from a specific filePath to be used in the mocked
@@ -124,41 +111,41 @@ public class MockData implements IData {
    * @return a songObj for the specific song
    * @throws Exception IOException where the
    */
-  private Song getSongSpecificIds(String file) throws Exception{
+  private Song getSongSpecificIds(String file) throws Exception {
 
     FileReader reader = new FileReader(file);
     SongDataSource songData = new SongDataSource(reader);
     songData.loadJson();
     return songData.getJsonObj();
-
   }
 
   /**
    * Empty method used to set the token in the non mocked version of this method
+   *
    * @param token the spotify api token
    */
   @Override
-  public boolean setToken(String token){
+  public boolean setToken(String token) {
     return false;
   }
-
 
   /**
    * Method that returns a list of list of strings containing a lot of information of the songs
    * returned for the user to use in order to get the valuable info to create the search bar.
+   *
    * @param prompt what is searching for the song
    * @param limit max number of songs returned
    * @return list of list of strings with info for the songs
    * @throws Exception any exception thrown while creating the mocked response.
    */
   @Override
-  public List<List<String>> getSongsPrompt(String prompt, String limit) throws Exception{
+  public List<List<String>> getSongsPrompt(String prompt, String limit) throws Exception {
     FileReader reader = new FileReader(this.mockedSongPath);
     SongDataSource songData = new SongDataSource(reader);
     songData.loadJson();
     Song songs = songData.getJsonObj();
     List<List<String>> toReturn = new ArrayList<>();
-    for(int i =0; i<songs.tracks().items().size();i++){
+    for (int i = 0; i < songs.tracks().items().size(); i++) {
       List<String> innerList = new ArrayList<>();
       innerList.add(songs.tracks().items().get(i).name());
       innerList.add(songs.tracks().items().get(i).artists().get(0).name());
@@ -170,12 +157,10 @@ public class MockData implements IData {
     return toReturn;
   }
 
-  /**
-   * Mocked method that returns the same recommendation object.
-   */
+  /** Mocked method that returns the same recommendation object. */
   @Override
-  public Recommendation postProcess(Recommendation rec, String[] names){
-    for(int i =0; i<names.length; i++){
+  public Recommendation postProcess(Recommendation rec, String[] names) {
+    for (int i = 0; i < names.length; i++) {
       String name = names[i];
       name = name.replaceAll("%26", "&");
       name = name.replaceAll("%20", " ");

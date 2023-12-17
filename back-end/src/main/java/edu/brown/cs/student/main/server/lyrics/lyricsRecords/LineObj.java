@@ -6,6 +6,4 @@ package edu.brown.cs.student.main.server.lyrics.lyricsRecords;
  * @param timeTag the time at which the lyrics begin
  * @param words the words of that line
  */
-public record LineObj(String timeTag, String words) {
-
-}
+public record LineObj(String timeTag, String words) {}
