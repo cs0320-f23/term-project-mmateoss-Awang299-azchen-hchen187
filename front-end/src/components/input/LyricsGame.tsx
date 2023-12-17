@@ -62,6 +62,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   }, [currentPosition]);
 
   const initializeGame = () => {
+    console.log("token", token)
     let newLyricNumber = lyricNumber + 1;
 
     while (lyrics[newLyricNumber].learningLyric === "") {

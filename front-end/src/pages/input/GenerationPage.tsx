@@ -35,7 +35,6 @@ function GenerationPage() {
     const lyricsObject = await fetch(`http://localhost:3232/getLyrics?SpotifyTrackID=${trackId}&toLanguage=${nativeLanguage}`);
     const lyricsJson = await lyricsObject.json();
     
-    console.log("result", lyricsJson.result)
     if (lyricsJson.result) {
       const lyricsArr = lyricsJson.message;
       let songLyrics: LyricLine[] = [];
@@ -54,8 +53,7 @@ function GenerationPage() {
     setTrackUri(`spotify:track:${selectedTrack[2]}`)
     console.log("testing")
     console.log(selectedTrack[2])
-
-    console.log(lyrics)
+    console.log("token", token)
     
   }, [])
 
@@ -63,8 +61,6 @@ function GenerationPage() {
     <div className="generation-page">
       <div className="generation-page-container">
         <div className="left">
-          {/* {console.log('selectedTrack')} */}
-          {/* <img src={selectedTrack[3]} alt="album cover" /> */}
           <img
             src="https://i.scdn.co/image/ab67616d00001e0238876c52ff708856ae680d7e"
             alt="album cover"
@@ -79,7 +75,7 @@ function GenerationPage() {
           </div>
         </div>
         <div className="middle">
-          <LyricsGame token={token} trackUri={trackUri} lyrics={mockLyricsResponse} difficulty={"medium"} score={score} setScore={setScore} />
+          <LyricsGame token={token} trackUri={mockTrackUri} lyrics={mockLyricsResponse} difficulty={"medium"} score={score} setScore={setScore} />
           {/* {lyrics && <LyricsGame token={token} trackUri={trackUri} lyrics={lyrics} difficulty={difficulty} score={score} setScore={setScore} />} */}
         </div>
 

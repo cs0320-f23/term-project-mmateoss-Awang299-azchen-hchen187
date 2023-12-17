@@ -9,6 +9,7 @@ import { useAppContext } from '../../components/input/ContextProvider';
 
 import './SongsPage.css';
 import '../../components/home/Person.css';
+import { getAccessToken } from '../../components/SpotifyOAuth/authPkce';
 
 //mock function to get mock data
 async function fetchMockedSongs(input: string) {
@@ -16,15 +17,35 @@ async function fetchMockedSongs(input: string) {
   return dataObject;
 }
 
+const clientId = "eb941c29116d4a429cee98b37757ceca";
+
 //main component of the songs page
 function SongsPage() {
-  const { selectedTrack, chooseTrack, setToken } = useAppContext();
+  const { selectedTrack, chooseTrack, setToken, token } = useAppContext();
   const [search, setSearch] = useState("");
   const [searchResults, setSearchResults] = useState<string[][]>([]);
   const [isActive, setIsActive] = useState(false);
   const [fieldsPopulated, setFieldsPopulated] = useState(false);
   const [displayWarning, setDisplayWarning] = useState(false);
   const [searched, setSearched] = useState(false);
+
+  useEffect(() => {
+    const fetchAccessToken = async () => {
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+
+      if (code) {
+        try {
+          const accessToken = await getAccessToken(clientId, code);
+          setToken(accessToken);
+        } catch (error) {
+          console.error("Error fetching access token:", error);
+        }
+      }
+    };
+
+    fetchAccessToken();
+  }, []);
 
   //method to toggle the search bar
   const handleSearchClick = () => {
@@ -87,15 +108,13 @@ function SongsPage() {
   //async function to make backend api calls to get the songs
   async function fetchSongs(input: string): Promise<{ Result: string; data: string[][] }> {
     const limit = 10;
-    const tokenObject = await fetch("http://localhost:3232/token");
-    const tokenJson = await tokenObject.json();
-    const token = tokenJson.token;
+
+    console.log("INSIDE FETCH SONGS TOKEN:", token)
     const serverInput = "getSongs?token=" + token + "&limit=" + limit + "&query=" + input;
     console.log(serverInput);
     const fetched = await fetch("http://localhost:3232/" + serverInput);
     const dataObject = await fetched.json();
 
-    // setToken(tokenJson);
     return dataObject;
   }
 
