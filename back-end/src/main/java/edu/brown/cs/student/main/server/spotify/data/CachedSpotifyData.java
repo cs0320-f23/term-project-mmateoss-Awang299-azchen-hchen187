@@ -1,12 +1,10 @@
-package edu.brown.cs.student.main.server;
+package edu.brown.cs.student.main.server.spotify.data;
 
 import com.beust.ah.A;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import edu.brown.cs.student.main.server.spotify.data.IData;
-import edu.brown.cs.student.main.server.spotify.data.SpotifyData;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
@@ -51,7 +49,8 @@ public class CachedSpotifyData implements IData {
               }
             });
 
-    // building the cache that will hold the list of list of strings for the search bar
+    // building the cache that will hold the list of list of strings for the search
+    // bar
     this.searchingSongCache = CacheBuilder.newBuilder()
         .maximumSize(40)
         .expireAfterWrite(3, TimeUnit.MINUTES)
@@ -61,7 +60,7 @@ public class CachedSpotifyData implements IData {
               public List<List<String>> load(String[] queries) throws Exception {
                 String prompt = queries[0];
                 String limit = queries[1];
-                return buildGetSongsPrompts(prompt,limit);
+                return buildGetSongsPrompts(prompt, limit);
               }
             }
 
@@ -341,13 +340,13 @@ public class CachedSpotifyData implements IData {
 
   }
 
-
   /**
-   * Method used to get song objects and needed information for search bar based on any prompt
+   * Method used to get song objects and needed information for search bar based
+   * on any prompt
    * inputted by the users.
    *
    * @param prompt what is being searched
-   * @param limit max number of songs returned
+   * @param limit  max number of songs returned
    *
    * @return List of list of strings containing all the needed information
    *
@@ -358,8 +357,8 @@ public class CachedSpotifyData implements IData {
    *                              interrupted.
    */
   @Override
-  public List<List<String>> getSongsPrompt(String prompt, String limit) throws
-      URISyntaxException, IOException, InterruptedException, ExecutionException {
+  public List<List<String>> getSongsPrompt(String prompt, String limit)
+      throws URISyntaxException, IOException, InterruptedException, ExecutionException {
 
     String[] input = new String[2];
     input[0] = prompt;
@@ -368,10 +367,11 @@ public class CachedSpotifyData implements IData {
   }
 
   /**
-   * Method that builds the list of list of strings to be returned by getSongsPrompt
+   * Method that builds the list of list of strings to be returned by
+   * getSongsPrompt
    *
    * @param prompt what the songs gotten will be based off of
-   * @param limit the max number of songs returned
+   * @param limit  the max number of songs returned
    *
    * @return List of list of strings containing all the needed information
    *
@@ -381,11 +381,11 @@ public class CachedSpotifyData implements IData {
    * @throws InterruptedException exception where connection to API is
    *                              interrupted.
    */
-  private List<List<String>> buildGetSongsPrompts(String prompt, String limit)  throws
-      URISyntaxException, IOException, InterruptedException{
+  private List<List<String>> buildGetSongsPrompts(String prompt, String limit)
+      throws URISyntaxException, IOException, InterruptedException {
     Song songs = this.data.getSongKeywords(this.token, prompt, limit);
     List<List<String>> toReturn = new ArrayList<>();
-    for(int i =0; i<songs.tracks().items().size();i++){
+    for (int i = 0; i < songs.tracks().items().size(); i++) {
       List<String> innerList = new ArrayList<>();
       innerList.add(songs.tracks().items().get(i).name());
       innerList.add(songs.tracks().items().get(i).artists().get(0).name());
@@ -400,21 +400,22 @@ public class CachedSpotifyData implements IData {
 
   /**
    * Method that removes the same song from the recommendation
-   * @param rec recommendation object to be processed
+   * 
+   * @param rec   recommendation object to be processed
    * @param names names of the songs inputted.
    * @return processed recommendation object
    */
   @Override
-  public Recommendation postProcess(Recommendation rec, String[] names){
-    for(int i =0; i<names.length; i++){
+  public Recommendation postProcess(Recommendation rec, String[] names) {
+    for (int i = 0; i < names.length; i++) {
       String name = names[i];
       name = name.replaceAll("%26", "&");
       name = name.replaceAll("%20", " ");
       name = name.replaceAll("%28", "(");
       name = name.replaceAll("%29", ")");
       name = name.replaceAll("\\+", " ");
-      for(int j=0;j<rec.tracks().size();j++){
-        if(name.equals(rec.tracks().get(j).name())){
+      for (int j = 0; j < rec.tracks().size(); j++) {
+        if (name.equals(rec.tracks().get(j).name())) {
           rec.tracks().remove(rec.tracks().get(j));
         }
       }

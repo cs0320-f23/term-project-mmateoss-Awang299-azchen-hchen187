@@ -2,9 +2,6 @@ package edu.brown.cs.student.main.server.spotify.data;
 
 import static spark.Spark.after;
 
-import com.beust.ah.A;
-
-import edu.brown.cs.student.main.server.CachedSpotifyData;
 import edu.brown.cs.student.main.server.audioRecognition.audioData.AudioData;
 import edu.brown.cs.student.main.server.handlers.AudioTextHandler;
 import edu.brown.cs.student.main.server.handlers.GetSongHandler;
@@ -66,7 +63,7 @@ public class Server {
 
     LibreTranslateData data1 = new LibreTranslateData();
     try {
-      String res = data1.getTranslation("I am absolutely super cool", "en", "fr");
+      String res = data1.getTranslation("I am absolutely super cool", "en", "fr").translatedText();
       System.out.println(res);
       System.out.println("done");
     } catch (Exception e) {
