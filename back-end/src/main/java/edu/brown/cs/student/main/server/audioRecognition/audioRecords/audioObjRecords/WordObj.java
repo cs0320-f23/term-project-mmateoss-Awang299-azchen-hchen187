@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.server.audioRecognition.audioRecords.audioObjRecords;
 
-
 /**
  * Record used by moshi for the model to give info on what each word it heard.
  *
@@ -9,6 +8,4 @@ package edu.brown.cs.student.main.server.audioRecognition.audioRecords.audioObjR
  * @param end at what time the word ended
  * @param confidence how confident the model is in its prediction
  */
-public record WordObj(String word, double start, double end, double confidence) {
-
-}
+public record WordObj(String word, double start, double end, double confidence) {}

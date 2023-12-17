@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.server.audioRecognition.audioRecords.audioObjRecords;
 
-import edu.brown.cs.student.main.server.audioRecognition.audioRecords.audioObjRecords.AlternativeObj;
 import java.util.List;
 
 /**
@@ -8,6 +7,4 @@ import java.util.List;
  *
  * @param alternatives objects that hold the possibilities of what the audio said
  */
-public record ChannelObj(List<AlternativeObj> alternatives) {
-
-}
+public record ChannelObj(List<AlternativeObj> alternatives) {}

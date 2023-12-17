@@ -6,15 +6,10 @@ import spark.Route;
 
 public class AddInputSongsHandler implements Route {
 
-
-  public AddInputSongsHandler(){
-
-  }
-
+  public AddInputSongsHandler() {}
 
   @Override
-  public Object handle(Request req, Response res) throws Exception{
+  public Object handle(Request req, Response res) throws Exception {
     return null;
   }
-
 }

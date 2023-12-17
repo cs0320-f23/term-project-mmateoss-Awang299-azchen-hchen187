@@ -7,6 +7,4 @@ package edu.brown.cs.student.main.server.spotify.records.recommendationRecords;
  * @param height height of the image
  * @param width width of the image
  */
-public record ImageRec(String url, int height, int width) {
-
-}
+public record ImageRec(String url, int height, int width) {}
