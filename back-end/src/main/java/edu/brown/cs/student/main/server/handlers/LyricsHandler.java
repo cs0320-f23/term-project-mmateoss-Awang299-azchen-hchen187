@@ -41,8 +41,11 @@ public class LyricsHandler implements Route {
                 responseMap.put("Result", "Error");
                 responseMap.put("Message", "no track ID provided");
                 return moshi.adapter(Map.class).toJson(responseMap);
+            } else if(toLanguage == null){
+                responseMap.put("Result", "Error");
+                responseMap.put("Message", "no toLanguage provided");
+                return moshi.adapter(Map.class).toJson(responseMap);
             }
-
             // convert language to ISO 639-1 code
             if (fromLanguage == null) { // Set default language to English
                 if (request.queryParams().size() != 2) {

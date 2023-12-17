@@ -1,4 +1,4 @@
-package edu.brown.cs.student.main.server.spotify.data;
+package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 

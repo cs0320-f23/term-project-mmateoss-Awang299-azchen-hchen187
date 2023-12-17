@@ -153,6 +153,7 @@ public class GetSongsHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, Object> responseBody = jsonAdapter.fromJson(response.body());
+    System.out.println(responseBody);
     Assert.assertEquals("Success", responseBody.get("Result"));
   }
 
