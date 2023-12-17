@@ -156,10 +156,10 @@ To start the server, navigate in the backend to the server file and in IntelliJ 
 ## Accessibility 
 
     . We paid attention to accessibility when working on this project. Some specific choices that we implemented are the following:
-        .
-
-        .
-
-        .
-
-        .
+        
+        . Users can click tab to move between different sections of the page.
+        . The character with eyes follows the mouse so that the user will
+        know where their mouse is at all times
+        . We accept multiple languages to accomodate learners from all over the world and wanting to learn a variety of languages.
+        . We display the lyrics in the native language of the user in case they are just starting out, they can still use the webapp.
+        . Another reason to display the lyrics is to ensure that people who might have some trouble with hearing, can still participate and use the app to learn the language.
