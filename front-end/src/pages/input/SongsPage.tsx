@@ -28,6 +28,7 @@ function SongsPage() {
   const [fieldsPopulated, setFieldsPopulated] = useState(false);
   const [displayWarning, setDisplayWarning] = useState(false);
   const [searched, setSearched] = useState(false);
+  const [searchMessage, setSearchMessage] = useState("Loading...")
 
   useEffect(() => {
     const fetchAccessToken = async () => {
@@ -90,11 +91,14 @@ function SongsPage() {
         if (response.Result === "Success") {
           setSearchResults(response.data);
         } else {
+            setSearchResults([])
+            setSearchMessage("No songs found")
         }
       });
     };
 
     const delayTimer = setTimeout(() => {
+      setSearchMessage("Loading...")
       fetchJson();
       setSearched(true);
     }, 500);
@@ -168,11 +172,15 @@ function SongsPage() {
                       <TrackSearchResult track={track} key={track[2]} chooseTrack={chooseTrack} />
                     ))
                   ) : (
-                    <div key={"0"} className="recommended-track-container" onClick={() => {}}>
-                      <p style={{ textAlign: "center" }}>Loading...</p>
-                    </div>
+                    <div
+                    key={"0"}
+                    className="recommended-track-container"
+                    onClick={() => {}}
+                  >
+                    <p style={{textAlign: "center"}}>{searchMessage}</p>
+                  </div>
                   )
-                ) : null}
+                ) : null }
               </div>
             </div>
           </Container>

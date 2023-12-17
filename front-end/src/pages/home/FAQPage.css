@@ -34,7 +34,7 @@
     line-height: 30px;
 }
 
-.y-wrapper {
+/* .y-wrapper {
     position: absolute;
     bottom: -5vh;
     left: -7vh;
@@ -77,4 +77,4 @@
     50% {
       transform: translateZ(300px);
     }
-  }
+  } */
