@@ -55,7 +55,7 @@ const mockLyricsResponse: LyricLine[] = [
 ];
 
 function GenerationPage() {
-  const { token, difficulty, selectedTrack, nativeLanguage } = useAppContext();
+  const { token, difficulty, selectedTrack, nativeLanguage, songLanguage} = useAppContext();
   const [score, setScore] = useState(0);
   const [trackUri, setTrackUri] = useState("");
   const [lyrics, setLyrics] = useState<LyricLine[] | null>(null);
@@ -64,7 +64,7 @@ function GenerationPage() {
 
   const fetchLyrics = async (trackId: string, nativeLanguage: string) => {
     const lyricsObject = await fetch(
-      `http://localhost:3232/getLyrics?SpotifyTrackID=${trackId}&toLanguage=${nativeLanguage}`
+      `http://localhost:3232/getLyrics?SpotifyTrackID=${trackId}&toLanguage=${nativeLanguage}&fromLanguage=${songLanguage}`
     );
     const lyricsJson = await lyricsObject.json();
 

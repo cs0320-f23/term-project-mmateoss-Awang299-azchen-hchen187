@@ -32,7 +32,8 @@ export const ContextProvider: React.FC<{ children: ReactNode }> = ({
   const [totalPoints, setTotalPoints] = useState(0);
   const [difficulty, setDifficulty] = useState("easy");
   const [token, setToken] =
-    useState(``);
+    useState(`BQC5EcI-Rc1pwYzgOmGIAap2clUu3VASycuoYQg3NH3slsJK5MBsFiL1fVn9RwgUW4o_7A4bWehFv55mVeVAkeI24hQw0NSon8BXHVOIaO1FYh5Rf5XJre5bUhlM1mMEMSwC-qia2Gb0097Wq0J1xoK85L4zBzBbJHXZoxzEjP8n3nuB1HrwXE0mDAR5DMdDJTraxiZWPg
+`);
 
   const chooseTrack = (track: string[]) => {
     setSelectedTrack(track);
