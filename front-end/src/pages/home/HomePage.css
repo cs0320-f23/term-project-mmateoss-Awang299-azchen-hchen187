@@ -1,0 +1,92 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
+
+/* css styling for the homepage */
+
+.home-page {
+  background: black;
+  min-height: 100vh;
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  background: black;
+}
+
+.filler-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  height: 8vh;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.person-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  margin-top: 40px;
+  margin-bottom: 40px;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+}
+
+
+.svg-component {
+  position: absolute;
+  width: 100%;
+  height: 80%;
+  top: 10vh;
+}
+
+path {
+  stroke: transparent;
+  stroke-width: 12;
+  stroke-dasharray: 8000;
+  stroke-dashoffset: 8000;
+}
+
+.animate {
+  stroke: white;
+  stroke-width: 12;
+  animation: drawLine 2.5s forwards;
+}
+
+@keyframes drawLine {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.text-container {
+  color: white;
+  text-align: left;
+  margin-right: 100px;
+  width: 400px;
+  position: relative;
+}
+
+.text-top, .text-bottom {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  font-weight: bold;
+  font-size: 30px;
+  justify-content: center;
+  align-items: center;
+  cursor: default;
+}
+
+.text-top {
+  position: absolute;
+  mask-repeat: no-repeat;
+  mask-size: 20px;
+}
+
