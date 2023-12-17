@@ -146,7 +146,7 @@ export default function GeneratedPlaylistPage() {
           </div>
 
           <NavButton
-            nextPage="/"
+            nextPage="/input/settings"
             displayedText="Submit"
             proceedToNextPage={fieldsPopulated}
             onClickRejection={handleButtonRejection}
