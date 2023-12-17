@@ -1,0 +1,48 @@
+/* css styling for the tool bar*/
+
+.header {
+    top: 0;
+    left: 0;
+    width: 90%;
+    padding: 20px 75px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: black;
+  }
+  
+  .logo {
+    font-size: 32px;
+    text-decoration: none;
+    font-weight: 700;
+    color: white;
+  }
+
+  .logo:hover {
+    color: #1db954;
+  }
+  
+  .navbar a {
+    position: relative;
+    font-size: 18px;
+    color: white;
+    font-weight: 500;
+    text-decoration: none;
+    margin-left: 40px;
+  }
+  
+  .navbar a::before {
+    content: '';
+    position: absolute;
+    top: 100%;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: white;
+    transition: .3s;
+  }
+  
+  .navbar a:hover::before {
+    width: 100%;
+  }
+  
