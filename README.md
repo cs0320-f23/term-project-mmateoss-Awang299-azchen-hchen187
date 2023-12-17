@@ -19,7 +19,7 @@ Links to outisde contributions used:
 
 Used these to learn how to do things in the code
 
-    .https://github.com/deepgram-starters/deepgram-java-starters/blob/main/Starter-01/src/main/java/com/deepgram/App.java 
+    .https://github.com/deepgram-starters/deepgram-java-starters/blob/main/Starter-01/src/main/java/com/deepgram/App.java
         .Used this to figure out how exactly the deepgram API wanted us to send a post request to their API, the documentation on their website was not the best for Java but this sample project they released worked well to show me how they wanted the Post API request to go.
 
     .https://www.baeldung.com/java-base64-encode-and-decode
@@ -31,24 +31,23 @@ Used these to learn how to do things in the code
     .https://mkyong.com/java/how-to-convert-file-into-an-array-of-bytes/
         . Used to learn how to convert a file into a byte[] in order to be able to send it as the body of an API.
 
-    .https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpRequest.BodyPublishers.html 
+    .https://docs.oracle.com/en/java/javase/11/docs/api/java.net.http/java/net/http/HttpRequest.BodyPublishers.html
         . Used this documentaion to learn the differnt BodyPublishers that could be used and chose the correct one for my specific needs.
 
     .https://www.javatpoint.com/java-string-replaceall
         . Used this to learn about the documentation of the replaceall methdo in java
 
-    .
-        .
+    .https://github.com/LibreTranslate/LibreTranslate
+        .Used this open-source AI Translation API to obtain the translated lyrics for songs
+
+    .https://leetcode.com/problems/edit-distance/solutions/3230662/clean-codes-full-explanation-dynamic-programming-c-java-python3/
+        .Used this leetcode solution to implement Levenshtein's Distance algorithm for the scoring algorithm
 
     .
         .
 
     .
         .
-
-    .
-        .
-
 
 ## Link to Repo
 
@@ -67,20 +66,19 @@ This project is split into two directories: the frontend and the backend. The fr
 ### Front-End
 
     . The front-end has as lot of working components and parts. We did this to give our users the best experience possible and make
-    the website as visually appealing as possible. The users follow a specific flow from page to page of the frontend that work together to build the project. 
+    the website as visually appealing as possible. The users follow a specific flow from page to page of the frontend that work together to build the project.
 
         .
 
         .
 
         .
-
 
 ### Back-End
 
     . The back-end has a lot of working parts and moving pieces in order to get the intended function for the webapp.
 
-        . On the surface, there are multiple handlers that take care of the logic for our front-end 
+        . On the surface, there are multiple handlers that take care of the logic for our front-end
         and possibly other front-ends to use. They dictate the information that is required to be passed into the back-end in order for us to execute some functionality and return certain information for the front-end to display and use.
 
         . We have different handlers that work with the frontend to do different functionalities of our project. For example, we have handlers that take care of getting Spotify tokens to the frontend, parsing a user's search query in order to get songs diaplyed as a user searches in the frontend, generating recommendations to the user for similar songs to use in the game, getting the specific lyrics for a song in different in both the user's language and the intended language, generating point values, turning audio into text, and more. (To see all the handlers, in the back-end folder navigate in the src to the handler package to see all the handlers available and read more about them in their comments).
@@ -88,7 +86,6 @@ This project is split into two directories: the frontend and the backend. The fr
         . Apart from handlers, we have different classes and interfaces that work together to make API calls to external APIs to fetch needed information when necessary. It then parses that information and verifies differnt properties, retuning a polished version of what the frontend needs. The interfaces allow us to use mocked data when needed in order to be able to run tests (our handlers can use either mocked or real data). Furthermore, some classes utilize the proxy and strategy pattern.
 
         . We also created multiple records to allow us to work with external APIs. Moshi uses these reeords to parse the incoming JSON into an object with the fields that we want to use and pay attention to.
-
 
 ## Specific Data Structures used and other Important Decisions
 
@@ -98,12 +95,12 @@ This project is split into two directories: the frontend and the backend. The fr
 
     . In order to be able to pass audio files between the front-end and the back-end (to be able to turn the words into text), the back-end needed to be smart. We tried to pass in a base64 encrypted string to the back-end as a query parameter but we ran into the problem that the strings ended up being way too long leading the API call to fail. The way that we were able to circumvent this was by making that audioText handler a post handler and sending a byte array of the audio in the body of the handler. That way, the front-end would be able to send such a large amount of information to the backend to be processed.
 
-
 # Errors/Bugs
 
     . There are no known bugs or errors. We tested pretty thoroughly and feel confident in our project.
 
 # Tests
+
     . There are a lot of tests included in this project. They test that the functionality works both using mocked and real data and also integrating different sections overall. Throughout the project, we created different tests that ensured that lots of different aspects of the project worked properly. For example, not only did we create tests for the differnt handlers, but we also creted tests ensuring that they worked properly together taking in different calls. Additionally, we tested that different methods worked properly without being integrated into differnt parts of the project with basic unit tests. Additionally, we did some user testing with oursleves and some of our friends allowing us to gage how well the web app was working and if there was anything we needed to change. Laslty, we used lots of mocked data in order to allow for us to run test of our respective components without actually needing them to be connected to the other part of the project or to external APIs.
 
 # How To
@@ -125,7 +122,7 @@ This project is split into two directories: the frontend and the backend. The fr
 
         One thing to note is that for integration tests, if some fail, you will
         have to manually run them one-by-one, as they likely failed due to
-        conflicting requests to the server. 
+        conflicting requests to the server.
 
 ### Back-End Tests:
 
@@ -148,12 +145,11 @@ This should start the front-end up. You can then follow the link that shows up i
 
 Then, follow the directions that the web app poses in order to use it as intended. To begin, click on the character with the eyes that follows your mouse.
 
-
 ### Just the server
 
 To start the server, navigate in the backend to the server file and in IntelliJ or your development IDE, run the server file. In IntelliJ this is pressing the green arrow at the top of the class, right above where the class declaration is or the green arrow to the left of the class declaration. Once the server is running, you can use the frontend as intended as it will be able to make API calls to the backend in order to get the needed information to function as intended. Additionally, please ensure that you enter the correct API client secret and id to your web-pp in the token generator class in order for certain parts to be able to connect with the Spotify API correctly.
 
-## Accessibility 
+## Accessibility
 
     . We paid attention to accessibility when working on this project. Some specific choices that we implemented are the following:
         .
