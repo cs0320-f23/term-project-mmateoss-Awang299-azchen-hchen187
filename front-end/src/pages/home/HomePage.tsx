@@ -36,17 +36,26 @@ function HomePage() {
     return (
       <>
         <div className="home-page">
-          <motion.div exit={{ opacity: 0 }} transition={transition} className="main-container">
+          <motion.div
+            exit={{ opacity: 0 }}
+            transition={transition}
+            className="main-container"
+          >
             <div className="filler-container"></div>
             <LineAnimationComponent startAnimation={animate} />
             <div className="person-container">
-              <motion.div key="text-container" exit={{ opacity: 0 }} transition={transition} className="text-container">
+              <motion.div
+                key="text-container"
+                exit={{ opacity: 0 }}
+                transition={transition}
+                className="text-container"
+              >
                 <div className="text-bottom">
-                  this is a super cool website
+                  SpotiDuo:
                   <br></br>
-                  blah blah blah blah blah balh blah blah blah
+                  Type the Beat,
                   <br></br>
-                  yeet
+                  Speak the Language!
                 </div>
               </motion.div>
               <motion.div
@@ -55,7 +64,11 @@ function HomePage() {
                 animate={animateStyle}
                 className="expanded-container"
               >
-                <PersonComponent handleHeadClick={handleHeadClick} headClicked={headClicked} disabledHover={false}/>
+                <PersonComponent
+                  handleHeadClick={handleHeadClick}
+                  headClicked={headClicked}
+                  disabledHover={false}
+                />
               </motion.div>
             </div>
           </motion.div>
