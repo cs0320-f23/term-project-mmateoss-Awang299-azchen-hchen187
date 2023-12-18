@@ -74,8 +74,8 @@ function GenerationPage() {
           </div>
         </div>
         <div className="middle">
-          <LyricsGame token={token} trackUri={mockTrackUri} lyrics={mockLyricsResponse} difficulty={"medium"} score={score} setScore={setScore} />
-          {/* {lyrics && <LyricsGame token={token} trackUri={trackUri} lyrics={lyrics} difficulty={difficulty} score={score} setScore={setScore} />} */}
+          {/* <LyricsGame token={token} trackUri={mockTrackUri} lyrics={mockLyricsResponse} difficulty={"medium"} score={score} setScore={setScore} /> */}
+          {lyrics && <LyricsGame token={token} trackUri={trackUri} lyrics={lyrics} difficulty={difficulty} score={score} setScore={setScore} />}
         </div>
 
         <div className="right">
