@@ -53,7 +53,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   }, [player]);
 
   useEffect(() => {
-    if (currentPosition >= currentInterval[1]) {
+    if (currentPosition > currentInterval[1]) {
       setPlay(false);
       player?.seek(currentInterval[0] * 1000).then(() => {
         console.log("changed position");

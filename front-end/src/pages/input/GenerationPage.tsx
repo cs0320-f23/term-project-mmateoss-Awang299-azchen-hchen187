@@ -67,8 +67,7 @@ function GenerationPage() {
             style={{ height: "15rem", width: "15rem" }}
           />
           <p>
-            Easy On My Eyes - Stephen Sanchez
-            {selectedTrack[1]}
+            {selectedTrack[0]} - {selectedTrack[1]}
           </p>
           <div className="person-container-small">
             <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true} />
