@@ -244,7 +244,7 @@ public class AzureTranslateData implements ITranslateData {
   }
 
   /**
-   * @param text- String to be detected
+   * @param language- String to be detected
    * @return String representing the ISO 639-1 code of the language detected
    * @throws IOException
    * @throws InterruptedException
@@ -252,7 +252,10 @@ public class AzureTranslateData implements ITranslateData {
    */
   @Override
   public LanguageCode getLanguageCode(String language) throws LanguageNotSupportedException {
-    if (this.languageMap.containsKey(language)) {
+    if (language == null) {
+      return null;
+    }
+    else if (this.languageMap.containsKey(language)) {
       return new LanguageCode(language, this.languageMap.get(language));
     } else {
       throw new LanguageNotSupportedException("Language not supported");

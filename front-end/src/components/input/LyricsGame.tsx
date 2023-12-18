@@ -30,7 +30,6 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   const [answer, setAnswer] = useState("");
   const [currentGameLyric, setCurrentGameLyric] = useState<GameLyric>({ beginning: "", answer: "", end: "" });
   const [userGuess, setUserGuess] = useState("");
-  const [attempts, setAttempts] = useState(0);
 
   // overall game variables
   const [history, setHistory] = useState<HistoryLyric[]>([]);
@@ -53,7 +52,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   }, [player]);
 
   useEffect(() => {
-    if (currentPosition >= currentInterval[1]) {
+    if (currentPosition >= currentInterval[1] + 1) {
       setPlay(false);
       player?.seek(currentInterval[0] * 1000).then(() => {
         console.log("changed position");
@@ -62,6 +61,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   }, [currentPosition]);
 
   const initializeGame = () => {
+    console.log("token", token)
     let newLyricNumber = lyricNumber + 1;
 
     while (lyrics[newLyricNumber].learningLyric === "") {
@@ -81,7 +81,6 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   const generateAnswer = (generateLyricNumber: number) => {
     const lyric = lyrics[generateLyricNumber].learningLyric;
     const lyricArr = lyric.split(" ");
-    console.log(lyricArr);
     let answerLength = 1;
 
     switch (difficulty) {
@@ -98,13 +97,30 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
 
     const validIdxs = lyricArr.length - answerLength + 1;
     const randomIdx = Math.floor(Math.random() * validIdxs);
+    // const newAnswer = lyricArr[lyricArr.length - 1]
     const newAnswer = lyricArr.slice(randomIdx, randomIdx + answerLength).join(" ");
 
-    const answerIdx = lyric.indexOf(newAnswer);
+    let answerIdx = -1;
+    let answerLyric = lyric;
+    while (true) {
+      answerIdx = answerLyric.indexOf(newAnswer, answerIdx + 1);
+
+      if (answerIdx === -1) {
+        break;
+      }
+
+      let leftSpace = answerIdx === 0 || answerLyric[answerIdx - 1] === " ";
+      let rightSpace =
+        answerIdx + newAnswer.length >= answerLyric.length || answerLyric[answerIdx + newAnswer.length] === " ";
+
+      if (leftSpace && rightSpace) {
+        break;
+      }
+    }
+    
     const beginning = lyric.substring(0, answerIdx);
     const end = lyric.substring(answerIdx + newAnswer.length);
 
-    console.log({ beginning, answer: newAnswer, end });
     setCurrentGameLyric({ beginning, answer: newAnswer, end });
     setAnswer(newAnswer);
   };
@@ -116,98 +132,105 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   const handleSubmitAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    const newAttempts = attempts + 1;
-    const guessCorrect = cleanString(userGuess) === cleanString(answer);
-    if (guessCorrect || newAttempts >= 3) {
-      let newLyricNumber = lyricNumber + 1;
-
-      if (newLyricNumber + 1 < lyrics.length) {
-        const soundLyricNumber = lyricNumber + 1;
-
-        while (lyrics[newLyricNumber].learningLyric === "" || lyrics[newLyricNumber].learningLyric === "♪") {
-          newLyricNumber += 1;
-        }
-
-        const startTime = lyrics[newLyricNumber].startTime;
-        const endTime = lyrics[newLyricNumber + 1].startTime;
-
-        player?.seek(lyrics[soundLyricNumber].startTime * 1000);
-        let newHistoryLyric: HistoryLyric;
-
-        if (!guessCorrect) {
-          newHistoryLyric = { lyric: currentGameLyric, userGuess: userGuess, correct: false };
-        } else {
-
-          setScore((prevScore: number) => prevScore + Math.floor(answer.length / newAttempts));
-          // const points  = await calculateScore(newAttempts)
-          // if (points) {
-          //   setScore((prevScore) => prevScore + points)
-          // }
-          
-          newHistoryLyric = { lyric: currentGameLyric, userGuess: userGuess, correct: true };
-        }
-
-        setHistory((prevHistory) => prevHistory.concat(newHistoryLyric));
-        setAttempts(0);
-        setLyricNumber(newLyricNumber);
-        setCurrentInterval([startTime, endTime - 1]);
-        generateAnswer(newLyricNumber);
-      } else {
-        setGameOver(true);
+    // update history + score
+    let newHistoryLyric: HistoryLyric;
+    if (cleanString(userGuess) === cleanString(answer)) {
+      // setScore((prevScore: number) => prevScore + answer.length);
+      const points  = await calculateScore()
+      console.log("points", points)
+      if (points) {
+        setScore((prevScore) => prevScore + points)
       }
+
+      newHistoryLyric = { lyric: currentGameLyric, userGuess: answer, correct: true };
     } else {
-      setAttempts(newAttempts);
+      newHistoryLyric = { lyric: currentGameLyric, userGuess: userGuess, correct: false };
     }
+
+    setHistory((prevHistory) => prevHistory.concat(newHistoryLyric));
+
+    // move on to next lyric
+    let newLyricNumber = lyricNumber + 1;
+    const soundLyricNumber = lyricNumber + 1;
+
+    while (
+      newLyricNumber < lyrics.length &&
+      (lyrics[newLyricNumber].learningLyric === "" || lyrics[newLyricNumber].learningLyric === "♪")
+    ) {
+      newLyricNumber += 1;
+    }
+
+    if (newLyricNumber < lyrics.length) {
+      const startTime = lyrics[newLyricNumber].startTime;
+      const endTime =
+        newLyricNumber + 1 < lyrics.length ? lyrics[newLyricNumber + 1].startTime : lyrics[lyrics.length - 1].startTime;
+
+      player?.seek(lyrics[soundLyricNumber].startTime * 1000);
+
+      setPlay(true)
+      setLyricNumber(newLyricNumber);
+      setCurrentInterval([startTime, endTime - 1]);
+      generateAnswer(newLyricNumber);
+    } else {
+      setGameOver(true);
+    }
+
     setUserGuess("");
   };
 
-  const calculateScore = async (attempts : number) => {
-    const scoreObject = await fetch(`http://localhost:3232/getScore?spotifyID=${selectedTrack[2]}&correctWord=${answer}&guessWord=${userGuess}`);
+  const calculateScore = async () => {
+    console.log("inside score")
+    console.log("selected", selectedTrack[2])
+    const scoreObject = await fetch(
+      `http://localhost:3232/getScore?spotifyID=${selectedTrack[2]}&correctWord=${answer}&guessWord=${userGuess}&line=${lyricNumber}`
+    );
     const scoreJson = await scoreObject.json();
-    if (scoreJson.result) {
-      return parseInt(scoreJson.message)
+    console.log(scoreJson.Message)
+    if (scoreJson.Result) {
+      return Math.floor(parseFloat(scoreJson.Message));
     } else {
-      console.log("incorrect score")
+      console.log("incorrect score");
     }
-  }
+  };
 
   return (
-    <div className="lyrics-game" style={{ justifyContent : gameOver ? "flex-start" : "" }}>
+    <div className="lyrics-game" style={{ justifyContent: gameOver ? "flex-start" : "" }}>
       <h2>Fill In the Lyric</h2>
-      {!gameOver && <div className="game">
-        <LyricsHistory history={history} result={false}/>
-        {currentGameLyric && lyricNumber >= 0 && (
-          <InputLyric
-            gameLyric={currentGameLyric}
-            handleSubmitAnswer={handleSubmitAnswer}
-            userGuess={userGuess}
-            setUserGuess={setUserGuess}
-            difficulty={difficulty}
-            nativeLyric={lyrics[lyricNumber].nativeLyric}
-          />
-        )}
+      {!gameOver && (
+        <div className="game">
+          <LyricsHistory history={history} result={false} />
+          {currentGameLyric && lyricNumber >= 0 && (
+            <InputLyric
+              gameLyric={currentGameLyric}
+              handleSubmitAnswer={handleSubmitAnswer}
+              userGuess={userGuess}
+              setUserGuess={setUserGuess}
+              difficulty={difficulty}
+              nativeLyric={lyrics[lyricNumber].nativeLyric}
+            />
+          )}
 
-        <div className="player">
-          <SpotifyPlayer
-            token={token}
-            uris={trackUri ? [trackUri] : []}
-            getPlayer={(player: Spotify.Player) => setPlayer(player)}
-            play={play}
-            callback={(state: CallbackState) => setPlay(state.isPlaying)}
-            hideAttribution
-            hideCoverArt
-            styles={{
-              bgColor: "black",
-              sliderHandleColor: "white",
-              color: "white",
-            }}
-          />
+          <div className="player">
+            <SpotifyPlayer
+              token={token}
+              uris={trackUri ? [trackUri] : []}
+              getPlayer={(player: Spotify.Player) => setPlayer(player)}
+              play={play}
+              callback={(state: CallbackState) => setPlay(state.isPlaying)}
+              hideAttribution
+              hideCoverArt
+              styles={{
+                bgColor: "black",
+                sliderHandleColor: "white",
+                color: "white",
+              }}
+            />
+          </div>
         </div>
-      </div>}
-      {gameOver && 
-       <LyricsHistory history={history} result={true}/>
-      }
-      
+      )}
+      {gameOver && <>
+        <LyricsHistory history={history} result={true} />
+      </>}
     </div>
   );
 }
@@ -225,7 +248,7 @@ const InputLyric = ({ gameLyric, handleSubmitAnswer, userGuess, setUserGuess, di
   let inputWidth = 0;
   switch(difficulty) {
     case "easy" : inputWidth = gameLyric.answer.length; break
-    case "medium" : inputWidth = gameLyric.answer.length / 1.5; break
+    case "medium" : inputWidth = gameLyric.answer.length / 1.7; break
     case "hard" : inputWidth = gameLyric.answer.length / 2; break
   }
 
@@ -233,17 +256,19 @@ const InputLyric = ({ gameLyric, handleSubmitAnswer, userGuess, setUserGuess, di
     <>
       <div className="input">
         <div className="input-lyric">
-          <p>{gameLyric.beginning}</p>
-          <form onSubmit={handleSubmitAnswer}>
-            <input
-              className="user-input"
-              type="text"
-              value={userGuess}
-              onChange={(e) => setUserGuess(e.target.value)}
-              style={{ width: inputWidth + "rem" }}
-            />
-          </form>
-          <p>{gameLyric.end}</p>
+          <p className ="input-lyric">
+            {gameLyric.beginning}
+            <form onSubmit={handleSubmitAnswer} style={{display: "inline"}}>
+              <input
+                className="user-input"
+                type="text"
+                value={userGuess}
+                onChange={(e) => setUserGuess(e.target.value)}
+                style={{ width: inputWidth + "rem" }}
+              />
+            </form>
+            {gameLyric.end}
+          </p>
         </div>
         <p> {nativeLyric} </p>
       </div>

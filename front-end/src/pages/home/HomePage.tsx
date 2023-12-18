@@ -6,24 +6,37 @@ import PersonComponent from '../../components/home/PersonComponent';
 
 import './HomePage.css';
 import '../../components/home/Person.css';
+import { redirectToAuthCodeFlow } from '../../components/SpotifyOAuth/authPkce';
+import { useAppContext } from '../../components/input/ContextProvider';
+
+const clientId = "eb941c29116d4a429cee98b37757ceca";
 
 //main component of the homepage
 function HomePage() {
     const navigate = useNavigate();
     const [animate, setAnimate] = useState<boolean>(false);
     const [headClicked, setHeadClicked] = useState<boolean>(false);
+    const [hovered, setHovered] = useState(false);
     const transition = {duration: 1, ease: [0.43, 0.13, 0.23, 0.96]}
     
     //method to handle navigating to the next page when head is clicked
-    const handleHeadClick = () => {
+    const handleHeadClick = async () => {
       setAnimate(true);
-      setTimeout(() => {
+
+      const params = new URLSearchParams(window.location.search);
+      const code = params.get("code");
+      
+      if (!code) {
+        redirectToAuthCodeFlow(clientId);
+      } else {
+        setTimeout(() => {
           setAnimate(false);
           setHeadClicked(true);
           setTimeout(() => {
-            navigate('/input/songs');
+            navigate("/input/songs");
           }, 1000);
-      }, 1000);
+        }, 1000);
+      }
     }
   
     //outlining the transition for rendering the next page
@@ -58,7 +71,10 @@ function HomePage() {
                   Speak the Language!
                 </div>
               </motion.div>
+
               <motion.div
+                onHoverStart={() => setHovered(true)}
+                onHoverEnd={() => setHovered(false)}
                 initial={{ scale: 1 }}
                 transition={{ duration: 0.75 }}
                 animate={animateStyle}
@@ -70,6 +86,10 @@ function HomePage() {
                   disabledHover={false}
                 />
               </motion.div>
+
+              <div className={hovered ? "click-me-container-populated" : "click-me-container-empty"}>
+                Click me!
+              </div>
             </div>
           </motion.div>
         </div>

@@ -6,25 +6,34 @@
     overflow-y: auto;
     max-height: 15rem;
 
-    .lyric {
+    .lyric-history {
         display: flex;
 
-        .guess {
-            margin-left: 0.4rem;
-            margin-right: 0.4rem;
+        .lyric {
+            display: flex;
+    
+            .guess {
+                margin: 0;
+            }
+    
+            .guess-correct {
+                text-decoration: underline;
+                color: #98FB98;
+            }
+            
+            .guess-incorrect {
+                color: #F08080;
+                text-decoration: line-through;
+                text-decoration-color: #F08080;;
+            }
         }
 
-        .guess-correct {
-            color: #98FB98;
-            border-bottom: 1px solid #98FB98;
+        .correct-answer {
+            display: flex;
+            flex-direction: row;
         }
-        
-        .guess-incorrect {
-            color: #F08080;
-            text-decoration: line-through;
-            text-decoration-color: #F08080;;
-        }
-    }
+    }   
+
 }
 
 .result {

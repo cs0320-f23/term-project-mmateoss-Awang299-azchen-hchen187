@@ -155,7 +155,7 @@ function SettingsPage() {
           </div>
         
           
-          <NavButton nextPage="/input/generation" displayedText="Start Game" proceedToNextPage={fieldsPopulated} onClickRejection={handleButtonRejection} />
+          <NavButton nextPage="/input/lyrics" displayedText="Start Game" proceedToNextPage={fieldsPopulated} onClickRejection={handleButtonRejection} />
           <div className="person-container-small">
             <div className={`${displayWarning ? "warning-message-container" : ""}`}>Please input the languages & difficulty!</div>
             <PersonComponent
