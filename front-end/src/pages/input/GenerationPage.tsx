@@ -102,7 +102,6 @@ function GenerationPage() {
             {selectedTrack[0]} - {selectedTrack[1]}
           </p>
           <div className="person-container-small">
-            <div className="warning-message-container">Congrats, you've finished!</div>
             <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true} />
           </div>
         </div>

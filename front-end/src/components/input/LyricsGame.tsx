@@ -30,7 +30,6 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   const [answer, setAnswer] = useState("");
   const [currentGameLyric, setCurrentGameLyric] = useState<GameLyric>({ beginning: "", answer: "", end: "" });
   const [userGuess, setUserGuess] = useState("");
-  const [attempts, setAttempts] = useState(0);
 
   // overall game variables
   const [history, setHistory] = useState<HistoryLyric[]>([]);
@@ -53,7 +52,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   }, [player]);
 
   useEffect(() => {
-    if (currentPosition >= currentInterval[1] + 0.5) {
+    if (currentPosition >= currentInterval[1] + 1) {
       setPlay(false);
       player?.seek(currentInterval[0] * 1000).then(() => {
         console.log("changed position");
@@ -168,7 +167,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
 
       player?.seek(lyrics[soundLyricNumber].startTime * 1000);
 
-      setAttempts(0);
+      setPlay(true)
       setLyricNumber(newLyricNumber);
       setCurrentInterval([startTime, endTime - 1]);
       generateAnswer(newLyricNumber);
@@ -192,14 +191,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   };
 
   return (
-<<<<<<< HEAD
     <div className="lyrics-game" style={{ justifyContent: gameOver ? "flex-start" : "" }}>
-=======
-    <div
-      className="lyrics-game"
-      style={{ justifyContent: gameOver ? "flex-start" : "" }}
-    >
->>>>>>> eb32426bfa6ffe0bb88aa0657d7bd9fb2b0a56db
       <h2>Fill In the Lyric</h2>
       {!gameOver && (
         <div className="game">
@@ -233,13 +225,9 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
           </div>
         </div>
       )}
-<<<<<<< HEAD
       {gameOver && <>
         <LyricsHistory history={history} result={true} />
       </>}
-=======
-      {gameOver && <LyricsHistory history={history} result={true} />}
->>>>>>> eb32426bfa6ffe0bb88aa0657d7bd9fb2b0a56db
     </div>
   );
 }
@@ -265,18 +253,6 @@ const InputLyric = ({ gameLyric, handleSubmitAnswer, userGuess, setUserGuess, di
     <>
       <div className="input">
         <div className="input-lyric">
-          {/* 
-          <span>{gameLyric.beginning}</span>
-          <form onSubmit={handleSubmitAnswer}>
-            <input
-              className="user-input"
-              type="text"
-              value={userGuess}
-              onChange={(e) => setUserGuess(e.target.value)}
-              style={{ width: inputWidth + "rem" }}
-            />
-          </form>
-          <span>{gameLyric.end}</span> */}
           <p className ="input-lyric">
             {gameLyric.beginning}
             <form onSubmit={handleSubmitAnswer} style={{display: "inline"}}>

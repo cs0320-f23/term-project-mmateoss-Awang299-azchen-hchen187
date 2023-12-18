@@ -145,14 +145,6 @@ export default function GeneratedPlaylistPage() {
           </div>
 
           <div className="recommended-tracks-container">
-<<<<<<< HEAD
-            {dataFetched && displayRecs && (
-              <>
-                {Object.values(trackHashmap).map((track: TrackInfo) => (
-                  <GeneratedTrackComponent track={track} />
-                ))}
-              </>
-=======
             {dataFetched ? (
               displayRecs ? (
                 Object.values(trackHashmap).map((track: TrackInfo) => (
@@ -167,7 +159,6 @@ export default function GeneratedPlaylistPage() {
                 Loading...
               </div>
 
->>>>>>> eb32426bfa6ffe0bb88aa0657d7bd9fb2b0a56db
             )}
           </div>
 
