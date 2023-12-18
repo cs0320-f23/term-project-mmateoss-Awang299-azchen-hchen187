@@ -31,7 +31,7 @@ public class GetSongHandler implements Route {
    *
    * @param data IData object for getting data either mocked or real.
    */
-  public 2GetSongHandler(IData data, ILyricsData lyricsData) {
+  public GetSongHandler(IData data, ILyricsData lyricsData) {
     this.data = data;
     this.lyricsData = lyricsData;
   }

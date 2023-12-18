@@ -28,7 +28,8 @@ export default function FAQPage() {
                 <b>4.</b> Select the level of difficulty you want your game to be
                 <br/>
                 <b>5.</b> Play game! The song audio will be played and you just have to fill in the
-                missing word{'(s)'}/line. The more accurate you are, the more points you will get!
+                missing word{'(s)'}/line. The more accurate you are, the more points you will get! You have 3 
+                attempts
                 <br/> 
                 <b>6.</b> Once you finish a round, you can choose to play with other songs we recommend based
                 on your initial song and discover new artists!

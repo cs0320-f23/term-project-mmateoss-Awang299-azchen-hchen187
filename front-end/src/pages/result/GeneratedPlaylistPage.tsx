@@ -100,50 +100,65 @@ export default function GeneratedPlaylistPage() {
         <div className="main-container">
           <div className="boom-box-background"></div>
           <div className="input-track-container-wrapper" id="input-track">
-          <div className="input-track-container">
-            <div className="input-track-overlay">
-              <div className="title" style={{color: "black"}}>
-                {(selectedTrack.length!==0) ? selectedTrack[0] : "error"}
+            <div className="input-track-container">
+              <div className="input-track-overlay">
+                <div className="title" style={{ color: "black" }}>
+                  {selectedTrack.length !== 0 ? selectedTrack[0] : "error"}
+                </div>
+                <img
+                  className="track-image"
+                  src={selectedTrack.length !== 0 ? selectedTrack[3] : "error"}
+                  style={{ width: "120px", height: "120px" }}
+                  alt="album cover"
+                />
               </div>
-              <img
-                className="track-image"
-                src={(selectedTrack.length!==0) ? selectedTrack[3] : "error"}
-                style={{ width: "120px", height: "120px" }}
-                alt="album cover"
-              />
             </div>
-          </div>
           </div>
 
           <div className="boom-box-svg"></div>
           <div className="generation-text-container">
-            Here are your generated songs based on 
-            <br/>
-            <span style={{color: "var(--green)"}}>
-            {initialSelectedTrack? initialSelectedTrack: "error"}
-            </span>!
-            <br/>
+            Here are your generated songs based on
+            <br />
+            <span style={{ color: "var(--green)" }}>
+              {initialSelectedTrack ? initialSelectedTrack : "error"}
+            </span>
+            !
+            <br />
             Select one to play with:
           </div>
 
           <div className="recommended-tracks-container">
-            {dataFetched && displayRecs && (
-              <>
-                {Object.values(trackHashmap).map((track : TrackInfo) => (
-                  <GeneratedTrackComponent track={track}/>
-                ))}
-              </>
+            {dataFetched ? (
+              displayRecs ? (
+                Object.values(trackHashmap).map((track: TrackInfo) => (
+                  <GeneratedTrackComponent track={track} key={track.id} />
+                ))
+              ) : (
+                // Display a message when displayRecs is false
+                <p>No recommended tracks to display.</p>
+              )
+            ) : (
+              <div className="recs-loading">
+                Loading...
+              </div>
+
             )}
           </div>
 
           <NavButton
-            nextPage="/"
+            nextPage="/input/settings"
             displayedText="Submit"
             proceedToNextPage={fieldsPopulated}
             onClickRejection={handleButtonRejection}
           />
           <div className="person-container-small">
-            <div className={`${displayWarning ? "warning-message-container" : "no-display"}`}>Please input a song!</div>
+            <div
+              className={`${
+                displayWarning ? "warning-message-container" : "no-display"
+              }`}
+            >
+              Please input a song!
+            </div>
             <PersonComponent
               handleHeadClick={() => {}}
               headClicked={false}

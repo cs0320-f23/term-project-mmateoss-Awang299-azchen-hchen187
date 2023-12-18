@@ -204,3 +204,11 @@ background-color: var(--green);
 .no-display {
   display: none;
 }
+
+.recs-loading {
+  position: relative;
+  width: 200px;
+  height: 200px;
+  color: white;
+  font-size: 20pt;
+}
