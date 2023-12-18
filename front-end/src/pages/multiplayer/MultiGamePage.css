@@ -1,0 +1,49 @@
+.mp-game-page {
+    background: black;
+    min-height: 100vh;
+  }
+
+.main-container-mp-game {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.left-container-mp {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.right-container-mp {
+    margin-top: 10vh;
+    width: 50%;
+    justify-content: center;
+    /* display: flex;
+    flex-direction: row; */
+}
+
+.p1-container {
+    width: 450px;
+    height: 550px;
+    background-color: pink;
+}
+
+.p2-container {
+    margin-top: 5vh;
+    width: 250px;
+    height: 350px;
+    background-color: #ccc;
+}
+
+.exit-button-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 50px;
+}

@@ -1,0 +1,28 @@
+.mp-load-page {
+    background: black;
+    min-height: 100vh;
+  }
+
+.main-container-mp-load {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 70vh;
+    justify-content: center;
+    align-items: center;
+}
+
+.loading-text-container {
+    position: relative;
+    padding: 20px;
+    width: 500px;
+    font-size: 30pt;
+    color: white;
+}
+
+.exit-button-container {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    margin: 50px;
+}

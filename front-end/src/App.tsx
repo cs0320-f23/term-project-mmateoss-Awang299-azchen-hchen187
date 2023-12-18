@@ -11,6 +11,9 @@ import FAQPage from './pages/home/FAQPage';
 import './App.css';
 import Toolbar from './components/toolbar/Toolbar';
 import SettingsPage from './pages/input/SettingsPage';
+import MultiLoadPage from './pages/multiplayer/MultiLoadPage';
+import MultiGamePage from './pages/multiplayer/MultiGamePage';
+import MultiSettingPage from './pages/multiplayer/MultiSettingPage';
 
 
 /**
@@ -31,6 +34,10 @@ function App() {
             <Route path="/input/settings" element={<SettingsPage />} />
             <Route path="/input/generation" element={<GenerationPage />} />
             <Route path="/result" element={<GeneratedPlaylistPage />} />
+            
+            <Route path="/multi/settings" element={<MultiSettingPage />} />
+            <Route path="/multi/game" element={<MultiGamePage />} />
+            <Route path="/multi/load" element={<MultiLoadPage />} />
           </Routes>
         </Router>
       </div>
