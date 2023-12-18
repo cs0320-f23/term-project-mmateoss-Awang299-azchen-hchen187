@@ -5,6 +5,4 @@ package edu.brown.cs.student.main.server.audioRecognition.audioRecords.audioObjR
  *
  * @param results the results the model got when processing the audio
  */
-public record AudioObj(resultsObj results) {
-
-}
+public record AudioObj(resultsObj results) {}

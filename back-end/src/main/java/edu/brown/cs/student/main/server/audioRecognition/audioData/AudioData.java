@@ -5,17 +5,13 @@ import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Base64;
 
-/**
- * Class that does all the logic for the handler to be able to turn audio to text.
- */
-public class AudioData implements IAudioData{
+/** Class that does all the logic for the handler to be able to turn audio to text. */
+public class AudioData implements IAudioData {
 
   private AudioDataSource source;
 
-  /**
-   * Constructor for the AudioData class.
-   */
-  public AudioData(){
+  /** Constructor for the AudioData class. */
+  public AudioData() {
     this.source = new AudioDataSource();
   }
 
@@ -23,14 +19,13 @@ public class AudioData implements IAudioData{
    * Method called by the handler that turns the audio into Text.
    *
    * @param token API token for Deepgram, allowing us to use their model to turn audio to text and
-   *              detect different languages.
+   *     detect different languages.
    * @param encodedAudio the bytes of the audio file allowing for us to send it to the API
-   *
    * @return a String which is the translation of the audio to text
    */
   @Override
-  public String getTranslation(String token, String encodedAudio) throws
-      URISyntaxException, IOException, InterruptedException, IllegalStateException {
+  public String getTranslation(String token, String encodedAudio)
+      throws URISyntaxException, IOException, InterruptedException, IllegalStateException {
 
     byte[] bytes = this.getBytes(encodedAudio);
     AudioObj audioObj = this.source.getAudioText(token, bytes);
@@ -45,7 +40,7 @@ public class AudioData implements IAudioData{
    * @param encodedAudio the String that was passed into the handler for the audio
    * @return the byte array of the encodedAudio so that it can be passed into the api call.
    */
-  public byte[] getBytes(String encodedAudio){
+  public byte[] getBytes(String encodedAudio) {
 
     byte[] bytes = Base64.getDecoder().decode(encodedAudio);
 
@@ -56,18 +51,16 @@ public class AudioData implements IAudioData{
    * Method that extracts the Transcript from the audioObj returned by the Api call.
    *
    * @param audioObj audioObj returned by the api call and parse by moshi
-   *
    * @return the transcript of what was said in the audio.
    */
-  private String extractTranscript(AudioObj audioObj){
+  private String extractTranscript(AudioObj audioObj) {
 
-    if(audioObj.results().channels().size() > 0 && audioObj.results().channels().get(0).alternatives().size() > 0){
+    if (audioObj.results().channels().size() > 0
+        && audioObj.results().channels().get(0).alternatives().size() > 0) {
       String transcript = audioObj.results().channels().get(0).alternatives().get(0).transcript();
       return transcript;
-    }
-    else{
+    } else {
       throw new IllegalStateException();
     }
-
   }
 }

@@ -1,6 +1,9 @@
 package edu.brown.cs.student.main.server.translate.data;
 
+import edu.brown.cs.student.main.server.translate.records.TranslateResult;
+
 public interface ITranslateData {
 
-    public String getTranslation(String text, String fromLanguage, String toLanguage) throws Exception;
+  public TranslateResult getTranslation(String text, String fromLanguage, String toLanguage)
+      throws Exception;
 }

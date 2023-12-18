@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.server.spotify.data.mockedJsonSources;
 
-
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
@@ -9,23 +8,21 @@ import java.io.IOException;
 import java.io.Reader;
 
 /**
- * Class that servers as the main way of getting the data from the jsonfile. Parses it and turns
- * it into an object.
+ * Class that servers as the main way of getting the data from the jsonfile. Parses it and turns it
+ * into an object.
  */
 public class FeatureDataSource {
 
   /** Instance variables that are used throughout the class. */
   private Moshi moshi;
+
   private BufferedReader reader;
   private String line;
   private FeaturesProp json;
 
-
-  /**
-   * Constructor for JsonLoader object
-   */
-  public FeatureDataSource(Reader inputReader){
-    if(inputReader != null){
+  /** Constructor for JsonLoader object */
+  public FeatureDataSource(Reader inputReader) {
+    if (inputReader != null) {
       this.reader = new BufferedReader(inputReader);
       this.line = "";
     }
@@ -40,7 +37,7 @@ public class FeatureDataSource {
     String ourJson = "";
     this.line = this.reader.readLine();
 
-    while(this.line != null){
+    while (this.line != null) {
       ourJson += this.line;
       this.line = this.reader.readLine();
     }
@@ -56,11 +53,9 @@ public class FeatureDataSource {
    *
    * @return - object
    */
-  public FeaturesProp getJsonObj(){
+  public FeaturesProp getJsonObj() {
     // return a defensive copy
     FeaturesProp copy = this.json;
     return copy;
   }
-
-
 }

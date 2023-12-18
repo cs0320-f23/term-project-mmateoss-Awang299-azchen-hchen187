@@ -5,6 +5,4 @@ package edu.brown.cs.student.main.server.spotify.records.searchRecords;
  *
  * @param tracks all the information for the track that was searched for
  */
-public record Song(TracksProp tracks) {
-
-}
+public record Song(TracksProp tracks) {}

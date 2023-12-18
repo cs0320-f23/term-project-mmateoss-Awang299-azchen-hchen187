@@ -9,6 +9,4 @@ import java.util.List;
  * @param confidence how confident the model is in its prediction
  * @param words list of words that the model thinks it heard
  */
-public record AlternativeObj(String transcript, double confidence, List<WordObj> words) {
-
-}
+public record AlternativeObj(String transcript, double confidence, List<WordObj> words) {}

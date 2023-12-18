@@ -1,6 +1,5 @@
 package edu.brown.cs.student.main.server.audioRecognition.audioRecords.audioObjRecords;
 
-import edu.brown.cs.student.main.server.audioRecognition.audioRecords.audioObjRecords.ChannelObj;
 import java.util.List;
 
 /**
@@ -8,6 +7,4 @@ import java.util.List;
  *
  * @param channels object used to split the audio the model heard into different channels.
  */
-public record resultsObj(List<ChannelObj> channels) {
-
-}
+public record resultsObj(List<ChannelObj> channels) {}

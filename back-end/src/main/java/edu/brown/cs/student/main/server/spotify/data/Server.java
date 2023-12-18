@@ -65,13 +65,13 @@ public class Server {
     System.out.println("Server started at http://localhost:" + port);
 
     LibreTranslateData data1 = new LibreTranslateData();
-    try {
-      String res = data1.getTranslation("I am absolutely super cool", "en", "fr");
-      System.out.println(res);
-      System.out.println("done");
-    } catch (Exception e) {
-      System.out.println("Invalid BRUH");
-    }
+//    try {
+//      String res = data1.getTranslation("I am absolutely super cool", "en", "fr");
+//      System.out.println(res);
+//      System.out.println("done");
+//    } catch (Exception e) {
+//      System.out.println("Invalid BRUH");
+//    }
 
     // LyricsData data1 = new LyricsData();
     // try {
