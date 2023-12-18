@@ -4,18 +4,9 @@ import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
 
-import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
-import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
-import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
-import java.io.IOException;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
-
-import javax.swing.plaf.LayerUI;
 
 /**
  * Class that works as a proxy class for the data gotten from the spotify api.
@@ -23,9 +14,9 @@ import javax.swing.plaf.LayerUI;
 public class CachedLyricsData implements ILyricsData {
 
   private LyricsData data;
-  private LoadingCache<String, ArrayList<String[]>> cache;
+  private LoadingCache<String, ArrayList<String[]>> getLyricsCache;
 
-  private LoadingCache<String[], List<List<String>>> searchingSongCache;
+  private LoadingCache<String, Boolean> lyricsExistsCache;
 
   /**
    * Constructor for the CachedSpotifyData class. Serves as a proxy for the
@@ -37,44 +28,65 @@ public class CachedLyricsData implements ILyricsData {
     this.data = new LyricsData();
 
     // building the cache that will hold a song object for specific song names
-    this.cache = CacheBuilder.newBuilder()
+    this.getLyricsCache = CacheBuilder.newBuilder()
         .maximumSize(40)
         .expireAfterWrite(2, TimeUnit.MINUTES)
         .recordStats().build(
             new CacheLoader<String, ArrayList<String[]>>() {
 
               @Override
-              public ArrayList<String[]> load(String[] queries) throws Exception {
-                return this.data.getLyrics(trackID);
+              public ArrayList<String[]> load(String trackID) throws Exception {
+                try {
+                  return getLyricsWrapper(trackID);
+                } catch (Exception e) {
+                  // Caches error messages if lyrics aren't found
+                  ArrayList<String[]> res = new ArrayList<String[]>();
+                  String[] error = new String[] { e.getMessage() };
+                  res.add(error);
+                  return res;
+                }
               }
             });
 
-    // building the cache that will hold the list of list of strings for the search
-    // bar
-    this.searchingSongCache = CacheBuilder.newBuilder()
+    this.lyricsExistsCache = CacheBuilder.newBuilder()
         .maximumSize(40)
-        .expireAfterWrite(3, TimeUnit.MINUTES)
+        .expireAfterWrite(2, TimeUnit.MINUTES)
         .recordStats().build(
-            new CacheLoader<String[], List<List<String>>>() {
-              @Override
-              public List<List<String>> load(String[] queries) throws Exception {
-                String prompt = queries[0];
-                String limit = queries[1];
-                return buildGetSongsPrompts(prompt, limit);
-              }
-            }
+            new CacheLoader<String, Boolean>() {
 
-        );
+              @Override
+              public Boolean load(String trackID) throws Exception {
+                return lyricsExistWrapper(trackID);
+              }
+
+            });
 
   }
 
   @Override
   public ArrayList<String[]> getLyrics(String trackID) throws Exception {
-    return this.data.getLyrics(trackID);
+    ArrayList<String[]> res = this.getLyricsCache.get(trackID);
+    if (res.size() == 1 && res.get(0).length == 1) {
+      throw new Exception(res.get(0)[0]);
+    }
+    return res;
   }
 
   @Override
   public Boolean LyricsExist(String trackID) {
+    // If cache contains trackID as a key, return true
+    try {
+      return this.lyricsExistsCache.get(trackID);
+    } catch (ExecutionException e) {
+      return this.lyricsExistWrapper(trackID);
+    }
+  }
+
+  private ArrayList<String[]> getLyricsWrapper(String trackID) throws Exception {
+    return this.data.getLyrics(trackID);
+  }
+
+  private Boolean lyricsExistWrapper(String trackID) {
     return this.data.LyricsExist(trackID);
   }
 

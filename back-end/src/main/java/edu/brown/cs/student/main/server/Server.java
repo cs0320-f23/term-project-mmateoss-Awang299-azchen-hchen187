@@ -11,6 +11,8 @@ import edu.brown.cs.student.main.server.handlers.LyricsHandler;
 import edu.brown.cs.student.main.server.handlers.RecommendationHandler;
 import edu.brown.cs.student.main.server.handlers.ScoreHandler;
 import edu.brown.cs.student.main.server.handlers.TokenHandler;
+import edu.brown.cs.student.main.server.lyrics.data.CachedLyricsData;
+import edu.brown.cs.student.main.server.lyrics.data.ILyricsData;
 import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
@@ -45,7 +47,7 @@ public class Server {
     CachedSpotifyData data = new CachedSpotifyData();
     TokenGenerator generator = new TokenGenerator();
     AudioData audioData = new AudioData();
-    LyricsData lyricsData = new LyricsData();
+    ILyricsData lyricsData = new CachedLyricsData();
     LibreTranslateData translateData = new LibreTranslateData();
     MockTranslateData mockTranslateData = new MockTranslateData();
 
