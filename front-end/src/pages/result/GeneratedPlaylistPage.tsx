@@ -4,11 +4,11 @@ import NavButton from '../../components/button/NavButton';
 import PersonComponent from '../../components/home/PersonComponent';
 import { useAppContext } from '../../components/input/ContextProvider';
 import { recommendationOutputData } from '../../mock/MockedData';
-import { RecommendationOutputData, TrackInfo } from '../../components/interfaces/Interface';
 import GeneratedTrackComponent from '../../components/result/GeneratedTrackComponent';
 
 import './GeneratedPlaylistPage.css';
 import '../../components/home/Person.css';
+import { RecommendationOutputData, TrackInfo } from '../../components/interfaces/Interface';
 
 //async method to make backend api calls to get the recommended songs
 async function fetchSongs(selectedTrackTitle: string) : Promise<RecommendationOutputData> {
