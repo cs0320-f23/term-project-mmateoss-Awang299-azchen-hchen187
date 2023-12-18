@@ -7,3 +7,5 @@
 /.mvn
 /.mvn-classpath
 /pom.xml.bak
+
+*.class
