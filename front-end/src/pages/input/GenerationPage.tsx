@@ -11,7 +11,7 @@ import NavButton from "../../components/button/NavButton";
 const mockLyricsResponse: LyricLine[] = [
   {
     startTime: 16,
-    learningLyric: "She was all, that I could see",
+    learningLyric: "remember me me me me me me",
     nativeLyric: "Ella era todo, lo que podía ver",
   },
   {
@@ -70,15 +70,13 @@ function GenerationPage() {
 
     console.log("result", lyricsJson.Result);
     if (lyricsJson.Result) {
+      console.log("lyrics", lyricsJson.Message)
       const lyricsArr = lyricsJson.Message;
-      let songLyrics: LyricLine[] = [];
-      lyricsArr.map((lyric: string[]) =>
-        songLyrics.push({
-          startTime: parseInt(lyric[0]),
-          learningLyric: lyric[1],
-          nativeLyric: lyric[2],
-        })
-      );
+      let songLyrics: LyricLine[] = lyricsArr.map((lyric: string[]) => ({
+        startTime: parseInt(lyric[0], 10),
+        learningLyric: lyric[1],
+        nativeLyric: lyric[2],
+      }));
 
       setLyrics(songLyrics);
     } else {
@@ -99,40 +97,31 @@ function GenerationPage() {
     <div className="generation-page">
       <div className="generation-page-container">
         <div className="left">
-          <img
-            src={selectedTrack[3]}
-            alt="album cover"
-            style={{ height: "15rem", width: "15rem" }}
-          />
-          {/* <img
-            src="https://i.scdn.co/image/ab67616d00001e0238876c52ff708856ae680d7e"
-            alt="album cover"
-            style={{ height: "15rem", width: "15rem" }}
-          /> */}
+          <img src={selectedTrack[3]} alt="album cover" style={{ height: "15rem", width: "15rem" }} />
           <p>
             {selectedTrack[0]} - {selectedTrack[1]}
           </p>
           <div className="person-container-small">
-            <PersonComponent
-              handleHeadClick={() => {}}
-              headClicked={false}
-              disabledHover={true}
-            />
+            <div className="warning-message-container">Congrats, you've finished!</div>
+            <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true} />
           </div>
         </div>
-        <div className="middle">
-          <LyricsGame token={token} trackUri={mockTrackUri} lyrics={mockLyricsResponse} difficulty={"medium"} score={score} setScore={setScore} />
-          {/* {lyrics && <LyricsGame token={token} trackUri={trackUri} lyrics={lyrics} difficulty={difficulty} score={score} setScore={setScore} />} */}
+        <div className={`middle${!lyrics ? " middle-loading" : ""}`}>
+          {/* <LyricsGame
+            token={token}
+            trackUri={mockTrackUri}
+            lyrics={mockLyricsResponse}
+            difficulty={"medium"}
+            score={score}
+            setScore={setScore}
+          /> */}
+          {lyrics && <LyricsGame token={token} trackUri={trackUri} lyrics={lyrics} difficulty={difficulty} score={score} setScore={setScore} />}
+          {!lyrics && <h3 style={{ }}>Translating Song to {nativeLanguage}...</h3>}
         </div>
 
         <div className="right">
           <p>Score: {score} </p>
-          <NavButton
-            nextPage="/result"
-            displayedText="Leave"
-            proceedToNextPage={true}
-            onClickRejection={() => {}}
-          />
+          <NavButton nextPage="/result" displayedText="Leave" proceedToNextPage={true} onClickRejection={() => {}} />
         </div>
       </div>
     </div>

@@ -29,7 +29,7 @@ function App() {
             <Route path="/faq" element={<FAQPage />} />
             <Route path="/input/songs" element={<SongsPage />} />
             <Route path="/input/settings" element={<SettingsPage />} />
-            <Route path="/input/generation" element={<GenerationPage />} />
+            <Route path="/input/lyrics" element={<GenerationPage />} />
             <Route path="/result" element={<GeneratedPlaylistPage />} />
           </Routes>
         </Router>

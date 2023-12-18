@@ -21,7 +21,12 @@
     .middle {
       display: flex;
       align-items: flex-end;
+      justify-content: center;
       flex: 1;
+    }
+
+    .middle-loading {
+      align-items: center;
     }
 
     .right {
