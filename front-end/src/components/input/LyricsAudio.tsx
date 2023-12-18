@@ -57,6 +57,10 @@ export default function LyricsAudio() {
   
         const token = "a06f3c6571d5817664b8e771a11cb07116eddbe5";
         const uriString = "http://localhost:3232/audioText?token=" + token;
+        const headers: Record<string, string> = {
+            'Accept': 'application/json',
+            'Content-Type': 'audio/mpeg',
+          };
   
         // Create a FormData object and append the audio file
         const formData = new FormData();
@@ -66,9 +70,7 @@ export default function LyricsAudio() {
         fetch(uriString, {
           method: "POST",
           body: formData,
-          headers: {
-            Accept: "application/json",
-          },
+          headers: headers,
         })
           .then((response) => response.json())
           .then((data) => {
