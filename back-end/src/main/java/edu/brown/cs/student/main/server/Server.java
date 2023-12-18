@@ -59,7 +59,7 @@ public class Server {
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
     Spark.post("audioText", new AudioTextHandler(audioData));
-    Spark.get("getLyrics", new LyricsHandler(lyricsData, mockTranslateData));
+    Spark.get("getLyrics", new LyricsHandler(lyricsData, azureTranslateData));
     Spark.get("getScore", new ScoreHandler(lyricsData));
 
     Spark.init();

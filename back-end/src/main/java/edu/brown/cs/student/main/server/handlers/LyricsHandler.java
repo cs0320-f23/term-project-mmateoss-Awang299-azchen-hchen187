@@ -66,12 +66,12 @@ public class LyricsHandler implements Route {
             toLanguage = toLanguage.toLowerCase();
 
             // Testing purposes
-            // AzureTranslateData data = new AzureTranslateData();
-            // System.out.println("fromLanguage: " +
-            // data.getLanguageCode(fromLanguage).code());
-            // System.out.println("before toLanguage: " + toLanguage);
-            // System.out.println("after toLanguage: " +
-            // data.getLanguageCode(toLanguage).code());
+             AzureTranslateData data = new AzureTranslateData();
+             System.out.println("fromLanguage: " +
+             data.getLanguageCode(fromLanguage).code());
+             System.out.println("before toLanguage: " + toLanguage);
+             System.out.println("after toLanguage: " +
+             data.getLanguageCode(toLanguage).code());
 
             int count = 0;
             ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics(spotifyTrackID);
@@ -103,7 +103,7 @@ public class LyricsHandler implements Route {
                 }
                 count += line[1].length();
                 line[2] = this.translateData
-                        .getTranslation(line[1].trim(), fromLanguage, toLanguage)
+                        .getTranslation(line[1].replaceAll("\"", "").replace("\'", ""), fromLanguage, toLanguage)
                         .translatedText();
             }
             // defaultLyrics.get(0)[2] =
@@ -116,6 +116,7 @@ public class LyricsHandler implements Route {
 
         } catch (Exception e) {
             responseMap.put("Result", "Error");
+            e.printStackTrace();
             responseMap.put("Message", e.getMessage());
             return moshi.adapter(Map.class).toJson(responseMap);
         }
