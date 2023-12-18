@@ -18,6 +18,7 @@ function HomePage() {
     //method to handle navigating to the next page when head is clicked
     const handleHeadClick = () => {
       setAnimate(true);
+      setHovered(false);
       setTimeout(() => {
           setAnimate(false);
           setHeadClicked(true);
