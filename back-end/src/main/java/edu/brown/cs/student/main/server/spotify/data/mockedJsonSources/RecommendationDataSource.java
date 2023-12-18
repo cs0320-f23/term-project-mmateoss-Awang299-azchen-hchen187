@@ -11,16 +11,14 @@ public class RecommendationDataSource {
 
   /** Instance variables that are used throughout the class. */
   private Moshi moshi;
+
   private BufferedReader reader;
   private String line;
   private Recommendation json;
 
-
-  /**
-   * Constructor for JsonLoader object
-   */
-  public RecommendationDataSource(Reader inputReader){
-    if(inputReader != null){
+  /** Constructor for JsonLoader object */
+  public RecommendationDataSource(Reader inputReader) {
+    if (inputReader != null) {
       this.reader = new BufferedReader(inputReader);
       this.line = "";
     }
@@ -35,7 +33,7 @@ public class RecommendationDataSource {
     String ourJson = "";
     this.line = this.reader.readLine();
 
-    while(this.line != null){
+    while (this.line != null) {
       ourJson += this.line;
       this.line = this.reader.readLine();
     }
@@ -51,14 +49,9 @@ public class RecommendationDataSource {
    *
    * @return - object
    */
-  public Recommendation getJsonObj(){
+  public Recommendation getJsonObj() {
     // return a defensive copy
     Recommendation copy = this.json;
     return copy;
   }
-
-
-
-
-
 }

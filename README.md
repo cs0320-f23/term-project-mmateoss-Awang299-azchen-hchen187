@@ -151,15 +151,19 @@ Then, follow the directions that the web app poses in order to use it as intende
 
 ### Just the server
 
-To start the server, navigate in the backend to the server file and in IntelliJ or your development IDE, run the server file. In IntelliJ this is pressing the green arrow at the top of the class, right above where the class declaration is or the green arrow to the left of the class declaration. Once the server is running, you can use the frontend as intended as it will be able to make API calls to the backend in order to get the needed information to function as intended. Additionally, please ensure that you enter the correct API client secret and id to your web-pp in the token generator class in order for certain parts to be able to connect with the Spotify API correctly.
+To start the server, navigate in the backend to the server file and in IntelliJ or your development IDE, run the server file. In IntelliJ this is pressing the green arrow at the top of the class, right above where the class declaration is or the green arrow to the left of the class declaration. Once the server is running, you can use the frontend as intended as it will be able to make API calls to the backend in order to get the needed information to function as intended. Additionally, please ensure that you enter the correct API client secret, id, and an azure translation key in a .env file in the source of your backend so that it will be stored safely while also being accessible to all the methods of the server. Lastly, if you want to use the free libretranslate method instead of having an azure key, please make sure to run:
+    pip install libretranslate
+so that it will work, and to turn that server on with the command: 
+    libretranslate
+Additioanlly, in the server class you would have to swap out the translation object that is being passed in to the lyrics handler to be one for he libretranslation.
 
 ## Accessibility 
 
     . We paid attention to accessibility when working on this project. Some specific choices that we implemented are the following:
-        .
-
-        .
-
-        .
-
-        .
+        
+        . Users can click tab to move between different sections of the page.
+        . The character with eyes follows the mouse so that the user will
+        know where their mouse is at all times
+        . We accept multiple languages to accomodate learners from all over the world and wanting to learn a variety of languages.
+        . We display the lyrics in the native language of the user in case they are just starting out, they can still use the webapp.
+        . Another reason to display the lyrics is to ensure that people who might have some trouble with hearing, can still participate and use the app to learn the language.

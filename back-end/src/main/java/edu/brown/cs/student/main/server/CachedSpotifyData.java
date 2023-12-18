@@ -1,10 +1,8 @@
 package edu.brown.cs.student.main.server;
 
-import com.beust.ah.A;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 import com.google.common.cache.LoadingCache;
-
 import edu.brown.cs.student.main.server.spotify.data.IData;
 import edu.brown.cs.student.main.server.spotify.data.SpotifyData;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
@@ -18,9 +16,7 @@ import java.util.Random;
 import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
 
-/**
- * Class that works as a proxy class for the data gotten from the spotify api.
- */
+/** Class that works as a proxy class for the data gotten from the spotify api. */
 public class CachedSpotifyData implements IData {
 
   private SpotifyData data;
@@ -30,43 +26,42 @@ public class CachedSpotifyData implements IData {
   private LoadingCache<String[], List<List<String>>> searchingSongCache;
 
   /**
-   * Constructor for the CachedSpotifyData class. Serves as a proxy for the
-   * Spotify Data class
-   * allowing us to cache the data, increasing performance and reducing number of
-   * API calls.
+   * Constructor for the CachedSpotifyData class. Serves as a proxy for the Spotify Data class
+   * allowing us to cache the data, increasing performance and reducing number of API calls.
    */
   public CachedSpotifyData() {
     this.data = new SpotifyData();
 
     // building the cache that will hold a song object for specific song names
-    this.songCache = CacheBuilder.newBuilder()
-        .maximumSize(40)
-        .expireAfterWrite(2, TimeUnit.MINUTES)
-        .recordStats().build(
-            new CacheLoader<String, Song>() {
-              @Override
-              public Song load(String songName) throws Exception {
+    this.songCache =
+        CacheBuilder.newBuilder()
+            .maximumSize(40)
+            .expireAfterWrite(2, TimeUnit.MINUTES)
+            .recordStats()
+            .build(
+                new CacheLoader<String, Song>() {
+                  @Override
+                  public Song load(String songName) throws Exception {
 
-                return getSong(songName);
-              }
-            });
+                    return getSong(songName);
+                  }
+                });
 
     // building the cache that will hold the list of list of strings for the search bar
-    this.searchingSongCache = CacheBuilder.newBuilder()
-        .maximumSize(40)
-        .expireAfterWrite(3, TimeUnit.MINUTES)
-        .recordStats().build(
-            new CacheLoader<String[], List<List<String>>>() {
-              @Override
-              public List<List<String>> load(String[] queries) throws Exception {
-                String prompt = queries[0];
-                String limit = queries[1];
-                return buildGetSongsPrompts(prompt,limit);
-              }
-            }
-
-        );
-
+    this.searchingSongCache =
+        CacheBuilder.newBuilder()
+            .maximumSize(40)
+            .expireAfterWrite(3, TimeUnit.MINUTES)
+            .recordStats()
+            .build(
+                new CacheLoader<String[], List<List<String>>>() {
+                  @Override
+                  public List<List<String>> load(String[] queries) throws Exception {
+                    String prompt = queries[0];
+                    String limit = queries[1];
+                    return buildGetSongsPrompts(prompt, limit);
+                  }
+                });
   }
 
   /**
@@ -86,26 +81,22 @@ public class CachedSpotifyData implements IData {
 
   /**
    * Method that gets a song object based on the name of the song.
-   * 
+   *
    * @param songName the name of the song
-   *
    * @return Spotify object for the name of the song
-   *
-   * @throws URISyntaxException   exception where URI syntax is incorrect.
-   * @throws IOException          exception where it failed to read/open
-   *                              information.
-   * @throws InterruptedException exception where connection to API is
-   *                              interrupted.
-   *
+   * @throws URISyntaxException exception where URI syntax is incorrect.
+   * @throws IOException exception where it failed to read/open information.
+   * @throws InterruptedException exception where connection to API is interrupted.
    */
   @Override
-  public Song getSong(String songName) throws URISyntaxException, IOException, InterruptedException {
+  public Song getSong(String songName)
+      throws URISyntaxException, IOException, InterruptedException {
     return this.data.getSong(this.token, songName);
   }
 
   /**
-   * Method that generates the values needed to generate recommendation
-   * based on the metadata for the songs passed in.
+   * Method that generates the values needed to generate recommendation based on the metadata for
+   * the songs passed in.
    *
    * @return a string array containing all the values needed.
    */
@@ -222,44 +213,60 @@ public class CachedSpotifyData implements IData {
   }
 
   /**
-   * Method that generates a recommendation based on all the metadata points
-   * inputted.
+   * Method that generates a recommendation based on all the metadata points inputted.
    *
-   * @param limit            max number of recommended songs
+   * @param limit max number of recommended songs
    * @param max_acousticness max acousticness of songs recommended
    * @param min_acousticness min acousticness of songs recommended
    * @param max_danceability max dancability of songs recommended
-   * @param max_energy       max energy of songs recommended
-   * @param max_speechiness  max speechiness of songs reccomended
-   * @param max_valence      max valence of songs recommended
+   * @param max_energy max energy of songs recommended
+   * @param max_speechiness max speechiness of songs reccomended
+   * @param max_valence max valence of songs recommended
    * @param min_danceability min dancability of songs recommended
-   * @param min_energy       min energy of songs recommended
-   * @param min_speechiness  min speechiness of songs recommended
-   * @param min_valence      min valence of songs recommended
-   * @param seed_tracks      seed_tracks of songs recommended
+   * @param min_energy min energy of songs recommended
+   * @param min_speechiness min speechiness of songs recommended
+   * @param min_valence min valence of songs recommended
+   * @param seed_tracks seed_tracks of songs recommended
    * @return a recommendation object.
-   * @throws URISyntaxException   exception where URI syntax is incorrect.
-   * @throws IOException          exception where it failed to read/open
-   *                              information.
-   * @throws InterruptedException exception where connection to API is
-   *                              interrupted.
+   * @throws URISyntaxException exception where URI syntax is incorrect.
+   * @throws IOException exception where it failed to read/open information.
+   * @throws InterruptedException exception where connection to API is interrupted.
    */
-  private Recommendation generateRecommendation(String limit, String seed_tracks,
-      String min_acousticness, String max_acousticness, String min_danceability,
-      String max_danceability, String min_energy, String max_energy,
-      String min_speechiness, String max_speechiness, String min_valence,
-      String max_valence) throws InterruptedException, IOException, URISyntaxException {
+  private Recommendation generateRecommendation(
+      String limit,
+      String seed_tracks,
+      String min_acousticness,
+      String max_acousticness,
+      String min_danceability,
+      String max_danceability,
+      String min_energy,
+      String max_energy,
+      String min_speechiness,
+      String max_speechiness,
+      String min_valence,
+      String max_valence)
+      throws InterruptedException, IOException, URISyntaxException {
 
-    Recommendation rec = this.data.getRecommendation(this.token, limit, seed_tracks,
-        min_acousticness, max_acousticness, min_danceability, max_danceability, min_energy,
-        max_energy, min_speechiness, max_speechiness, min_valence, max_valence);
+    Recommendation rec =
+        this.data.getRecommendation(
+            this.token,
+            limit,
+            seed_tracks,
+            min_acousticness,
+            max_acousticness,
+            min_danceability,
+            max_danceability,
+            min_energy,
+            max_energy,
+            min_speechiness,
+            max_speechiness,
+            min_valence,
+            max_valence);
     return rec;
   }
 
   /**
-   * Method called by the server to get a recommendation based on the passed in
-   * Array of
-   * song names.
+   * Method called by the server to get a recommendation based on the passed in Array of song names.
    *
    * @param limit
    * @param allNames
@@ -273,29 +280,36 @@ public class CachedSpotifyData implements IData {
     FeaturesProp feats = this.getFeatures(allNames);
     String[] values = this.generateValues(feats, variability);
 
-    Recommendation rec = this.generateRecommendation(limit, values[10], values[0], values[1],
-        values[2], values[3], values[4], values[5], values[6], values[7], values[8], values[9]);
+    Recommendation rec =
+        this.generateRecommendation(
+            limit,
+            values[10],
+            values[0],
+            values[1],
+            values[2],
+            values[3],
+            values[4],
+            values[5],
+            values[6],
+            values[7],
+            values[8],
+            values[9]);
 
     return rec;
   }
 
   /**
-   * Helper method that gets all the song ids and puts them into a string in order
-   * for getFeatures
+   * Helper method that gets all the song ids and puts them into a string in order for getFeatures
    * to get all the features for the songs.
    *
    * @param allNames String or List<String> that contains all the names of the
-   * @return a string that is comma separated, containing all the track ids for
-   *         the songs
-   * @throws URISyntaxException   exception where URI syntax is incorrect.
-   * @throws IOException          exception where it failed to read/open
-   *                              information.
-   * @throws InterruptedException exception where connection to API is
-   *                              interrupted.
-   *
+   * @return a string that is comma separated, containing all the track ids for the songs
+   * @throws URISyntaxException exception where URI syntax is incorrect.
+   * @throws IOException exception where it failed to read/open information.
+   * @throws InterruptedException exception where connection to API is interrupted.
    */
-  private String getSongIds(String[] allNames) throws URISyntaxException, IOException,
-      InterruptedException, ExecutionException {
+  private String getSongIds(String[] allNames)
+      throws URISyntaxException, IOException, InterruptedException, ExecutionException {
 
     // creating our final string to store all our ids
     String ids = "";
@@ -324,9 +338,7 @@ public class CachedSpotifyData implements IData {
    * Method the gets a feature object containing info for all the songs.
    *
    * @param allNames array containing the names of all the songs inputted.
-   *
    * @return a featureProp object containing features for each song
-   *
    * @throws Exception
    */
   @Override
@@ -338,9 +350,7 @@ public class CachedSpotifyData implements IData {
     // making an api request and returning the corresponding Feature
     FeaturesProp feat = this.data.getFeatures(this.token, songIds);
     return feat;
-
   }
-
 
   /**
    * Method used to get song objects and needed information for search bar based on any prompt
@@ -348,18 +358,14 @@ public class CachedSpotifyData implements IData {
    *
    * @param prompt what is being searched
    * @param limit max number of songs returned
-   *
    * @return List of list of strings containing all the needed information
-   *
-   * @throws URISyntaxException   exception where URI syntax is incorrect.
-   * @throws IOException          exception where it failed to read/open
-   *                              information.
-   * @throws InterruptedException exception where connection to API is
-   *                              interrupted.
+   * @throws URISyntaxException exception where URI syntax is incorrect.
+   * @throws IOException exception where it failed to read/open information.
+   * @throws InterruptedException exception where connection to API is interrupted.
    */
   @Override
-  public List<List<String>> getSongsPrompt(String prompt, String limit) throws
-      URISyntaxException, IOException, InterruptedException, ExecutionException {
+  public List<List<String>> getSongsPrompt(String prompt, String limit)
+      throws URISyntaxException, IOException, InterruptedException, ExecutionException {
 
     String[] input = new String[2];
     input[0] = prompt;
@@ -372,20 +378,16 @@ public class CachedSpotifyData implements IData {
    *
    * @param prompt what the songs gotten will be based off of
    * @param limit the max number of songs returned
-   *
    * @return List of list of strings containing all the needed information
-   *
-   * @throws URISyntaxException   exception where URI syntax is incorrect.
-   * @throws IOException          exception where it failed to read/open
-   *                              information.
-   * @throws InterruptedException exception where connection to API is
-   *                              interrupted.
+   * @throws URISyntaxException exception where URI syntax is incorrect.
+   * @throws IOException exception where it failed to read/open information.
+   * @throws InterruptedException exception where connection to API is interrupted.
    */
-  private List<List<String>> buildGetSongsPrompts(String prompt, String limit)  throws
-      URISyntaxException, IOException, InterruptedException{
+  private List<List<String>> buildGetSongsPrompts(String prompt, String limit)
+      throws URISyntaxException, IOException, InterruptedException {
     Song songs = this.data.getSongKeywords(this.token, prompt, limit);
     List<List<String>> toReturn = new ArrayList<>();
-    for(int i =0; i<songs.tracks().items().size();i++){
+    for (int i = 0; i < songs.tracks().items().size(); i++) {
       List<String> innerList = new ArrayList<>();
       innerList.add(songs.tracks().items().get(i).name());
       innerList.add(songs.tracks().items().get(i).artists().get(0).name());
@@ -400,26 +402,26 @@ public class CachedSpotifyData implements IData {
 
   /**
    * Method that removes the same song from the recommendation
+   *
    * @param rec recommendation object to be processed
    * @param names names of the songs inputted.
    * @return processed recommendation object
    */
   @Override
-  public Recommendation postProcess(Recommendation rec, String[] names){
-    for(int i =0; i<names.length; i++){
+  public Recommendation postProcess(Recommendation rec, String[] names) {
+    for (int i = 0; i < names.length; i++) {
       String name = names[i];
       name = name.replaceAll("%26", "&");
       name = name.replaceAll("%20", " ");
       name = name.replaceAll("%28", "(");
       name = name.replaceAll("%29", ")");
       name = name.replaceAll("\\+", " ");
-      for(int j=0;j<rec.tracks().size();j++){
-        if(name.equals(rec.tracks().get(j).name())){
+      for (int j = 0; j < rec.tracks().size(); j++) {
+        if (name.equals(rec.tracks().get(j).name())) {
           rec.tracks().remove(rec.tracks().get(j));
         }
       }
     }
     return rec;
   }
-
 }

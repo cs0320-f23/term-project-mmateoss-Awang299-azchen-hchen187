@@ -62,16 +62,6 @@
       <version>RELEASE</version>
       <scope>compile</scope>
     </dependency>
-
-    <!--
-           JUnit is a unit testing library for Java.
-    -->
-    <dependency>
-      <groupId>org.junit.jupiter</groupId>
-      <artifactId>junit-jupiter-engine</artifactId>
-      <version>5.4.0</version>
-      <scope>test</scope>
-    </dependency>
     <!--
            Guava Caching library
     -->
@@ -85,6 +75,16 @@
       <groupId>io.github.cdimascio</groupId>
       <artifactId>dotenv-java</artifactId>
       <version>3.0.0</version>
+    </dependency>
+
+    <!--
+           JUnit is a unit testing library for Java.
+    -->
+    <dependency>
+      <groupId>org.junit.jupiter</groupId>
+      <artifactId>junit-jupiter-engine</artifactId>
+      <version>5.4.0</version>
+      <scope>test</scope>
     </dependency>
 
   </dependencies>

@@ -7,6 +7,4 @@ import java.util.List;
  *
  * @param images list of images for the album corresponding to the song
  */
-public record AlbumRec(List<ImageRec> images) {
-
-}
+public record AlbumRec(List<ImageRec> images) {}
