@@ -192,7 +192,14 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   };
 
   return (
+<<<<<<< HEAD
     <div className="lyrics-game" style={{ justifyContent: gameOver ? "flex-start" : "" }}>
+=======
+    <div
+      className="lyrics-game"
+      style={{ justifyContent: gameOver ? "flex-start" : "" }}
+    >
+>>>>>>> eb32426bfa6ffe0bb88aa0657d7bd9fb2b0a56db
       <h2>Fill In the Lyric</h2>
       {!gameOver && (
         <div className="game">
@@ -226,9 +233,13 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
           </div>
         </div>
       )}
+<<<<<<< HEAD
       {gameOver && <>
         <LyricsHistory history={history} result={true} />
       </>}
+=======
+      {gameOver && <LyricsHistory history={history} result={true} />}
+>>>>>>> eb32426bfa6ffe0bb88aa0657d7bd9fb2b0a56db
     </div>
   );
 }
