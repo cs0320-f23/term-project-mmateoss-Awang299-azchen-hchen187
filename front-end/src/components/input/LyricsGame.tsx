@@ -121,7 +121,6 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
     const beginning = lyric.substring(0, answerIdx);
     const end = lyric.substring(answerIdx + newAnswer.length);
 
-    console.log({ beginning, answer: newAnswer, end });
     setCurrentGameLyric({ beginning, answer: newAnswer, end });
     setAnswer(newAnswer);
   };
@@ -136,11 +135,12 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
     // update history + score
     let newHistoryLyric: HistoryLyric;
     if (cleanString(userGuess) === cleanString(answer)) {
-      setScore((prevScore: number) => prevScore + answer.length);
-      // const points  = await calculateScore(newAttempts)
-      // if (points) {
-      //   setScore((prevScore) => prevScore + points)
-      // }
+      // setScore((prevScore: number) => prevScore + answer.length);
+      const points  = await calculateScore()
+      console.log("points", points)
+      if (points) {
+        setScore((prevScore) => prevScore + points)
+      }
 
       newHistoryLyric = { lyric: currentGameLyric, userGuess: answer, correct: true };
     } else {
@@ -178,13 +178,16 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
     setUserGuess("");
   };
 
-  const calculateScore = async (attempts: number) => {
+  const calculateScore = async () => {
+    console.log("inside score")
+    console.log("selected", selectedTrack[2])
     const scoreObject = await fetch(
-      `http://localhost:3232/getScore?spotifyID=${selectedTrack[2]}&correctWord=${answer}&guessWord=${userGuess}`
+      `http://localhost:3232/getScore?spotifyID=${selectedTrack[2]}&correctWord=${answer}&guessWord=${userGuess}&line=${lyricNumber}`
     );
     const scoreJson = await scoreObject.json();
-    if (scoreJson.result) {
-      return parseInt(scoreJson.message);
+    console.log(scoreJson.Message)
+    if (scoreJson.Result) {
+      return Math.floor(parseFloat(scoreJson.Message));
     } else {
       console.log("incorrect score");
     }
