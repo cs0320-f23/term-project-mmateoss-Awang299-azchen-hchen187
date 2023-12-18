@@ -9,7 +9,7 @@ import AboutPage from './pages/home/AboutPage';
 import FAQPage from './pages/home/FAQPage';
 
 import './App.css';
-import Toolbar from './components/Toolbar/Toolbar';
+import Toolbar from './components/toolbar/Toolbar';
 import SettingsPage from './pages/input/SettingsPage';
 
 

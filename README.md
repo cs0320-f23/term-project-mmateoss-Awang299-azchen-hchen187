@@ -69,11 +69,11 @@ This project is split into two directories: the frontend and the backend. The fr
     . The front-end has as lot of working components and parts. We did this to give our users the best experience possible and make
     the website as visually appealing as possible. The users follow a specific flow from page to page of the frontend that work together to build the project. 
 
-        .
+        . There are multiple pages that define the flow of the project. Users interact with on page and then after doing all the functionality needed for that page, are redirected to the next page in the sequence. There are CSS files that contain all the styling for those pages.
 
-        .
+        . Shared componenets across pages are stored in separate files and accessed by those pages. There are also other files that create the functionalities and make API calls for certain things, allowing us to have the frontend work with our backend.
 
-        .
+        . Everything is divided into files and packages based on what they do and are related to.
 
 
 ### Back-End
@@ -167,3 +167,4 @@ Additioanlly, in the server class you would have to swap out the translation obj
         . We accept multiple languages to accomodate learners from all over the world and wanting to learn a variety of languages.
         . We display the lyrics in the native language of the user in case they are just starting out, they can still use the webapp.
         . Another reason to display the lyrics is to ensure that people who might have some trouble with hearing, can still participate and use the app to learn the language.
+        . We chose to use contrasting colors so that is high visibility for people who have trouble discerning between colors.

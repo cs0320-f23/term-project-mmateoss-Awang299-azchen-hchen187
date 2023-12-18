@@ -114,7 +114,7 @@ public class LyricsData implements ILyricsData {
   /**
    * Obtains and parses LineObj object into the desired String[]
    *
-   * @param LineObj representing a line of LRC
+   * @param line representing a line of LRC
    * @return String[3] representing [timestamp in seconds, lyrics]
    * @throws Exception
    */

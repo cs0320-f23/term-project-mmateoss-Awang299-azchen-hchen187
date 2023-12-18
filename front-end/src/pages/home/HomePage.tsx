@@ -16,6 +16,7 @@ function HomePage() {
     const navigate = useNavigate();
     const [animate, setAnimate] = useState<boolean>(false);
     const [headClicked, setHeadClicked] = useState<boolean>(false);
+    const [hovered, setHovered] = useState(false);
     const transition = {duration: 1, ease: [0.43, 0.13, 0.23, 0.96]}
     
     //method to handle navigating to the next page when head is clicked
@@ -48,27 +49,47 @@ function HomePage() {
     return (
       <>
         <div className="home-page">
-          <motion.div exit={{ opacity: 0 }} transition={transition} className="main-container">
+          <motion.div
+            exit={{ opacity: 0 }}
+            transition={transition}
+            className="main-container"
+          >
             <div className="filler-container"></div>
             <LineAnimationComponent startAnimation={animate} />
             <div className="person-container">
-              <motion.div key="text-container" exit={{ opacity: 0 }} transition={transition} className="text-container">
+              <motion.div
+                key="text-container"
+                exit={{ opacity: 0 }}
+                transition={transition}
+                className="text-container"
+              >
                 <div className="text-bottom">
-                  this is a super cool website
+                  SpotiDuo:
                   <br></br>
-                  blah blah blah blah blah balh blah blah blah
+                  Type the Beat,
                   <br></br>
-                  yeet
+                  Speak the Language!
                 </div>
               </motion.div>
+
               <motion.div
+                onHoverStart={() => setHovered(true)}
+                onHoverEnd={() => setHovered(false)}
                 initial={{ scale: 1 }}
                 transition={{ duration: 0.75 }}
                 animate={animateStyle}
                 className="expanded-container"
               >
-                <PersonComponent handleHeadClick={handleHeadClick} headClicked={headClicked} disabledHover={false}/>
+                <PersonComponent
+                  handleHeadClick={handleHeadClick}
+                  headClicked={headClicked}
+                  disabledHover={false}
+                />
               </motion.div>
+
+              <div className={hovered ? "click-me-container-populated" : "click-me-container-empty"}>
+                Click me!
+              </div>
             </div>
           </motion.div>
         </div>
