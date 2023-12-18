@@ -19,7 +19,8 @@ import edu.brown.cs.student.main.server.translate.mockedData.MockTranslateData;
 import spark.Spark;
 
 /**
- * Top-level class for the server. Contains the main() method which starts Spark and runs the
+ * Top-level class for the server. Contains the main() method which starts Spark
+ * and runs the
  * various handlers. We have four endpoints.
  */
 public class Server {
@@ -58,7 +59,7 @@ public class Server {
     Spark.get("addInputSongs", new AddInputSongsHandler());
     Spark.get("addDislikedSongs", new AddDislikedSongsHandler());
     Spark.post("audioText", new AudioTextHandler(audioData));
-    Spark.get("getLyrics", new LyricsHandler(lyricsData, azureTranslateData));
+    Spark.get("getLyrics", new LyricsHandler(lyricsData, mockTranslateData));
     Spark.get("getScore", new ScoreHandler(lyricsData));
 
     Spark.init();
@@ -67,7 +68,7 @@ public class Server {
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
 
-    // ureTranslateData data3 = new AzureTranslateData();
+    // AzureTranslateData data3 = new AzureTranslateData();
     //
     //
     // String res = data3.getTranslation("I just want to get high with my lover?",

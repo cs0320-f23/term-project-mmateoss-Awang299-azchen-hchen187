@@ -1,6 +1,8 @@
 package edu.brown.cs.student.main.server.translate.mockedData;
 
+import edu.brown.cs.student.main.server.translate.LanguageNotSupportedException;
 import edu.brown.cs.student.main.server.translate.data.ITranslateData;
+import edu.brown.cs.student.main.server.translate.records.LanguageCode;
 import edu.brown.cs.student.main.server.translate.records.TranslateResult;
 import java.util.HashMap;
 import java.util.Map;
@@ -35,5 +37,15 @@ public class MockTranslateData implements ITranslateData {
     wordMap.put("Aha-ha-ha-ha-ha", "Aha-ha-ha-ha-ha");
     wordMap.put("", "");
     return new TranslateResult(wordMap.get(text), fromLanguage);
+  }
+
+  @Override
+  public LanguageCode getLanguageCode(String language) throws LanguageNotSupportedException {
+    if (language.equals("spanish")) {
+      return new LanguageCode(language, "es");
+    } else if (language.equals("english")) {
+      return new LanguageCode(language, "en");
+    }
+    throw new LanguageNotSupportedException("Language not supported");
   }
 }
