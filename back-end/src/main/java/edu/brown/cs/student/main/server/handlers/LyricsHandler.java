@@ -65,6 +65,7 @@ public class LyricsHandler implements Route {
             }
             toLanguage = this.getLanguageCode(toLanguage);
             System.out.println("fromLanguage: " + fromLanguage);
+            System.out.println("toLanguage: " + toLanguage);
             int count = 0;
             ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics(spotifyTrackID);
             // StringBuilder superLine = new StringBuilder("");
@@ -117,12 +118,21 @@ public class LyricsHandler implements Route {
      */
     private String getLanguageCode(String language) throws Exception {
         Locale[] locales = Locale.getAvailableLocales();
+        String res = null;
+        System.out.println("Start");
         for (Locale locale : locales) {
             if (language.equalsIgnoreCase(locale.getDisplayLanguage())) {
-                return locale.getLanguage();
+                if (res == null) {
+                    res = locale.toLanguageTag();
+                    // getLanguage();
+                }
+                System.out.println(locale.toLanguageTag());
             }
         }
-        throw new Exception("language doesn't exist");
+        if (res != null) {
+            return res;
+        }
+        throw new Exception("language's ISO 639-1 code doesn't exist");
     }
 
 }

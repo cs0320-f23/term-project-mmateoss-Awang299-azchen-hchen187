@@ -31,6 +31,9 @@ public class MockTranslateData implements ITranslateData {
         wordMap.put("SpongeBob SquarePants", "Bob Esponja");
         wordMap.put("Aha-ha-ha-ha-ha", "Aha-ha-ha-ha-ha");
         wordMap.put("", "");
+        if (wordMap.get(text) == null) {
+            return new TranslateResult(text, fromLanguage);
+        }
         return new TranslateResult(wordMap.get(text), fromLanguage);
 
     }

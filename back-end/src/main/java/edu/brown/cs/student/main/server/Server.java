@@ -54,7 +54,7 @@ public class Server {
     ILyricsData lyricsData = new CachedLyricsData();
 
     // Create priority list of available APIs
-    // Developer can add, delete, or cutomize Translation API ordering below
+    // Developer can add, delete, or customize Translation API ordering below
     // --------------------------------------------------------------------------------------
     ArrayList<ITranslateData> translateDataList = new ArrayList<ITranslateData>();
     translateDataList.add(new MockTranslateData());
