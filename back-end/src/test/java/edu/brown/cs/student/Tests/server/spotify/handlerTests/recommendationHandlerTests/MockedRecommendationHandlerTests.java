@@ -14,6 +14,7 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.junit.jupiter.api.AfterEach;
@@ -338,6 +339,41 @@ public class MockedRecommendationHandlerTests {
     // Assert.assertEquals(responseBody.get("Message").size(), 5);
     // Assert.assertEquals(responseBody.tracks().get(0).id(),
     // "5N9M7Ji7KYrmfJ6Jki3raU");
+
+  }
+
+
+  /**
+   * Method that repeats the calls with randomized limit should not crash even if its
+   * out of bounds
+   */
+  @Test
+  public void fuzzTest() throws Exception{
+
+    Map<String, String> queryParams = new HashMap<>();
+
+    for(int i=0; i<100;i++){
+
+      Random rand = new Random();
+      int randInt = rand.nextInt(150);
+      String lim = String.valueOf(randInt);
+      queryParams.put("token", "dsdsds");
+      queryParams.put("variability", "0.2");
+      queryParams.put("limit", lim);
+
+      // missing names
+      String allNames = "&allNames=";
+      allNames += "Enchanted";
+      allNames += "&allNames=All%20too%20well";
+
+      HttpResponse<String> response = tryRequest("recommendation", queryParams, allNames);
+
+      Moshi moshi = new Moshi.Builder().build();
+
+      JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
+      Recommendation responseBody = jsonAdapter.fromJson(response.body());
+    }
+
 
   }
 }
