@@ -1,17 +1,14 @@
-import React, { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-import NavButton from "../../components/button/NavButton";
-import PersonComponent from "../../components/home/PersonComponent";
-import { useAppContext } from "../../components/input/ContextProvider";
-import { recommendationOutputData } from "../../mock/MockedData";
-import {
-  RecommendationOutputData,
-  TrackInfo,
-} from "../../components/interfaces/Interface";
-import GeneratedTrackComponent from "../../components/result/GeneratedTrackComponent";
+import React, { useEffect, useState } from 'react'
+import { motion } from 'framer-motion';
+import NavButton from '../../components/button/NavButton';
+import PersonComponent from '../../components/home/PersonComponent';
+import { useAppContext } from '../../components/input/ContextProvider';
+import { recommendationOutputData } from '../../mock/MockedData';
+import GeneratedTrackComponent from '../../components/result/GeneratedTrackComponent';
 
-import "./GeneratedPlaylistPage.css";
-import "../../components/home/Person.css";
+import './GeneratedPlaylistPage.css';
+import '../../components/home/Person.css';
+import { RecommendationOutputData, TrackInfo } from '../../components/interfaces/Interface';
 
 //async method to make backend api calls to get the recommended songs
 async function fetchSongs(
@@ -148,12 +145,20 @@ export default function GeneratedPlaylistPage() {
           </div>
 
           <div className="recommended-tracks-container">
-            {dataFetched && displayRecs && (
-              <>
-                {Object.values(trackHashmap).map((track: TrackInfo) => (
-                  <GeneratedTrackComponent track={track} />
-                ))}
-              </>
+            {dataFetched ? (
+              displayRecs ? (
+                Object.values(trackHashmap).map((track: TrackInfo) => (
+                  <GeneratedTrackComponent track={track} key={track.id} />
+                ))
+              ) : (
+                // Display a message when displayRecs is false
+                <p>No recommended tracks to display.</p>
+              )
+            ) : (
+              <div className="recs-loading">
+                Loading...
+              </div>
+
             )}
           </div>
 

@@ -23,17 +23,13 @@ interface AppContextProps {
 
 const AppContext = createContext<AppContextProps | undefined>(undefined);
 
-export const ContextProvider: React.FC<{ children: ReactNode }> = ({
-  children,
-}) => {
-  const [selectedTrack, setSelectedTrack] = useState<string[]>([]);
-  const [songLanguage, setSongLanguage] = useState("");
-  const [nativeLanguage, setNativeLanguage] = useState("");
-  const [totalPoints, setTotalPoints] = useState(0);
-  const [difficulty, setDifficulty] = useState("easy");
-  const [token, setToken] =
-    useState(`BQB5Obvr9woLrutyJ8ogQiSGgOSxiWrTab0fib0X3fvskhgiaHcHD1hE_Zz8YcyHEaGcWl0S3R5ZHoWfI3Q7rAPGQHvXQyy_0EGfqWE7rM7F-qjzflxlq2qUo4FNq_nehaLnBIpYSFoQn7azZpXUbgsc2ZhZhZ7yuenX-rT8m7SXtavgskgL7_r_gYefnsceMs4n-0zCSg
-`);
+export const ContextProvider: React.FC<{ children: ReactNode }> = ({children}) => {
+    const [selectedTrack, setSelectedTrack] = useState<string[]>([]);
+    const [songLanguage, setSongLanguage] = useState("");
+    const [nativeLanguage, setNativeLanguage] = useState("");
+    const [totalPoints, setTotalPoints] = useState(0);
+    const [difficulty, setDifficulty] = useState("easy");
+    const [token, setToken] = useState("")
 
   const chooseTrack = (track: string[]) => {
     setSelectedTrack(track);
