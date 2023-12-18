@@ -19,8 +19,8 @@ public class CachedLyricsData implements ILyricsData {
   private LoadingCache<String, Boolean> lyricsExistsCache;
 
   /**
-   * Constructor for the CachedSpotifyData class. Serves as a proxy for the
-   * Spotify Data class
+   * Constructor for the CachedLyricsData class. Serves as a proxy for the
+   * LyricsData class
    * allowing us to cache the data, increasing performance and reducing number of
    * API calls.
    */

@@ -2,6 +2,8 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
+import java.util.ArrayList;
+
 import edu.brown.cs.student.main.server.handlers.AudioTextHandler;
 import edu.brown.cs.student.main.server.handlers.GetSongHandler;
 import edu.brown.cs.student.main.server.audioRecognition.audioData.AudioData;
@@ -17,6 +19,8 @@ import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.translate.data.AzureTranslateData;
+import edu.brown.cs.student.main.server.translate.data.CachedTranslateData;
+import edu.brown.cs.student.main.server.translate.data.ITranslateData;
 import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
 import edu.brown.cs.student.main.server.translate.mockedData.MockTranslateData;
 import spark.Spark;
@@ -48,8 +52,16 @@ public class Server {
     TokenGenerator generator = new TokenGenerator();
     AudioData audioData = new AudioData();
     ILyricsData lyricsData = new CachedLyricsData();
-    LibreTranslateData translateData = new LibreTranslateData();
-    MockTranslateData mockTranslateData = new MockTranslateData();
+
+    // Create priority list of available APIs
+    // Developer can add, delete, or cutomize Translation API ordering below
+    // --------------------------------------------------------------------------------------
+    ArrayList<ITranslateData> translateDataList = new ArrayList<ITranslateData>();
+    translateDataList.add(new MockTranslateData());
+    translateDataList.add(new AzureTranslateData());
+    translateDataList.add(new LibreTranslateData());
+    // --------------------------------------------------------------------------------------
+    ITranslateData translateData = new CachedTranslateData(translateDataList);
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
@@ -67,7 +79,7 @@ public class Server {
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
 
-    // ureTranslateData data3 = new AzureTranslateData();
+    // AzureTranslateData data3 = new AzureTranslateData();
     //
     //
     // String res = data3.getTranslation("I just want to get high with my lover?",

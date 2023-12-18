@@ -1,7 +1,7 @@
 package edu.brown.cs.student.Tests.server.spotify;
 
 import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
-import edu.brown.cs.student.main.server.CachedSpotifyData;
+import edu.brown.cs.student.main.server.spotify.data.CachedSpotifyData;
 import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import java.util.List;
