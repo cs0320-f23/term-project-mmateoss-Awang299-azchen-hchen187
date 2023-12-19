@@ -46,7 +46,20 @@ Used these to learn how to do things in the code
     .https://github.com/LibreTranslate/LibreTranslate
         . This is the optional free translation API that we downloaded and added to our project. This is the reason that our github is a little weird with additional contributors, because its open source and when we added it it also added the people who worked on it.
 
-    
+    . https://developer.spotify.com/documentation/web-playback-sdk 
+        . This was the documentation used to see how to setup the playback
+        SDK from spotify.
+
+    . https://developer.spotify.com/documentation/web-api/concepts/authorization 
+        . This was used to set up Spotify authentication for the users.
+
+    . https://www.mockplus.com/blog/post/search-bar-design
+        . Used to see how to create a cool search bar
+
+    . https://github.com/WebDevSimplified/spotify-clone
+
+    . https://redstapler.co/curved-css-animation-path/
+        . Used to see how to create a CSS animated path
 
 
 
