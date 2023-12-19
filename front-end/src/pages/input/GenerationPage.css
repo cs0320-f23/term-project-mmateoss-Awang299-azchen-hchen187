@@ -17,6 +17,20 @@
 
     .left {
       flex: 1;
+
+      .game-over-message {
+        width: 250px;
+        height: 200px;
+        border-radius: 50px 50px 50px 10px;
+        text-align: center;
+        align-items: center;
+        vertical-align: middle;
+        display: flex;
+        background-color: var(--lime);
+        margin-left: 300px;
+        color: black;
+        font-size: 20pt;
+      }
     }
     .middle {
       display: flex;
@@ -34,8 +48,13 @@
       display: flex;
       align-items: flex-start;
       justify-content: center;
+
+      .song-info {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
     }
   }
-
-
 }

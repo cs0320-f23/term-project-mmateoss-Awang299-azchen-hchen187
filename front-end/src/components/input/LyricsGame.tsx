@@ -12,11 +12,12 @@ export interface PlayerProps {
   token : string,
   lyrics: LyricLine[],
   difficulty: string,
-  score: number,
   setScore: (updateFunction: (prevScore: number) => number) => void;
+  gameOver: boolean;
+  setGameOver: (gameStatus : boolean) => void;
 }
 
-export default function LyricsGame({trackUri, token, lyrics, difficulty, score, setScore }: PlayerProps) {
+export default function LyricsGame({trackUri, token, lyrics, difficulty, setScore, gameOver, setGameOver }: PlayerProps) {
   const  {selectedTrack } = useAppContext();
 
   // game controls
@@ -33,7 +34,6 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
 
   // overall game variables
   const [history, setHistory] = useState<HistoryLyric[]>([]);
-  const [gameOver, setGameOver] = useState(false);
 
   useEffect(() => {
     initializeGame();
@@ -52,7 +52,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   }, [player]);
 
   useEffect(() => {
-    if (currentPosition >= currentInterval[1] + 1) {
+    if (currentPosition >= currentInterval[1]) {
       setPlay(false);
       player?.seek(currentInterval[0] * 1000).then(() => {
         console.log("changed position");
@@ -61,7 +61,6 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   }, [currentPosition]);
 
   const initializeGame = () => {
-    console.log("token", token)
     let newLyricNumber = lyricNumber + 1;
 
     while (lyrics[newLyricNumber].learningLyric === "") {
@@ -72,7 +71,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
     const endTime = lyrics[newLyricNumber + 1].startTime;
 
     setLyricNumber(newLyricNumber);
-    setCurrentInterval([startTime, endTime - 1]);
+    setCurrentInterval([startTime, endTime]);
 
     generateAnswer(newLyricNumber);
     setPlay(true);
@@ -126,7 +125,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   };
 
   const cleanString = (str: string) => {
-    return str.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "");
+    return str.toLowerCase().replace(/[.,\/#!$%\^&\*;:{}=\-_`~()?]/g, "").trim();
   };
 
   const handleSubmitAnswer = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -134,14 +133,14 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
 
     // update history + score
     let newHistoryLyric: HistoryLyric;
-    if (cleanString(userGuess) === cleanString(answer)) {
-      // setScore((prevScore: number) => prevScore + answer.length);
-      const points  = await calculateScore()
-      console.log("points", points)
-      if (points) {
-        setScore((prevScore) => prevScore + points)
-      }
+    
+    // setScore((prevScore: number) => prevScore + answer.length);
+    const points  = await calculateScore()
+    if (points) {
+      setScore((prevScore) => prevScore + points)
+    }
 
+    if (cleanString(userGuess) === cleanString(answer)) {
       newHistoryLyric = { lyric: currentGameLyric, userGuess: answer, correct: true };
     } else {
       newHistoryLyric = { lyric: currentGameLyric, userGuess: userGuess, correct: false };
@@ -169,7 +168,7 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
 
       setPlay(true)
       setLyricNumber(newLyricNumber);
-      setCurrentInterval([startTime, endTime - 1]);
+      setCurrentInterval([startTime, endTime]);
       generateAnswer(newLyricNumber);
     } else {
       setGameOver(true);
@@ -179,17 +178,14 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, score, 
   };
 
   const calculateScore = async () => {
-    console.log("inside score")
-    console.log("selected", selectedTrack[2])
     const scoreObject = await fetch(
-      `http://localhost:3232/getScore?spotifyID=${selectedTrack[2]}&correctWord=${answer}&guessWord=${userGuess}&line=${lyricNumber}`
+      `http://localhost:3232/getScore?spotifyID=${selectedTrack[2]}&correctWord=${answer}&guessWord=${cleanString(userGuess)}&line=${lyricNumber}`
     );
     const scoreJson = await scoreObject.json();
-    console.log(scoreJson.Message)
     if (scoreJson.Result) {
       return Math.floor(parseFloat(scoreJson.Message));
     } else {
-      console.log("incorrect score");
+      console.error("incorrect score");
     }
   };
 
@@ -264,7 +260,7 @@ const InputLyric = ({ gameLyric, handleSubmitAnswer, userGuess, setUserGuess, di
                 type="text"
                 value={userGuess}
                 onChange={(e) => setUserGuess(e.target.value)}
-                style={{ width: inputWidth + "rem" }}
+                style={{ width: inputWidth + "rem", display: "inline" }}
               />
             </form>
             {gameLyric.end}
