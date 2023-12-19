@@ -1,5 +1,6 @@
 import React from 'react'
 import PersonComponent from 'src/components/home/PersonComponent'
+import LanguageDropdown from 'src/components/input/LanguageDropdown';
 import { mockLeaderBoardData } from 'src/mock/MockedData'
 
 import "./LeaderBoardPage.css"
@@ -13,7 +14,12 @@ export default function LeaderBoardPage() {
         <div className="main-container-leader">
           <div className="left-lineart"></div>
           <div className="right-lineart"></div>
-          <div className="leaderboard-title">Global Leaderboard</div>
+          
+          <div className="leaderboard-title">Global Leaderboard for 
+            <div className="language-select-container">
+              <LanguageDropdown setSongLang={false} />
+            </div>
+          </div>
           <div className="leaderboard-container">
           <table className="leaderboard-table">
             <thead>
