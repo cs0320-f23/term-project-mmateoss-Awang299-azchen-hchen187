@@ -4,6 +4,7 @@ import com.squareup.moshi.Moshi;
 import edu.brown.cs.student.main.server.lyrics.data.ILyricsData;
 import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
 import edu.brown.cs.student.main.server.translate.data.AzureTranslateData;
+import edu.brown.cs.student.main.server.translate.data.CachedTranslateData;
 import edu.brown.cs.student.main.server.translate.data.ITranslateData;
 import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
 import java.util.ArrayList;
@@ -96,14 +97,19 @@ public class LyricsHandler implements Route {
             // System.out.println(val);
             // }
             // ---------------------------------------------
-            for (String[] line : defaultLyrics) {
-                if (line[1].equals("")) {
-                    continue;
+            if (this.translateData instanceof CachedTranslateData) {
+                System.out.println("Recognized as CachedTranslateData");
+                ((CachedTranslateData) this.translateData).TranslateAll(defaultLyrics, fromLanguage, toLanguage);
+            } else {
+                for (String[] line : defaultLyrics) {
+                    if (line[1].equals("")) {
+                        continue;
+                    }
+                    count += line[1].length();
+                    line[2] = this.translateData
+                            .getTranslation(line[1].replaceAll("\"", "").replace("\'", ""), fromLanguage, toLanguage)
+                            .translatedText();
                 }
-                count += line[1].length();
-                line[2] = this.translateData
-                        .getTranslation(line[1].replaceAll("\"", "").replace("\'", ""), fromLanguage, toLanguage)
-                        .translatedText();
             }
             // defaultLyrics.get(0)[2] =
             // this.translateData.getTranslation(defaultLyrics.get(0)[1], fromLanguage,

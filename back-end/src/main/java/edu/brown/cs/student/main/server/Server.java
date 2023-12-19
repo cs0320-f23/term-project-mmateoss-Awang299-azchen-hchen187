@@ -2,11 +2,15 @@ package edu.brown.cs.student.main.server;
 
 import static spark.Spark.after;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import edu.brown.cs.student.main.server.handlers.AudioTextHandler;
 import edu.brown.cs.student.main.server.handlers.GetSongHandler;
 import edu.brown.cs.student.main.server.audioRecognition.audioData.AudioData;
+import edu.brown.cs.student.main.server.database.PostgresConnection;
 import edu.brown.cs.student.main.server.handlers.AddDislikedSongsHandler;
 import edu.brown.cs.student.main.server.handlers.AddInputSongsHandler;
 import edu.brown.cs.student.main.server.handlers.LyricsHandler;
@@ -47,6 +51,9 @@ public class Server {
       response.header("Access-Control-Allow-Methods", "*");
     });
 
+    // Initializing Database
+    PostgresConnection databaseConnection = new PostgresConnection();
+
     // Creating variables that need to be passed into
     CachedSpotifyData data = new CachedSpotifyData();
     TokenGenerator generator = new TokenGenerator();
@@ -57,11 +64,19 @@ public class Server {
     // Developer can add, delete, or customize Translation API ordering below
     // --------------------------------------------------------------------------------------
     ArrayList<ITranslateData> translateDataList = new ArrayList<ITranslateData>();
-    translateDataList.add(new MockTranslateData());
-    translateDataList.add(new AzureTranslateData());
-    translateDataList.add(new LibreTranslateData());
+    MockTranslateData mockTranslateData = new MockTranslateData();
+    AzureTranslateData azureTranslateData = new AzureTranslateData();
+    LibreTranslateData libreTranslateData = new LibreTranslateData();
+    translateDataList.add(mockTranslateData);
+    translateDataList.add(azureTranslateData);
+    translateDataList.add(libreTranslateData);
+
+    Map<ITranslateData, String> databaseNameMap = new HashMap<ITranslateData, String>();
+    databaseNameMap.put(mockTranslateData, "Mock");
+    databaseNameMap.put(libreTranslateData, "Libre");
+    databaseNameMap.put(azureTranslateData, "Azure");
     // --------------------------------------------------------------------------------------
-    ITranslateData translateData = new CachedTranslateData(translateDataList);
+    ITranslateData translateData = new CachedTranslateData(translateDataList, databaseNameMap, databaseConnection);
 
     // Initializing Spark get handlers
     Spark.get("recommendation", new RecommendationHandler(data, lyricsData));
@@ -78,6 +93,13 @@ public class Server {
 
     // Notice this link alone leads to a 404... Why is that?
     System.out.println("Server started at http://localhost:" + port);
+
+    // try {
+    // databaseConnection.incrementTranslationLimit(3, "Mock");
+    // } catch (SQLException e) {
+    // // TODO Auto-generated catch block
+    // e.printStackTrace();
+    // }
 
     // AzureTranslateData data3 = new AzureTranslateData();
     //

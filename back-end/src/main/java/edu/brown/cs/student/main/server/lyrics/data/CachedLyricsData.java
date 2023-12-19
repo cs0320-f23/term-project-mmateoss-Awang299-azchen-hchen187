@@ -30,7 +30,7 @@ public class CachedLyricsData implements ILyricsData {
     // building the cache that will hold a song object for specific song names
     this.getLyricsCache = CacheBuilder.newBuilder()
         .maximumSize(40)
-        .expireAfterWrite(2, TimeUnit.MINUTES)
+        .expireAfterWrite(15, TimeUnit.MINUTES)
         .recordStats().build(
             new CacheLoader<String, ArrayList<String[]>>() {
 
@@ -50,7 +50,7 @@ public class CachedLyricsData implements ILyricsData {
 
     this.lyricsExistsCache = CacheBuilder.newBuilder()
         .maximumSize(40)
-        .expireAfterWrite(2, TimeUnit.MINUTES)
+        .expireAfterWrite(15, TimeUnit.MINUTES)
         .recordStats().build(
             new CacheLoader<String, Boolean>() {
 
