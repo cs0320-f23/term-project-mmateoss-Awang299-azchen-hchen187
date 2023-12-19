@@ -1,3 +1,6 @@
+import { m } from "framer-motion"
+import { LeaderboardData } from "src/components/interfaces/Interface"
+
 //mock returned data from searching "daniel"
 export const songsData: {[key: string]: {title: string, artist: string, trackID: string, albumUrl: string}[]} = {
     "d" : [
@@ -315,3 +318,56 @@ export const recommendationOutputData = {
                 {"url":"https://i.scdn.co/image/ab67616d00001e02266f95f6353cb2b974f67fa7","height":300,"width":300},
                 {"url":"https://i.scdn.co/image/ab67616d00004851266f95f6353cb2b974f67fa7","height":64,"width":64}]}}
     ]}
+
+export const mockLeaderBoardData: LeaderboardData = {
+    0: {
+        username: "bobIsCool",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 10,
+    },
+    1: {
+        username: "bobIsNotCool",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 9,
+    },
+    2: {
+        username: "bobIsSuperCool",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 8,
+    },
+    3: {
+        username: "bobIsSuperDuperCool",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 7,
+    },
+    4: {
+        username: "bobIsCool?",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 6,
+    },
+    5: {
+        username: "bobIsCooler",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 5,
+    },
+    6: {
+        username: "bobIsTooCool",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 4,
+    },
+    7: {
+        username: "bobIsCoolLOL",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 3,
+    },
+    8: {
+        username: "bobIsCoolDood",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 2,
+    },
+    9: {
+        username: "bobIsCoolYeh",
+        profileUrl: "https://i.scdn.co/image/ab67616d00001e02633a2d775747bccfbcb17a45",
+        score: 1,
+    }
+}
