@@ -1,0 +1,79 @@
+.lyrics-game {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 3rem;
+    justify-content: space-between;
+
+    .input {
+        margin-top: 2rem;
+        border: 2px dashed white;
+        padding: 0 1rem 0;
+        border-radius: 10px;
+        margin-bottom: 1rem;
+        width: 25rem;
+
+        .input-lyric {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 1rem;
+            margin-bottom: 1rem;
+            p {
+                margin-top: 0;
+                margin-bottom: 0;
+            }
+        
+            .user-input {
+                text-align: center;
+                background: none;
+                border: none;
+                outline: none;
+                color: white;
+                border-bottom: 1px solid white;
+                margin-left: 0.4rem;
+                margin-right: 0.4rem;
+                font-size: 1rem;
+            }
+        }
+    }
+
+    .player {
+        width: 100%;
+
+        ._ControlsRSWP {
+            width: 25rem;
+        }
+
+        ._WrapperRSWP > div:first-child {
+            display: none;
+        }
+
+        ._ActionsRSWP, ._InfoRSWP {
+            display: none;
+        }
+        
+        ._SliderRSWP {
+            .slider {
+                pointer-events: none;
+            }
+        }
+
+        ._ControlsButtonsRSWP {
+            .ButtonRSWP {
+                display: none;
+            }
+            .rswp__toggle {
+                display: block;
+            }
+            
+        }
+    }
+}
+
+.lyrics-game p {
+    color: white;
+}

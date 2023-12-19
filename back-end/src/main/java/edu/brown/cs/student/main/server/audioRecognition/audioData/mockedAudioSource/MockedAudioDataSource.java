@@ -10,10 +10,9 @@ import java.nio.file.Paths;
  */
 public class MockedAudioDataSource {
 
-
   /**
-   * Class used to encode mockedAudioFiles to base64 in order to be able to see if it works
-   * with the API
+   * Class used to encode mockedAudioFiles to base64 in order to be able to see if it works with the
+   * API
    */
   private String filePath;
 
@@ -22,14 +21,14 @@ public class MockedAudioDataSource {
    *
    * @param filePath path to the file we want to send to the API.
    */
-  public MockedAudioDataSource(String filePath){
+  public MockedAudioDataSource(String filePath) {
 
     this.filePath = filePath;
-
   }
 
   /**
-   * Method used to encode a mp3 file into base64 in order to be able to pass it as an api parameter.
+   * Method used to encode a mp3 file into base64 in order to be able to pass it as an api
+   * parameter.
    *
    * @return a byte array of the encoded file
    * @throws IOException exception thrown when the file can't be read or encoded.
@@ -40,13 +39,8 @@ public class MockedAudioDataSource {
     // https://mkyong.com/java/how-to-convert-file-into-an-array-of-bytes/
 
     byte[] bytes = Files.readAllBytes(Paths.get(this.filePath));
-    //String encoded = Base64.getEncoder().encodeToString(bytes);
+    // String encoded = Base64.getEncoder().encodeToString(bytes);
 
     return bytes;
   }
-
-
-
-
-
 }

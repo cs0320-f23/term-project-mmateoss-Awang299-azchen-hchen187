@@ -23,9 +23,7 @@ import spark.Spark;
 
 public class TokenHandlerTests {
 
-  /**
-   * Method that is run once at the beginning. Gotten from the gearup.
-   */
+  /** Method that is run once at the beginning. Gotten from the gearup. */
   @BeforeAll
   public static void setup_before_everything() {
 
@@ -34,10 +32,7 @@ public class TokenHandlerTests {
     Logger.getLogger("").setLevel(Level.WARNING); // empty name = root logger
   }
 
-
-  /**
-   * Method gotten from the gearup, that sets up our server, called before each test is run.
-   */
+  /** Method gotten from the gearup, that sets up our server, called before each test is run. */
   @BeforeEach
   public void setup() {
     // In fact, restart the entire Spark server for every test!
@@ -49,9 +44,7 @@ public class TokenHandlerTests {
     Spark.awaitInitialization(); // don't continue until the server is listening
   }
 
-  /**
-   * Method gotten from the gearup that stops the connection to the server.
-   */
+  /** Method gotten from the gearup that stops the connection to the server. */
   @AfterEach
   public void teardown() {
     // Gracefully stop Spark listening on both endpoints
@@ -64,13 +57,12 @@ public class TokenHandlerTests {
    *
    * @param apiCall the endpoint you are calling to.
    * @param queryParams the query parameters that you want to use.
-   *
    * @return HttpResponse that can be used to set up a connection with an API.
    * @throws IOException exception where it failed to read/open information.
    * @throws InterruptedException exception where connection to API is interrupted.
    * @throws URISyntaxException exception where URI syntax is incorrect.
    */
-  static private HttpResponse<String> tryRequest(String apiCall, Map<String, String> queryParams)
+  private static HttpResponse<String> tryRequest(String apiCall, Map<String, String> queryParams)
       throws IOException, InterruptedException, URISyntaxException {
 
     StringBuilder queryString = new StringBuilder();
@@ -93,10 +85,11 @@ public class TokenHandlerTests {
     HttpClient client = HttpClient.newHttpClient();
 
     // Build the HTTP request
-    HttpRequest request = HttpRequest.newBuilder()
-        .uri(new URI("http://localhost:" + Spark.port() + "/" + apiCall + queryString))
-        .GET()  // This is optional since GET is the default method.
-        .build();
+    HttpRequest request =
+        HttpRequest.newBuilder()
+            .uri(new URI("http://localhost:" + Spark.port() + "/" + apiCall + queryString))
+            .GET() // This is optional since GET is the default method.
+            .build();
 
     // Send the request and get the response
     HttpResponse<String> response = client.send(request, HttpResponse.BodyHandlers.ofString());
@@ -104,28 +97,26 @@ public class TokenHandlerTests {
     return response;
   }
 
-
   /**
    * Method that tests we get the correct error message when a parameter is included.
    *
    * @throws Exception any exception that could occur from making the api call.
    */
   @Test
-  public void hasParamsTest() throws Exception{
+  public void hasParamsTest() throws Exception {
 
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("blah", "bluh");
 
-
-    HttpResponse<String> response = tryRequest("token",queryParams);
+    HttpResponse<String> response = tryRequest("token", queryParams);
 
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Error",responseBody.get("Result"));
-    Assert.assertEquals("please do not include any parameters when trying to get the token",
+    Assert.assertEquals("Error", responseBody.get("Result"));
+    Assert.assertEquals(
+        "please do not include any parameters when trying to get the token",
         responseBody.get("Error Message"));
-
   }
 
   /**
@@ -134,7 +125,7 @@ public class TokenHandlerTests {
    * @throws Exception any exception that could occur from making the api call.
    */
   @Test
-  public void getTokenTest() throws Exception{
+  public void getTokenTest() throws Exception {
     Map<String, String> queryParams = new HashMap<>();
 
     HttpResponse<String> response = tryRequest("token", queryParams);
@@ -143,10 +134,9 @@ public class TokenHandlerTests {
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
 
     Map<String, String> responseBody = jsonAdapter.fromJson(response.body());
-    Assert.assertEquals("Success",responseBody.get("Result"));
+    Assert.assertEquals("Success", responseBody.get("Result"));
     Assert.assertTrue(responseBody.get("token") != null);
     Assert.assertTrue(responseBody.get("token") != null);
-
   }
 
   /**
@@ -173,10 +163,6 @@ public class TokenHandlerTests {
     String token2 = responseBody2.get("token");
 
     // should return the same token because of caching
-    Assert.assertEquals(token1,token2);
-
-
+    Assert.assertEquals(token1, token2);
   }
-
-
 }

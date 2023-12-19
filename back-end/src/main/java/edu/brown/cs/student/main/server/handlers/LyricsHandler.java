@@ -1,15 +1,15 @@
 package edu.brown.cs.student.main.server.handlers;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Locale;
 import com.squareup.moshi.Moshi;
-
 import edu.brown.cs.student.main.server.lyrics.data.ILyricsData;
 import edu.brown.cs.student.main.server.lyrics.data.LyricsData;
+import edu.brown.cs.student.main.server.translate.data.AzureTranslateData;
 import edu.brown.cs.student.main.server.translate.data.ITranslateData;
 import edu.brown.cs.student.main.server.translate.data.LibreTranslateData;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 import spark.Request;
 import spark.Response;
 import spark.Route;
@@ -46,7 +46,6 @@ public class LyricsHandler implements Route {
                 responseMap.put("Message", "no toLanguage provided");
                 return moshi.adapter(Map.class).toJson(responseMap);
             }
-
             // convert language to ISO 639-1 code
             if (fromLanguage == null) { // Set default language to English
                 if (request.queryParams().size() != 2) {
@@ -54,20 +53,29 @@ public class LyricsHandler implements Route {
                     responseMap.put("Message", "invalid parameters provided");
                     return moshi.adapter(Map.class).toJson(responseMap);
                 }
-                fromLanguage = "en";
+                fromLanguage = "english";
             } else {
                 if (request.queryParams().size() != 3) {
                     responseMap.put("Result", "Error");
                     responseMap.put("Message", "invalid parameters provided");
                     return moshi.adapter(Map.class).toJson(responseMap);
                 }
-                fromLanguage = this.getLanguageCode(fromLanguage);
+                fromLanguage = fromLanguage.toLowerCase();
             }
-            toLanguage = this.getLanguageCode(toLanguage);
-            System.out.println("fromLanguage: " + fromLanguage);
-            System.out.println("toLanguage: " + toLanguage);
+            toLanguage = toLanguage.toLowerCase();
+
+            // Testing purposes
+            AzureTranslateData data = new AzureTranslateData();
+            System.out.println("fromLanguage: " +
+                    data.getLanguageCode(fromLanguage).code());
+            System.out.println("before toLanguage: " + toLanguage);
+            System.out.println("after toLanguage: " +
+                    data.getLanguageCode(toLanguage).code());
+
             int count = 0;
             ArrayList<String[]> defaultLyrics = this.lyricsData.getLyrics(spotifyTrackID);
+            // ---------------------------------------------
+            // Attempt to batch entire song's lyrics into one string
             // StringBuilder superLine = new StringBuilder("");
             // for (String[] line : defaultLyrics) {
             // // if (line[1].equals("")) {
@@ -87,13 +95,15 @@ public class LyricsHandler implements Route {
             // for (String val : resString) {
             // System.out.println(val);
             // }
+            // ---------------------------------------------
             for (String[] line : defaultLyrics) {
                 if (line[1].equals("")) {
                     continue;
                 }
                 count += line[1].length();
-                line[2] = this.translateData.getTranslation(line[1].trim(), fromLanguage,
-                        toLanguage).translatedText();
+                line[2] = this.translateData
+                        .getTranslation(line[1].replaceAll("\"", "").replace("\'", ""), fromLanguage, toLanguage)
+                        .translatedText();
             }
             // defaultLyrics.get(0)[2] =
             // this.translateData.getTranslation(defaultLyrics.get(0)[1], fromLanguage,
@@ -105,34 +115,25 @@ public class LyricsHandler implements Route {
 
         } catch (Exception e) {
             responseMap.put("Result", "Error");
+            e.printStackTrace();
             responseMap.put("Message", e.getMessage());
             return moshi.adapter(Map.class).toJson(responseMap);
         }
     }
 
-    /**
-     * 
-     * @param language- name of the language
-     * @return String representing the ISO 639-1 of the language
-     * @throws Exception if no code is found
-     */
-    private String getLanguageCode(String language) throws Exception {
-        Locale[] locales = Locale.getAvailableLocales();
-        String res = null;
-        System.out.println("Start");
-        for (Locale locale : locales) {
-            if (language.equalsIgnoreCase(locale.getDisplayLanguage())) {
-                if (res == null) {
-                    res = locale.toLanguageTag();
-                    // getLanguage();
-                }
-                System.out.println(locale.toLanguageTag());
-            }
-        }
-        if (res != null) {
-            return res;
-        }
-        throw new Exception("language's ISO 639-1 code doesn't exist");
-    }
-
+    // /**
+    // * @param language- name of the language
+    // * @return String representing the ISO 639-1 of the language
+    // * @throws Exception if no code is found
+    // */
+    // private String getLanguageCode(String language) throws Exception {
+    // Locale[] locales = Locale.getAvailableLocales();
+    // for (Locale locale : locales) {
+    // if (language.equalsIgnoreCase(locale.getDisplayLanguage())) {
+    // System.out.println("toLanguage: " + locale.toLanguageTag());
+    // return locale.toLanguageTag();
+    // }
+    // }
+    // throw new Exception("language doesn't exist");
+    // }
 }

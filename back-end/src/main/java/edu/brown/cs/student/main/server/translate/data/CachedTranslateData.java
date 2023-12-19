@@ -8,6 +8,8 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
 
+import edu.brown.cs.student.main.server.translate.LanguageNotSupportedException;
+import edu.brown.cs.student.main.server.translate.records.LanguageCode;
 import edu.brown.cs.student.main.server.translate.records.TranslateResult;
 
 public class CachedTranslateData implements ITranslateData {
@@ -87,6 +89,12 @@ public class CachedTranslateData implements ITranslateData {
      */
     private boolean CheckAPIAvailability(ITranslateData translateData) {
         return true;
+    }
+
+    @Override
+    public LanguageCode getLanguageCode(String language) throws LanguageNotSupportedException {
+        // TODO Auto-generated method stub
+        throw new UnsupportedOperationException("Unimplemented method 'getLanguageCode'");
     }
 
 }

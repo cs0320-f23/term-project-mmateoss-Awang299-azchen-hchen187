@@ -1,9 +1,10 @@
+/* css styling for the tool bar*/
 
 .header {
     top: 0;
     left: 0;
     width: 90%;
-    padding: 20px 100px;
+    padding: 20px 75px;
     display: flex;
     justify-content: space-between;
     align-items: center;

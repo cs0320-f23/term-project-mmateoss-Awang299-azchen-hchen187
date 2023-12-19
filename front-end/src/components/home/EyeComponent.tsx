@@ -1,14 +1,17 @@
 import React, { useState, useEffect} from 'react';
 
+//interface that specifies values passed into the component
 interface EyeComponentProps {
   headClicked: boolean;
 }
 
+//main component for the eye
 function EyeComponent(props: EyeComponentProps) {
-  const [eyePosition, setEyePosition] = useState({ x: 200, y: 200 });
+  const [eyePosition, setEyePosition] = useState({ x: 0, y: 0 });
   const [pupilPosition, setPupilPosition] = useState({ x: 0, y: 0 });
   
 
+  //sets up the event listeners for the eyes
   useEffect(() => {
     const container = document.querySelector('.head-container') as HTMLElement;
     const eye = document.querySelector('.eye') as HTMLElement;
@@ -22,6 +25,7 @@ function EyeComponent(props: EyeComponentProps) {
     }
   }, []);
 
+  //method to calculate and update the eye location based on mouse movement
   const updateLocation = (e: { clientX: number; clientY: number; }) => {
     const container = document.querySelector('.head-container') as HTMLElement;
     const eye = document.querySelector('.eye') as HTMLElement;
@@ -42,6 +46,7 @@ function EyeComponent(props: EyeComponentProps) {
     setPupilPosition({ x: scaledPupilX, y: scaledPupilY });
   }
 
+  //returns the component
   return (
     <div className="eye" style={props.headClicked ? {} : {left: `${eyePosition.x}px`, top: `${eyePosition.y}px`}}>
       <div style= {props.headClicked ? {} : {left: `${pupilPosition.x}px`, top: `${pupilPosition.y}px`}} className="pupil"></div>

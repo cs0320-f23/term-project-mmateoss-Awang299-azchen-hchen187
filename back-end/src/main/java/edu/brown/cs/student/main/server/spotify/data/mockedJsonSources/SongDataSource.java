@@ -2,8 +2,6 @@ package edu.brown.cs.student.main.server.spotify.data.mockedJsonSources;
 
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
-import edu.brown.cs.student.main.server.spotify.records.audioFeaturesRecords.FeaturesProp;
-import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.records.searchRecords.Song;
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -13,16 +11,14 @@ public class SongDataSource {
 
   /** Instance variables that are used throughout the class. */
   private Moshi moshi;
+
   private BufferedReader reader;
   private String line;
   private Song json;
 
-
-  /**
-   * Constructor for JsonLoader object
-   */
-  public SongDataSource(Reader inputReader){
-    if(inputReader != null){
+  /** Constructor for JsonLoader object */
+  public SongDataSource(Reader inputReader) {
+    if (inputReader != null) {
       this.reader = new BufferedReader(inputReader);
       this.line = "";
     }
@@ -37,7 +33,7 @@ public class SongDataSource {
     String ourJson = "";
     this.line = this.reader.readLine();
 
-    while(this.line != null){
+    while (this.line != null) {
       ourJson += this.line;
       this.line = this.reader.readLine();
     }
@@ -53,10 +49,9 @@ public class SongDataSource {
    *
    * @return - object
    */
-  public Song getJsonObj(){
+  public Song getJsonObj() {
     // return a defensive copy
     Song copy = this.json;
     return copy;
   }
-
 }

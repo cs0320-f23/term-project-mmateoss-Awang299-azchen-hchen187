@@ -1,0 +1,41 @@
+@import url('https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@500&display=swap');
+
+.generation-page {
+  background: black;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  flex-direction: column;
+  flex: 1;
+
+  .generation-page-container {
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 80vh;
+    color: white;
+
+    .left {
+      flex: 1;
+    }
+    .middle {
+      display: flex;
+      align-items: flex-end;
+      justify-content: center;
+      flex: 1;
+    }
+
+    .middle-loading {
+      align-items: center;
+    }
+
+    .right {
+      flex: 1;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+    }
+  }
+
+
+}

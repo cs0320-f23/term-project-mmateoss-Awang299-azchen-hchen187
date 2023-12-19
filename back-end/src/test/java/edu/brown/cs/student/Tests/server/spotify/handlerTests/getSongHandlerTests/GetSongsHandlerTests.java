@@ -30,9 +30,7 @@ public class GetSongsHandlerTests {
 
   private String token;
 
-  /**
-   * Method that is run once at the beginning. Gotten from the gearup.
-   */
+  /** Method that is run once at the beginning. Gotten from the gearup. */
   @BeforeAll
   public static void setup_before_everything() {
 
@@ -60,9 +58,7 @@ public class GetSongsHandlerTests {
     this.token = generator.getToken();
   }
 
-  /**
-   * Method gotten from the gearup that stops the connection to the server.
-   */
+  /** Method gotten from the gearup that stops the connection to the server. */
   @AfterEach
   public void teardown() {
     // Gracefully stop Spark listening on both endpoints
@@ -76,7 +72,6 @@ public class GetSongsHandlerTests {
    *
    * @param apiCall     the endpoint you are calling to.
    * @param queryParams the query parameters that you want to use.
-   *
    * @return HttpResponse that can be used to set up a connection with an API.
    * @throws IOException          exception where it failed to read/open
    *                              information.
@@ -84,7 +79,7 @@ public class GetSongsHandlerTests {
    *                              interrupted.
    * @throws URISyntaxException   exception where URI syntax is incorrect.
    */
-  static private HttpResponse<String> tryRequest(String apiCall, Map<String, String> queryParams)
+  private static HttpResponse<String> tryRequest(String apiCall, Map<String, String> queryParams)
       throws IOException, InterruptedException, URISyntaxException {
 
     StringBuilder queryString = new StringBuilder();
@@ -118,9 +113,7 @@ public class GetSongsHandlerTests {
     return response;
   }
 
-  /**
-   * Method that tests when token is not included as a parameter.
-   */
+  /** Method that tests when token is not included as a parameter. */
   @Test
   public void testNoToken() throws Exception {
     Map<String, String> queryParams = new HashMap<>();
@@ -133,14 +126,12 @@ public class GetSongsHandlerTests {
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, Object> responseBody = jsonAdapter.fromJson(response.body());
     Assert.assertEquals("Error", responseBody.get("Result"));
-    Assert.assertEquals("Please ensure you pass in a token, limit, and query as"
-        + " parameters",
+    Assert.assertEquals(
+        "Please ensure you pass in a token, limit, and query as" + " parameters",
         responseBody.get("Error Message"));
   }
 
-  /**
-   * Method checking that the handler works with the correct parameters.
-   */
+  /** Method checking that the handler works with the correct parameters. */
   @Test
   public void testCorrectParams() throws Exception {
     Map<String, String> queryParams = new HashMap<>();
@@ -153,7 +144,7 @@ public class GetSongsHandlerTests {
     Moshi moshi = new Moshi.Builder().build();
     JsonAdapter<Map> jsonAdapter = moshi.adapter(Map.class);
     Map<String, Object> responseBody = jsonAdapter.fromJson(response.body());
+    System.out.println(responseBody);
     Assert.assertEquals("Success", responseBody.get("Result"));
   }
-
 }
