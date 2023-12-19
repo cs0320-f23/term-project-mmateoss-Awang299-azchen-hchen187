@@ -70,7 +70,7 @@ function GenerationPage() {
     if (lyricsJson.Result) {
       const lyricsArr = lyricsJson.Message;
       let songLyrics: LyricLine[] = lyricsArr.map((lyric: string[]) => ({
-        startTime: Math.round(parseFloat(lyric[0])),
+        startTime: parseFloat(lyric[0]),
         learningLyric: lyric[1],
         nativeLyric: lyric[2],
       }));
@@ -110,7 +110,7 @@ function GenerationPage() {
               setGameOver={setGameOver}
             />
           )}
-          {!lyrics && <h3 style={{}}>Translating song to {nativeLanguage}...</h3>}
+          {!lyrics && <h3 style={{}}>Translating Song to {nativeLanguage}...</h3>}
         </div>
 
         <div className="right">
