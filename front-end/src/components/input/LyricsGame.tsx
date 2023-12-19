@@ -43,10 +43,10 @@ export default function LyricsGame({trackUri, token, lyrics, difficulty, setScor
     const intervalId = setInterval(() => {
       player?.getCurrentState().then((state) => {
         if (state) {
-          setCurrentPosition(Math.floor(state.position / 1000));
+          setCurrentPosition(state.position / 1000);
         }
       });
-    }, 1000);
+    }, 100);
 
     return () => clearInterval(intervalId);
   }, [player]);
