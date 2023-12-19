@@ -19,8 +19,7 @@ import edu.brown.cs.student.main.server.translate.mockedData.MockTranslateData;
 import spark.Spark;
 
 /**
- * Top-level class for the server. Contains the main() method which starts Spark
- * and runs the
+ * Top-level class for the server. Contains the main() method which starts Spark and runs the
  * various handlers. We have four endpoints.
  */
 public class Server {

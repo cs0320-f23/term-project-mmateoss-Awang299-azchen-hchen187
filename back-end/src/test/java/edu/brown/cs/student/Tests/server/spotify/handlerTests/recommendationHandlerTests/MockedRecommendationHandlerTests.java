@@ -342,17 +342,15 @@ public class MockedRecommendationHandlerTests {
 
   }
 
-
   /**
-   * Method that repeats the calls with randomized limit should not crash even if its
-   * out of bounds
+   * Method that repeats the calls with randomized limit should not crash even if its out of bounds
    */
   @Test
-  public void fuzzTest() throws Exception{
+  public void fuzzTest() throws Exception {
 
     Map<String, String> queryParams = new HashMap<>();
 
-    for(int i=0; i<100;i++){
+    for (int i = 0; i < 100; i++) {
 
       Random rand = new Random();
       int randInt = rand.nextInt(150);
@@ -373,7 +371,5 @@ public class MockedRecommendationHandlerTests {
       JsonAdapter<Recommendation> jsonAdapter = moshi.adapter(Recommendation.class);
       Recommendation responseBody = jsonAdapter.fromJson(response.body());
     }
-
-
   }
 }
