@@ -10,7 +10,8 @@ import FAQPage from './pages/home/FAQPage';
 
 import './App.css';
 import SettingsPage from './pages/input/SettingsPage';
-import Toolbar from './components/Toolbar/Toolbar';
+import Toolbar from './components/toolbar/Toolbar';
+import LeaderBoardPage from './pages/home/LeaderBoardPage';
 
 
 /**
@@ -27,6 +28,7 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/about" element={<AboutPage />} />
             <Route path="/faq" element={<FAQPage />} />
+            <Route path="/leaderboard" element={<LeaderBoardPage />} />
             <Route path="/input/songs" element={<SongsPage />} />
             <Route path="/input/settings" element={<SettingsPage />} />
             <Route path="/input/lyrics" element={<GenerationPage />} />

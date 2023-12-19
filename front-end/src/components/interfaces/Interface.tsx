@@ -52,3 +52,14 @@ interface Image {
   height: number;
   width: number;
 }
+
+//data type for leaderboard data
+export interface UserData {
+  username: string;
+  profileUrl: string;
+  score: number;
+}
+
+export interface LeaderboardData {
+  [key: number]: UserData;
+}
