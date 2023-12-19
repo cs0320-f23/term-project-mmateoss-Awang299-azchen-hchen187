@@ -54,14 +54,12 @@ interface Image {
 }
 
 //data type for leaderboard data
-// Define the type for user data
 export interface UserData {
   username: string;
   profileUrl: string;
   score: number;
 }
 
-// Define the type for the leaderboard data object
 export interface LeaderboardData {
   [key: number]: UserData;
 }
