@@ -55,8 +55,10 @@ const mockLyricsResponse: LyricLine[] = [
 ];
 
 function GenerationPage() {
-  const { token, difficulty, selectedTrack, nativeLanguage, songLanguage} = useAppContext();
+  const { token, difficulty, selectedTrack, nativeLanguage, songLanguage } =
+    useAppContext();
   const [score, setScore] = useState(0);
+  const [totalScore, setTotalScore] = useState(0);
   const [trackUri, setTrackUri] = useState("");
   const [lyrics, setLyrics] = useState<LyricLine[] | null>(null);
   const [gameOver, setGameOver] = useState(false);
@@ -90,12 +92,18 @@ function GenerationPage() {
     <div className="generation-page">
       <div className="generation-page-container">
         <div className="left">
-          <p>Score: {score} </p>
+          <p>
+            Score: {score} / {totalScore}{" "}
+          </p>
           <div className="person-container-small">
             <div className={`${gameOver ? "game-over-message" : "no-display"}`}>
               Congrats on finishing the song! Take a look at how you did
             </div>
-            <PersonComponent handleHeadClick={() => {}} headClicked={false} disabledHover={true} />
+            <PersonComponent
+              handleHeadClick={() => {}}
+              headClicked={false}
+              disabledHover={true}
+            />
           </div>
         </div>
         <div className={`middle${!lyrics ? " middle-loading" : ""}`}>
@@ -106,22 +114,35 @@ function GenerationPage() {
               lyrics={lyrics}
               difficulty={difficulty}
               setScore={setScore}
+              setTotalScore={setTotalScore}
               gameOver={gameOver}
               setGameOver={setGameOver}
             />
           )}
-          {!lyrics && <h3 style={{}}>Translating Song to {nativeLanguage}...</h3>}
+          {!lyrics && (
+            <h3 style={{}}>Translating Song to {nativeLanguage}...</h3>
+          )}
         </div>
 
         <div className="right">
           <div className="song-info">
-            <img src={selectedTrack[3]} alt="album cover" style={{ height: "15rem", width: "15rem" }} />
+            <img
+              src={selectedTrack[3]}
+              alt="album cover"
+              style={{ height: "15rem", width: "15rem" }}
+            />
             <p>
-              {selectedTrack[0]} {selectedTrack[1] ? ("-" + selectedTrack[1]) : ""}
+              {selectedTrack[0]}{" "}
+              {selectedTrack[1] ? "-" + selectedTrack[1] : ""}
             </p>
           </div>
 
-          <NavButton nextPage="/result" displayedText={gameOver ? "Play More" : "Change Songs"} proceedToNextPage={true} onClickRejection={() => {}} />
+          <NavButton
+            nextPage="/result"
+            displayedText={gameOver ? "Play More" : "Change Songs"}
+            proceedToNextPage={true}
+            onClickRejection={() => {}}
+          />
         </div>
       </div>
     </div>

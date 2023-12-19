@@ -3,10 +3,10 @@ package edu.brown.cs.student.main.server.translate.data;
 import com.squareup.moshi.JsonAdapter;
 import com.squareup.moshi.Moshi;
 import com.squareup.moshi.Types;
+import edu.brown.cs.student.main.server.translate.LanguageNotSupportedException;
 import edu.brown.cs.student.main.server.translate.records.AzureRecords.DetectTranslateInfo;
 import edu.brown.cs.student.main.server.translate.records.AzureRecords.TranslateInfo;
 import edu.brown.cs.student.main.server.translate.records.AzureRecords.Translation;
-import edu.brown.cs.student.main.server.translate.LanguageNotSupportedException;
 import edu.brown.cs.student.main.server.translate.records.LanguageCode;
 import edu.brown.cs.student.main.server.translate.records.TranslateResult;
 import io.github.cdimascio.dotenv.Dotenv;
@@ -18,7 +18,6 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.util.HashMap;
 import java.util.List;
-// import io.github.cdimascio.dotenv.Dotenv;
 import java.util.Map;
 
 public class AzureTranslateData implements ITranslateData {
@@ -175,12 +174,10 @@ public class AzureTranslateData implements ITranslateData {
   }
 
   /**
-   * @param text-         String to be translated
-   * @param fromLanguage- String representing the ISO 639-1 code of the language
-   *                      to be translated
-   *                      from
-   * @param toLanguage-   String representing the ISO 639-1 code of the language
-   *                      to be translated to
+   * @param text- String to be translated
+   * @param fromLanguage- String representing the ISO 639-1 code of the language to be translated
+   *     from
+   * @param toLanguage- String representing the ISO 639-1 code of the language to be translated to
    * @return TranslateResult containing the translated lyrics and fromLanguage.
    * @throws IOException
    * @throws InterruptedException
@@ -197,35 +194,37 @@ public class AzureTranslateData implements ITranslateData {
     fromLanguage = this.getLanguageCode(fromLanguage).code();
 
     String endpoint = "https://api.cognitive.microsofttranslator.com";
-    String route = fromLanguage != null
-        ? "/translate?api-version=3.0&from=" + fromLanguage + "&to=" + toLanguage
-        : "/translate?api-version=3.0&to=" + toLanguage;
+    String route =
+        fromLanguage != null
+            ? "/translate?api-version=3.0&from=" + fromLanguage + "&to=" + toLanguage
+            : "/translate?api-version=3.0&to=" + toLanguage;
     String url = endpoint.concat(route);
     Dotenv dotenv = Dotenv.load();
     String key = dotenv.get("AZURE_KEY");
 
-    HttpRequest buildRequest = HttpRequest.newBuilder()
-        .uri(new URI(url))
-        .header("Ocp-Apim-Subscription-Key", key)
-        .header("Content-Type", "application/json")
-        .POST(HttpRequest.BodyPublishers.ofString("[{\"Text\": \"" + text + "\"}]"))
-        .build();
+    HttpRequest buildRequest =
+        HttpRequest.newBuilder()
+            .uri(new URI(url))
+            .header("Ocp-Apim-Subscription-Key", key)
+            .header("Content-Type", "application/json")
+            .POST(HttpRequest.BodyPublishers.ofString("[{\"Text\": \"" + text + "\"}]"))
+            .build();
     // building a response with the HttpRequest
-    HttpResponse<String> response = HttpClient.newBuilder().build().send(buildRequest,
-        HttpResponse.BodyHandlers.ofString());
+    HttpResponse<String> response =
+        HttpClient.newBuilder().build().send(buildRequest, HttpResponse.BodyHandlers.ofString());
 
     // using Moshi to turn it into a List<> object depending on if language
     // detection is used or not
     Moshi moshi = new Moshi.Builder().build();
     Translation translation;
     if (fromLanguage != null) {
-      JsonAdapter<List<TranslateInfo>> dataAdapter = moshi
-          .adapter(Types.newParameterizedType(List.class, TranslateInfo.class));
+      JsonAdapter<List<TranslateInfo>> dataAdapter =
+          moshi.adapter(Types.newParameterizedType(List.class, TranslateInfo.class));
       List<TranslateInfo> body = dataAdapter.fromJson(response.body());
       translation = body.get(0).translations().get(0);
     } else { // Not dead code, we are assigning fromLanguage to detected language here
-      JsonAdapter<List<DetectTranslateInfo>> dataAdapter = moshi
-          .adapter(Types.newParameterizedType(List.class, DetectTranslateInfo.class));
+      JsonAdapter<List<DetectTranslateInfo>> dataAdapter =
+          moshi.adapter(Types.newParameterizedType(List.class, DetectTranslateInfo.class));
       List<DetectTranslateInfo> body = dataAdapter.fromJson(response.body());
       translation = body.get(0).translations().get(0);
       fromLanguage = body.get(0).detectedLanguage().language();
@@ -254,8 +253,7 @@ public class AzureTranslateData implements ITranslateData {
   public LanguageCode getLanguageCode(String language) throws LanguageNotSupportedException {
     if (language == null) {
       return null;
-    }
-    else if (this.languageMap.containsKey(language)) {
+    } else if (this.languageMap.containsKey(language)) {
       return new LanguageCode(language, this.languageMap.get(language));
     } else {
       throw new LanguageNotSupportedException("Language not supported");

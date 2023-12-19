@@ -13,7 +13,6 @@ import edu.brown.cs.student.main.server.lyrics.mockedLyrics.MockLyricsData;
 import edu.brown.cs.student.main.server.spotify.data.MockData;
 import edu.brown.cs.student.main.server.spotify.records.recommendationRecords.Recommendation;
 import edu.brown.cs.student.main.server.spotify.tokens.MockedToken;
-import edu.brown.cs.student.main.server.spotify.tokens.TokenGenerator;
 import edu.brown.cs.student.main.server.translate.mockedData.MockTranslateData;
 import java.io.IOException;
 import java.net.URI;
@@ -32,11 +31,8 @@ import org.junit.jupiter.api.Test;
 import org.testng.Assert;
 import spark.Spark;
 
-/**
- * Class that makes an integration test to ensure that all the handlers work well together
- */
+/** Class that makes an integration test to ensure that all the handlers work well together */
 public class IntegrationTests {
-
 
   /** Method that is run once at the beginning. Gotten from the gearup. */
   @BeforeAll
@@ -134,7 +130,8 @@ public class IntegrationTests {
    * Method that makes a query to the server, made specifically for recommendation handler because
    * it allows for an extra parameter that is needed.
    */
-  private static HttpResponse<String> tryRequestRec(String apiCall, Map<String, String> queryParams, String allNames)
+  private static HttpResponse<String> tryRequestRec(
+      String apiCall, Map<String, String> queryParams, String allNames)
       throws IOException, InterruptedException, URISyntaxException {
 
     StringBuilder queryString = new StringBuilder();
@@ -159,7 +156,9 @@ public class IntegrationTests {
     // Build the HTTP request
     HttpRequest request =
         HttpRequest.newBuilder()
-            .uri(new URI("http://localhost:" + Spark.port() + "/" + apiCall + queryString+ allNames))
+            .uri(
+                new URI(
+                    "http://localhost:" + Spark.port() + "/" + apiCall + queryString + allNames))
             .GET() // This is optional since GET is the default method.
             .build();
 
@@ -169,13 +168,13 @@ public class IntegrationTests {
     return response;
   }
 
-
   /**
    * Method that integrates multiple handlers testing that we can
+   *
    * @throws Exception
    */
   @Test
-  public void integrationTest() throws Exception{
+  public void integrationTest() throws Exception {
     Map<String, String> queryParams = new HashMap<>();
     queryParams.put("token", "dsdsds");
     queryParams.put("limit", "5");
@@ -233,10 +232,5 @@ public class IntegrationTests {
     JsonAdapter<Map> jsonAdapter5 = moshi5.adapter(Map.class);
     Map<String, Object> responseBody5 = jsonAdapter5.fromJson(response5.body());
     Assert.assertEquals("Success", responseBody5.get("Result"));
-
   }
-
-
-
-
 }
