@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.Set;
 // import org.deeplearning4j.models.embeddings.loader.WordVectorSerializer;
 // import org.deeplearning4j.models.word2vec.WordVectors;
-import org.apache.commons.text.similarity.CosineSimilarity;
+// import org.apache.commons.text.similarity.CosineSimilarity;
 import spark.Request;
 import spark.Response;
 import spark.Route;

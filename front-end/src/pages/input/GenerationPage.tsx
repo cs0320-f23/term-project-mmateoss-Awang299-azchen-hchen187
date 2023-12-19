@@ -133,7 +133,7 @@ function GenerationPage() {
             />
             <p>
               {selectedTrack[0]}{" "}
-              {selectedTrack[1] ? "-" + selectedTrack[1] : ""}
+              {selectedTrack[1] ? " - " + selectedTrack[1] : ""}
             </p>
           </div>
 
