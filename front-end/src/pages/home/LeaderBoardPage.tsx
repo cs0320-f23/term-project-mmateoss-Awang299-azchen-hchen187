@@ -1,10 +1,8 @@
 import React from 'react'
-import PersonComponent from 'src/components/home/PersonComponent'
-import LanguageDropdown from 'src/components/input/LanguageDropdown';
-import { mockLeaderBoardData } from 'src/mock/MockedData'
-
 import "./LeaderBoardPage.css"
-
+import { mockLeaderBoardData } from '../../mock/MockedData';
+import LanguageDropdown from '../../components/input/LanguageDropdown';
+import PersonComponent from '../../components/home/PersonComponent';
 
 export default function LeaderBoardPage() {
   const leaderboardDataArray = Object.values(mockLeaderBoardData);
