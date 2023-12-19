@@ -35,8 +35,8 @@ function HomePage() {
           setTimeout(() => {
             redirectToAuthCodeFlow(clientId);
           }, 1000);
-        }, 1000);
-      }
+        }
+      }, 1000);
 
       
       // if (!code) {
