@@ -1,7 +1,7 @@
 import { BrowserRouter as Router, Routes, Route} from 'react-router-dom';
 import React from 'react';
 import { ContextProvider } from './components/input/ContextProvider';
-import HomePage from './pages/home/HomePage';
+
 import SongsPage from './pages/input/SongsPage';
 import GenerationPage from './pages/input/GenerationPage';
 import GeneratedPlaylistPage from './pages/result/GeneratedPlaylistPage';
@@ -12,6 +12,7 @@ import './App.css';
 import SettingsPage from './pages/input/SettingsPage';
 import Toolbar from './components/toolbar/Toolbar';
 import LeaderBoardPage from './pages/home/LeaderBoardPage';
+import HomePage from './pages/home/HomePage';
 
 
 /**

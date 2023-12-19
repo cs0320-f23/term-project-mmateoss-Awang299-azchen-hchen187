@@ -12,6 +12,9 @@ interface PersonProps {
 function PersonComponent(props: PersonProps) {
   const [HPPosition, setHPPosition] = useState({ x: 0, y: 0 });
   const handleHover = props.disabledHover ? 'disable-hover' : '';
+  const containerStyle: React.CSSProperties = {
+    pointerEvents: props.disabledHover ? 'none' : 'auto',
+  };
 
 
   //sets up the variables for event listeners
@@ -43,8 +46,7 @@ function PersonComponent(props: PersonProps) {
 
   //returns the component
   return (
-
-        <div className={`head-container ${handleHover}`}>
+        <div className={`head-container ${handleHover}`} style={containerStyle}>
             <div className="headphone-container">
                 <div className="left-headphone" style={props.headClicked ? {} : {left: `${HPPosition.x + 7}px`, top: `${HPPosition.y}px`}}></div>
             </div>

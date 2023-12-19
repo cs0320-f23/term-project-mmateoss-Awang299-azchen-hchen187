@@ -154,6 +154,7 @@ background-color: var(--green);
 }
 
 .boom-box-svg {
+  pointer-events: none;
   position: absolute;
   width: 400px;
   height: 650px;
