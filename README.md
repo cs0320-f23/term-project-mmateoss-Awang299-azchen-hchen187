@@ -37,17 +37,29 @@ Used these to learn how to do things in the code
     .https://www.javatpoint.com/java-string-replaceall
         . Used this to learn about the documentation of the replaceall methdo in java
 
-    .https://github.com/LibreTranslate/LibreTranslate
-        .Used this open-source AI Translation API to obtain the translated lyrics for songs
-
     .https://leetcode.com/problems/edit-distance/solutions/3230662/clean-codes-full-explanation-dynamic-programming-c-java-python3/
-        .Used this leetcode solution to implement Levenshtein's Distance algorithm for the scoring algorithm
+        . This was used to help us create our scoring algorithm.
 
-    .
-        .
+    .https://github.com/akashrchandran/spotify-lyrics-api
+        . This was used to get the lyrics from different songs.
 
-    .
-        .
+    .https://github.com/LibreTranslate/LibreTranslate
+        . This is the optional free translation API that we downloaded and added to our project. This is the reason that our github is a little weird with additional contributors, because its open source and when we added it it also added the people who worked on it.
+
+    . https://developer.spotify.com/documentation/web-playback-sdk
+        . This was the documentation used to see how to setup the playback
+        SDK from spotify.
+
+    . https://developer.spotify.com/documentation/web-api/concepts/authorization
+        . This was used to set up Spotify authentication for the users.
+
+    . https://www.mockplus.com/blog/post/search-bar-design
+        . Used to see how to create a cool search bar
+
+    . https://github.com/WebDevSimplified/spotify-clone
+
+    . https://redstapler.co/curved-css-animation-path/
+        . Used to see how to create a CSS animated path
 
 ## Link to Repo
 
@@ -86,6 +98,8 @@ This project is split into two directories: the frontend and the backend. The fr
         . Apart from handlers, we have different classes and interfaces that work together to make API calls to external APIs to fetch needed information when necessary. It then parses that information and verifies differnt properties, retuning a polished version of what the frontend needs. The interfaces allow us to use mocked data when needed in order to be able to run tests (our handlers can use either mocked or real data). Furthermore, some classes utilize the proxy and strategy pattern.
 
         . We also created multiple records to allow us to work with external APIs. Moshi uses these reeords to parse the incoming JSON into an object with the fields that we want to use and pay attention to.
+
+        . In the backend, we (Andrew) also created a database for our porject to use. He used Supabase, https://supabase.com/dashboard/project/yhtpfpemutniykkpmgbb, its being used to generate a leaderboard and keep track of how many characters have been used by the translaition APIs.
 
 ## Specific Data Structures used and other Important Decisions
 
@@ -139,7 +153,7 @@ An important thing to note, is that if you do not have different dependencies in
 
 To run the fron-end, navigate to the front-end directory and in the terminal run the command:
 
-npm run
+npm start
 
 This should start the front-end up. You can then follow the link that shows up in the terminal to open the front-end in your web browser. However, before using it, please follow the steps in the just the server section (underneath this) to start your back-end server so that everything functions as intended.
 
