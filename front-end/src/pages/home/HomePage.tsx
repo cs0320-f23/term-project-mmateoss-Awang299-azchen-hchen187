@@ -8,6 +8,7 @@ import './HomePage.css';
 import '../../components/home/Person.css';
 import { redirectToAuthCodeFlow } from '../../components/SpotifyOAuth/authPkce';
 import { useAppContext } from '../../components/input/ContextProvider';
+import { createFalse } from 'typescript';
 
 const clientId = "eb941c29116d4a429cee98b37757ceca";
 
@@ -21,22 +22,33 @@ function HomePage() {
     
     //method to handle navigating to the next page when head is clicked
     const handleHeadClick = async () => {
+      setHovered(false)
       setAnimate(true);
 
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
-      
-      if (!code) {
-        redirectToAuthCodeFlow(clientId);
-      } else {
-        setTimeout(() => {
-          setAnimate(false);
-          setHeadClicked(true);
+
+      setTimeout(() => {
+        setAnimate(false);
+        setHeadClicked(true);
+        if (!code) {
           setTimeout(() => {
-            navigate("/input/songs");
+            redirectToAuthCodeFlow(clientId);
           }, 1000);
-        }, 1000);
-      }
+        }
+      }, 1000);
+
+      
+      // if (!code) {
+      //   setTimeout(() => {
+      //     redirectToAuthCodeFlow(clientId);
+      //   }, 1600);
+      // } else {
+      //   setTimeout(() => {
+      //     setAnimate(false);
+      //     setHeadClicked(true);
+      //   }, 1000);
+      // }
     }
   
     //outlining the transition for rendering the next page
@@ -75,6 +87,7 @@ function HomePage() {
               <motion.div
                 onHoverStart={() => setHovered(true)}
                 onHoverEnd={() => setHovered(false)}
+                onClick={() => setHovered(false)}
                 initial={{ scale: 1 }}
                 transition={{ duration: 0.75 }}
                 animate={animateStyle}
