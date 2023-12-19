@@ -35,6 +35,7 @@ export async function getAccessToken(clientId: string, code: string) {
   const response = await result.json();
   const access_token = response.access_token;
   const refresh_token = response.refresh_token;
+  localStorage.setItem("access_token", access_token);
   localStorage.setItem("refresh_token",refresh_token);
 
   return access_token;
@@ -71,7 +72,6 @@ async function generateCodeChallenge(codeVerifier: string) {
 }
 
 
-
 export async function getRefreshToken(clientId: string){
 
    // refresh token that has been previously stored
@@ -91,12 +91,12 @@ export async function getRefreshToken(clientId: string){
     });
 
     const response = await toSend.json();
-    console.log(response);
     const access_token = response.access_token;
     const refresh_token = response.refresh_token;
     localStorage.setItem("refresh_token", refresh_token);
     localStorage.setItem("access_token", access_token);
-   }
 
+    return access_token;
+   }
   }
   

@@ -9,7 +9,7 @@ import { useAppContext } from '../../components/input/ContextProvider';
 
 import './SongsPage.css';
 import '../../components/home/Person.css';
-import { getAccessToken } from '../../components/SpotifyOAuth/authPkce';
+import { getAccessToken, getRefreshToken } from '../../components/SpotifyOAuth/authPkce';
 
 //mock function to get mock data
 async function fetchMockedSongs(input: string) {
@@ -30,8 +30,35 @@ function SongsPage() {
   const [searched, setSearched] = useState(false);
   const [searchMessage, setSearchMessage] = useState("Loading...")
 
+  const checkSpotifyToken = async (token : string) => {
+    return fetch('https://api.spotify.com/v1/me', {
+      headers: {
+        Authorization: `Bearer ${token}`
+      }
+    }).then(response => {
+      if (response.ok) {
+        return true
+      } else {
+        return false
+      }
+    })
+  };
+
   useEffect(() => {
     const fetchAccessToken = async () => {
+      let accessToken = localStorage.getItem("access_token")
+
+      if (accessToken) {
+        const isValid = await checkSpotifyToken(token);
+        if (!isValid) {
+          accessToken = await getRefreshToken(clientId);
+        }
+        console.log(accessToken)
+        accessToken && setToken(accessToken);
+        return;
+      }
+
+
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
 
@@ -46,6 +73,7 @@ function SongsPage() {
     };
 
     fetchAccessToken();
+    
   }, []);
 
   //method to toggle the search bar
@@ -113,7 +141,6 @@ function SongsPage() {
   async function fetchSongs(input: string): Promise<{ Result: string; data: string[][] }> {
     const limit = 10;
 
-    console.log("INSIDE FETCH SONGS TOKEN:", token)
     const serverInput = "getSongs?token=" + token + "&limit=" + limit + "&query=" + input;
     console.log(serverInput);
     const fetched = await fetch("http://localhost:3232/" + serverInput);

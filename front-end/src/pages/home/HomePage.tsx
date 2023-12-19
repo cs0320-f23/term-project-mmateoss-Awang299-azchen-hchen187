@@ -23,11 +23,17 @@ function HomePage() {
     const handleHeadClick = async () => {
       setAnimate(true);
 
+      if (localStorage.getItem("access_token")) {
+        navigate("/input/songs");
+        return;
+      }
+
       const params = new URLSearchParams(window.location.search);
       const code = params.get("code");
       
       if (!code) {
         redirectToAuthCodeFlow(clientId);
+        // random code
       } else {
         setTimeout(() => {
           setAnimate(false);

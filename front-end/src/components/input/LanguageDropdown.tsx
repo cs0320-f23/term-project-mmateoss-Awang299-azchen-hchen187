@@ -44,6 +44,7 @@ const LanguageDropdown = (props: LanguageDropdownProps) => {
     { value: 'tu', label: 'Turkish' },
     { value: 'fi', label: 'Filipino' },
     { value: 'ma', label: 'Malay' },
+    { value: 'zh-Hans', label: 'Chinese Simplified' },
   ];
 
   //returns the component 
