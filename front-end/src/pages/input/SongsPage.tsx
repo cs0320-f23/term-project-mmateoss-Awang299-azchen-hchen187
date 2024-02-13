@@ -114,7 +114,7 @@ function SongsPage() {
       if (cancel) {
         return;
       }
-      fetchSongs(search).then((response) => {
+      fetchMockedSongs(search).then((response) => {
         console.log(response);
         if (response.Result === "Success") {
           setSearchResults(response.data);

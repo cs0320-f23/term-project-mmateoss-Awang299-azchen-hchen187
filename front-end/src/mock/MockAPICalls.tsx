@@ -1,4 +1,4 @@
-import { songsData } from "./MockedData";
+import { easySongData, songsData } from "./MockedData";
 
 //interface to outline the fields needed
 interface MockedAPIData {
@@ -6,17 +6,22 @@ interface MockedAPIData {
   [key: string]: string | {title: string, artist: string, trackID: string, albumUrl: string}[]
 }
 
+interface MockedSongData {
+    Result: string;
+    data : string[][]
+}
+
 //method to return song data based on search input
-export const mockGetSongs = (input: string) : MockedAPIData => {
-    if (songsData[input]) {
+export const mockGetSongs = (input: string) : MockedSongData => {
+    if (easySongData[input]) {
         return {
-            result: "success", 
-            data: songsData[input]
+            Result: "Success", 
+            data: easySongData[input]
         }
     } else {
         return {
-            result: "error", 
-            error_type: "no data found"
+            Result: "error", 
+            data: [["error in fetch"]]
         }
     }
 }
