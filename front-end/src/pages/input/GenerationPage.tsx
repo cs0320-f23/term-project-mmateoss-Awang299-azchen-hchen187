@@ -11,7 +11,7 @@ import NavButton from "../../components/button/NavButton";
 const mockLyricsResponse: LyricLine[] = [
   {
     startTime: 16,
-    learningLyric: "remember me me me me me me",
+    learningLyric: "She was all, that I could see",
     nativeLyric: "Ella era todo, lo que podía ver",
   },
   {
@@ -84,8 +84,12 @@ function GenerationPage() {
   };
 
   useEffect(() => {
-    fetchLyrics(selectedTrack[2], nativeLanguage);
-    setTrackUri(`spotify:track:${selectedTrack[2]}`);
+    // fetchLyrics(selectedTrack[2], nativeLanguage);
+    
+    setTimeout(() => {
+      setLyrics(mockLyricsResponse);
+      setTrackUri(`spotify:track:${selectedTrack[2]}`);
+    }, 5000)
   }, []);
 
   return (
